@@ -1,0 +1,14 @@
+<h1>Home#index</h1>
+<p>Find me in app/views/home/index.html.erb</p>
+    
+    <p>
+    <% if user_signed_in? %>
+            <%= link_to "Signout", destroy_user_session_path, method: :delete,  data:{
+            turbo_method: :delete,
+            turbo_confirm: "Are you sure to want to logout"
+        } %>
+    <% else %>
+            <%= link_to "Sign In", new_user_session_path %>
+    <% end %>
+    </p>
+
