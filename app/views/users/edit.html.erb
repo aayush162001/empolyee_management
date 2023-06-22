@@ -1,0 +1,12 @@
+<h1>////</h1>
+<%= form_with(model: @users, action: 'update') do |form| %>
+    <%# <% binding.pry %> 
+    
+
+    <%= form.collection_check_boxes :role_ids, Role.all, :id, :name%>
+    <%= @users.errors[:roles] %>
+    <%= form.button :submit %>
+
+    
+    <%= link_to "Back to user", users_path %>  
+<%end%>
