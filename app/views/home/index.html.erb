@@ -3,6 +3,8 @@
     
     <p>
     <% if user_signed_in? %>
+            Are you admin? <%= current_user.has_role? :admin %> <br>
+            <%= current_user.roles.pluck(:name) %>
             <%= link_to "Signout", destroy_user_session_path, method: :delete,  data:{
             turbo_method: :delete,
             turbo_confirm: "Are you sure to want to logout"

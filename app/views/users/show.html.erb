@@ -1,0 +1,6 @@
+<% @users.each do |user| %>
+    <%= user.email %>
+    <%=  user.roles.pluck(:name)  %>
+    <%= link_to 'edit role', "users/#{user.id}/edit" %>
+    <br>
+<% end %>
