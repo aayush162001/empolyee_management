@@ -36,6 +36,11 @@
     <%= f.label :contact %><br />
     <%= f.text_field :contact %>
   </div>
+
+    
+  <div>
+    <%= f.collection_check_boxes :role_ids, Role.all, :id, :name%>
+    </div>
   <div class="actions">
     <%= f.submit "Sign up" %>
   </div>

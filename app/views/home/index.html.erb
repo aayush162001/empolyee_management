@@ -3,8 +3,12 @@
     
     <p>
     <% if user_signed_in? %>
-            Are you admin? <%= current_user.has_role? :admin %> <br>
-            <%= current_user.roles.pluck(:name) %>
+            Are you admin? <%= current_user.has_any_role? :admin,:"Company Admin" %> <br>
+            <%= current_user.roles.pluck(:name) %> <br>
+            Id : <%= current_user.id %> <br>
+            Name : <%= current_user.name %> <br>
+            <%= link_to 'edit', edit_user_path(current_user) %>
+            <%= link_to 'Create New User', new_user_path %>
             <%= link_to "Signout", destroy_user_session_path, method: :delete,  data:{
             turbo_method: :delete,
             turbo_confirm: "Are you sure to want to logout"

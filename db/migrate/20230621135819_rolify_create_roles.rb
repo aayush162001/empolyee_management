@@ -6,7 +6,7 @@ class RolifyCreateRoles < ActiveRecord::Migration[7.0]
 
       t.timestamps
     end
-
+    
     create_table(:users_roles, :id => false) do |t|
       t.references :user
       t.references :role
