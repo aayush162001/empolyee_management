@@ -2,6 +2,8 @@
 <%= form_with(model: @users, action: 'update') do |form| %>
     <%# <% binding.pry %> 
     
+    <%= form.label :name %><br />
+    <%= form.text_field :name, autocomplete: "name" %>
 
     <%= form.collection_check_boxes :role_ids, Role.all, :id, :name%>
     <%= @users.errors[:roles] %>

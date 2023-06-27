@@ -73,3 +73,5 @@ end
 gem 'devise'
 gem 'rolify'
 gem  'pry'
+gem 'kaminari'
+gem 'cancancan'
