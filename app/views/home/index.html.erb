@@ -3,8 +3,8 @@
     
     <p>
     <% if user_signed_in? %>
-            Are you admin? <%= current_user.has_any_role? :admin,:"Company Admin" %> <br>
-            <%= current_user.roles.pluck(:name) %> <br>
+            Are you admin? <%= current_user.super_admin? or current_user.company_admin?%> <br>
+            <%= current_user.role %> <br>
             Id : <%= current_user.id %> <br>
             Name : <%= current_user.name %> <br>
             <%= link_to 'edit', edit_user_path(current_user) %> |
