@@ -1,0 +1,10 @@
+<h1>Daily Work Report</h1>
+
+<p><strong>Name:</strong> <%= @daily_work_report.id%></p>
+
+<%= link_to 'Edit',edit_daily_work_report_path %> |
+<%= link_to 'Back', daily_work_reports_path %> |
+<%= link_to 'Delete', @daily_work_report, method: :delete, data:{
+        turbo_method: :delete,
+        turbo_confirm: "Are you sure"
+    } %>

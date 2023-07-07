@@ -10,7 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_21_135819) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_06_053959) do
+  create_table "daily_work_reports", force: :cascade do |t|
+    t.date "current_date"
+    t.integer "hours"
+    t.string "status"
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "project_id"
+    t.index ["user_id"], name: "index_daily_work_reports_on_user_id"
+  end
+
+  create_table "projects", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "roles", force: :cascade do |t|
     t.string "name"
     t.string "resource_type"
@@ -51,4 +68,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_21_135819) do
     t.index ["user_id"], name: "index_users_roles_on_user_id"
   end
 
+  add_foreign_key "daily_work_reports", "users"
 end

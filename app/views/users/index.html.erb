@@ -1,6 +1,7 @@
 <h1>Admin</h1>
 
 <%if current_user.has_any_role? :admin,:"Company Admin"%>
+    
     <% @users.each do |user| %>
         <%= user.email %>
         <%=  user.roles.pluck(:name)  %>
@@ -8,5 +9,8 @@
         <br>
 
     <% end %>
+    <br>
+    <%= link_to 'Create New User', new_user_path %>
+    <%= link_to 'home', root_path%>
 <% end %>
 <%= paginate @users %>
