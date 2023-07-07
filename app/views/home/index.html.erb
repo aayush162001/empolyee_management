@@ -7,12 +7,13 @@
             <%= current_user.roles.pluck(:name) %> <br>
             Id : <%= current_user.id %> <br>
             Name : <%= current_user.name %> <br>
-            <%= link_to 'edit', edit_user_path(current_user) %>
-            <%= link_to 'Create New User', new_user_path %>
+            <%= link_to 'edit', edit_user_path(current_user) %> |
+            <%= link_to 'Create New User', new_user_path %> |
             <%= link_to "Signout", destroy_user_session_path, method: :delete,  data:{
             turbo_method: :delete,
             turbo_confirm: "Are you sure to want to logout"
-        } %>
+        } %> | 
+            <%= link_to 'Add Work Report', daily_work_reports_path %>
     <% else %>
             <%= link_to "Sign In", new_user_session_path %>
     <% end %>

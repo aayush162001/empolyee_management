@@ -1,5 +1,7 @@
 class User < ApplicationRecord
   has_and_belongs_to_many :roles
+  has_many :projects, through: :daily_work_reports
+  has_many :daily_work_reports
   # paginates_per 2 
   rolify
   # Include default devise modules. Others available are:

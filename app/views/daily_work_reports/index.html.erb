@@ -1,0 +1,41 @@
+<h1>Daily Work Reports</h1>
+
+<%= search_form_for @q do |f| %>
+  <div>
+     <%# <%= f.label :current_date %>
+     <%# <%= f.search_field :current_date_cont %>
+      <%= f.label :project_name_or_current_date %>
+      <%= f.search_field :project_name_or_current_date_cont %>
+  </div>
+  <div>
+    <%= f.submit %>
+  </div>
+<% end %>
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Project Selection</th>
+      <th>Hours</th>
+      <th>Status</th>
+      <th colspan="2">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @daily_work_reports.each do |report| %>
+      <tr>
+        <td><%= report.current_date %></td>
+        <td><%= report.project.name %></td>
+        <td><%= report.hours %></td>
+        <td><%= report.status %></td>
+        <td><%= link_to 'Show', report %></td>
+        <td><%= link_to 'Edit', edit_daily_work_report_path(report) %></td>
+        <td><%= link_to 'Destroy', report, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Daily Work Report', new_daily_work_report_path %>
