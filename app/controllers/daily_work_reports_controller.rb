@@ -1,9 +1,13 @@
 class DailyWorkReportsController < ApplicationController
     before_action :set_daily_work_report, only: [:show, :edit, :update, :destroy]
-
+    before_action :authenticate_user!
+    load_and_authorize_resource
     def index
+      # binding.pry
       @q = DailyWorkReport.ransack(params[:q])
-      @daily_work_reports = @q.result(distinct: true)
+      @daily_work_reports = @q.result(distinct: true).accessible_by(current_ability)
+      # @daily_work_reports = DailyWorkReport.accessible_by(current_ability)
+      # @daily_work_reports = DailyWorkReport.all
     end
   
     def show

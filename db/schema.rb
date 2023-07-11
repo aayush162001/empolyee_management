@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_06_053959) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_07_113518) do
   create_table "daily_work_reports", force: :cascade do |t|
     t.date "current_date"
     t.integer "hours"
@@ -56,6 +56,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_06_053959) do
     t.date "dob"
     t.string "address"
     t.string "contact"
+    t.integer "role", default: 0
+    t.integer "department", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

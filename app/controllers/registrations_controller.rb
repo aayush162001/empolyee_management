@@ -5,7 +5,7 @@ class RegistrationsController < Devise::RegistrationsController
     private
     def redirect_unless_admin
         if user_signed_in?
-            unless current_user.has_any_role? :admin,:"Company Admin"
+            if not current_user.company_admin? || current_user.super_admin?
                 flash[:error] = "Only admins can do that"
                 redirect_to root_path
             end

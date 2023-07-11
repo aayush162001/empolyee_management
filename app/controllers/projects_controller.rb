@@ -1,9 +1,11 @@
 class ProjectsController < ApplicationController
-    before_action :set_project, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
+  load_and_authorize_resource
+  before_action :set_project, only: [:show, :edit, :update, :destroy]
 
     def index
       @q = Project.ransack(params[:q])
-      @projects = @q.result(distinct: true)      
+      @projects = @q.result(distinct: true).accessible_by(current_ability)      
       # @projects = Project.all
     end
   
