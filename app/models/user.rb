@@ -35,11 +35,11 @@ class User < ApplicationRecord
     self.department ||= :ror
   end
 
-  def must_have_a_role
-    unless roles.any?
-      errors.add(:roles, 'must have at least 1 role')
-    end
-  end
+  # def must_have_a_role
+  #   unless roles.any?
+  #     errors.add(:roles, 'must have at least 1 role')
+  #   end
+  # end
 
 
 end

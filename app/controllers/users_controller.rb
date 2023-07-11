@@ -1,4 +1,8 @@
 class UsersController < ApplicationController
+    before_action :authenticate_user!
+    load_and_authorize_resource
+    before_action :set_user, only: [:show, :edit, :update, :destroy]
+
     def index
         @users = User.all.page(params[:page])
     end
@@ -17,27 +21,39 @@ class UsersController < ApplicationController
         end
     end 
     def edit
-        @users = User.find(params[:id])
     end
     def update        
         # binding.pry
-        @users = User.find(params[:id])
-        if @users.update(user_params)
-            if current_user.has_any_role? :admin,:"Company Admin"
+        # @users = User.find(params[:id])
+        if current_user.company_admin? || current_user.super_admin?    
+
+            if @users.update(user_params)
+                # binding.pry
                 redirect_to users_url, notice: "User was successfully update"
             else
+                render :edit, status: :unprocessable_entity
+            end
+        
+        elsif current_user.id == params[:id].to_i
+            # binding.pry
+            if @users.update(user_params)
+                # binding.pry
                 redirect_to root_path, notice: "You update was added successfully."
+            else
+                render :edit, status: :unprocessable_entity
             end
         else 
             render :edit, status: :unprocessable_entity
         end
     end
     def show
-        @users = User.find(params[:id])
     end
 
     private
+        def set_user
+            @users = User.find(params[:id])
+        end
         def user_params
-            params.require(:user).permit(:email,:password,:name,:role_ids => [])
+            params.require(:user).permit(:email,:password,:name,:role,:department)
         end
 end

@@ -3,12 +3,26 @@
 class Ability
   include CanCan::Ability
 
-  # def initialize(user)
-  #   user ||= User.new
-
-  #   if user.has_role? :admin
-  #     can :manage, :all
-  #   end
+  def initialize(user)
+    user ||= User.new
+    
+    # binding.pry
+    
+    if user.super_admin?
+      can :manage, :all
+    elsif user.company_admin?
+      can :manage, :all
+    elsif user.project_manager?
+      can :manage, Project
+      can :manage, DailyWorkReport
+    elsif user.leader?
+      can :manage, DailyWorkReport
+    elsif user.employee?
+      can :create, DailyWorkReport, user_id: user.id
+      can [:read, :update], DailyWorkReport, user_id: user.id           
+    else
+      can :read, :all
+    end
     # Define abilities for the user here. For example:
     #
     #   return unless user.present?

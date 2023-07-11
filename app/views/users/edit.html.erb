@@ -5,8 +5,10 @@
     <%= form.label :name %><br />
     <%= form.text_field :name, autocomplete: "name" %>
 
-    <%= form.collection_check_boxes :role_ids, Role.all, :id, :name%>
-    <%= @users.errors[:roles] %>
+    <%# <%= f.select(:role, User.roles.keys) %> 
+    <%= form.select :role, User.roles.keys.map {|key| [key.humanize, key]}%>
+    <%# <%= f.select(:role, User.roles.keys) %> 
+    <%= form.select :department, User.departments.keys.map {|key| [key.humanize, key]}%>
     <%= form.button :submit %>
 
     
