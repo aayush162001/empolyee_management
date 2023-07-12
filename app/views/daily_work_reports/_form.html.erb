@@ -10,10 +10,19 @@
       </ul>
     </div>
   <% end %>
+  <% if @daily_work_report.errors.any? %>
+        <% @daily_work_report.errors.full_messages.each do |message| %>
+            <p><%= message  %></p>
+        <%end%>
+  <%end %>
+
+
+
 
   <div class="field">
     <%= form.label :current_date %>
     <%= form.date_field :current_date %>
+    <%# <%= form.date_field :current_date,:disabled=>true %>
   </div>
 
   <div class="field">

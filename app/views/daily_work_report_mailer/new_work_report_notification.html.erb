@@ -1,0 +1,17 @@
+<h1>DailyWorkReport</h1>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+   <%# <%= binding.pry  %>
+    <h3>Daily Work Report of user_id : <%= User.find_by(email: @user).id %></h3>
+    <p>
+      has successfully send daily work report,<br>
+      your user status is: <%= DailyWorkReport.where(user_id: User.find_by(email: @user).id).last.status %>.<br>
+      Date = <%= DailyWorkReport.where(user_id: User.find_by(email: @user).id).last.current_date %> <br>
+      Hours Worked : <%= DailyWorkReport.where(user_id: User.find_by(email: @user).id).last.hours %><br>
+    </p>
+    <p>Thanks have a great day!</p>
+  </body>
+</html>
