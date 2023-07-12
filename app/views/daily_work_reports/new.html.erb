@@ -1,5 +1,19 @@
 <h1>New Daily Work Report</h1>
-
+<%# <%= f.collection_check_boxes :role_ids, Role.all, :id, :name %>
+<%# <%= User.find(current_user.email_hierarchy[:user_id])[:email]%>
+<%= User.find(current_user.id)[:email] %>
+<br><br>
+<% if ! current_user.email_hierarchy == nil%>
+    <% c = current_user.email_hierarchy[:to].to_i%> 
+    To : <%= User.find(c)[:email] %>
+    <br><br>
+    <% a = current_user.email_hierarchy[:cc]%>
+    Cc = 
+    <%= User.find(a.split(',')).pluck(:email)%>
+<%end%>
+<br><br>
 <%= render 'form', report: @daily_work_report %>
 
 <%= link_to 'Back', daily_work_reports_path %>
+
+<%# User.where(id: cc.split(',')).pluck(:email) %>

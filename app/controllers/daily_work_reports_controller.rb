@@ -34,14 +34,20 @@ class DailyWorkReportsController < ApplicationController
     def create
       @daily_work_report = DailyWorkReport.new(daily_work_report_params)
       # binding.pry
-      if Project.exists?(params[:daily_work_report][:project_id])
-        if @daily_work_report.save
-          redirect_to daily_work_reports_path, notice: 'Daily work report was successfully created.'
+      if @daily_work_report.current_date == Date.today || @daily_work_report.current_date == Date.yesterday
+      # @daily_work_report.current_date = Time.now
+        if Project.exists?(params[:daily_work_report][:project_id])
+          if @daily_work_report.save
+            DailyWorkReportMailer.new_work_report_notification(@daily_work_report).deliver_now
+            redirect_to daily_work_reports_path, notice: 'Daily work report was successfully created.'
+          else
+            render :new
+          end
         else
-          render :new
+          redirect_to new_daily_work_report_path, alert: 'Invalid project selection.'
         end
       else
-        redirect_to new_daily_work_report_path, alert: 'Invalid project selection.'
+        redirect_to new_daily_work_report_path, alert: 'Choose Today date or yesterday.'
       end
     end
     

@@ -5,7 +5,7 @@ class User < ApplicationRecord
 
   has_many :projects, through: :daily_work_reports
   has_many :daily_work_reports
-
+  has_one :email_hierarchy
   after_initialize :set_default_role, :set_default_department, if: :new_record?
 
 

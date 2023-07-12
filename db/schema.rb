@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_07_113518) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_11_110332) do
   create_table "daily_work_reports", force: :cascade do |t|
     t.date "current_date"
     t.integer "hours"
@@ -20,6 +20,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_07_113518) do
     t.datetime "updated_at", null: false
     t.integer "project_id"
     t.index ["user_id"], name: "index_daily_work_reports_on_user_id"
+  end
+
+  create_table "email_hierarchies", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "to"
+    t.string "cc"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_email_hierarchies_on_user_id"
   end
 
   create_table "projects", force: :cascade do |t|
@@ -71,4 +80,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_07_113518) do
   end
 
   add_foreign_key "daily_work_reports", "users"
+  add_foreign_key "email_hierarchies", "users"
 end
