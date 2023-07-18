@@ -2,8 +2,11 @@
 <%# <%= f.collection_check_boxes :role_ids, Role.all, :id, :name %>
 <%# <%= User.find(current_user.email_hierarchy[:user_id])[:email]%>
 <%= User.find(current_user.id)[:email] %>
+<% 
+# binding.pry
+ %>
 <br><br>
-<% if ! current_user.email_hierarchy == nil%>
+<% if not current_user.email_hierarchy == nil%>
     <% c = current_user.email_hierarchy[:to].to_i%> 
     To : <%= User.find(c)[:email] %>
     <br><br>

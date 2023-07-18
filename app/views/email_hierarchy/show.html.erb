@@ -1,0 +1,8 @@
+<h1>Email Hierarchy Details</h1>
+
+<p><strong>User_id : </strong> <%= @email_hierarchy.user_id %> | <%= User.find(@email_hierarchy.user_id)[:email]%> </p>
+<p><strong>To User_id : </strong> <%= @email_hierarchy.to %> | <%= User.find(@email_hierarchy.to)[:email]%></p>
+<p><strong>Cc User_id : </strong> <%= @email_hierarchy.cc %> | <%= User.find((@email_hierarchy.cc).split(',')).pluck(:email)%></p><br><br>
+<%= link_to 'back',  email_hierarchy_index_path %> |
+<%= link_to 'Edit', edit_email_hierarchy_path %> |
+<%= link_to 'Destroy', @email_hierarchy, method: :delete, data: { confirm: 'Are you sure?' }%>

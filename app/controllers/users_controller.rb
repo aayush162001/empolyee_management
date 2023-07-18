@@ -11,6 +11,8 @@ class UsersController < ApplicationController
         # binding.pry
         @user = User.new
     end
+    def show
+    end
     def create
         binding.pry
         @user = User.new(user_params)
@@ -46,14 +48,12 @@ class UsersController < ApplicationController
             render :edit, status: :unprocessable_entity
         end
     end
-    def show
-    end
-
+    
     private
         def set_user
             @users = User.find(params[:id])
         end
         def user_params
-            params.require(:user).permit(:email,:password,:name,:role,:department)
+            params.require(:user).permit(:email,:password,:name,:role,:department,:dob,:address,:contact)
         end
 end

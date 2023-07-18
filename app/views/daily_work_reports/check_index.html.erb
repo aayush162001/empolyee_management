@@ -9,18 +9,18 @@
 
 
     </style>
-<%= search_form_for @q do |f|%>
-<%# <%= @daily_work_reports.each do |f| %> 
+<%# <%= search_form_for @q do |f| %>
+<%# <%= @daily_work_reports.each do |f| 
   <div>
-     <%# <%= f.label :current_date %>
-     <%# <%= f.search_field :current_date_cont %>
-      <%= f.label :project_name_or_current_date %>
+     <%# <%= f.label :current_date 
+     <%# <%= f.search_field :current_date_cont 
+      <%= f.label :project_name_or_current_date 
       <%= f.search_field :project_name_or_current_date_cont %>
-  </div>
+  <%# </div>
   <div>
-    <%= f.submit %>
+    <%= f.submit 
   </div>
-<% end %>
+<% end %> 
 <br>
 <%= link_to 'Add New Daily Work Report', new_daily_work_report_path %>
 <br>

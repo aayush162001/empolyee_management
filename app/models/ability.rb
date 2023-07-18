@@ -16,8 +16,14 @@ class Ability
       can :manage, Project
       can :manage, DailyWorkReport
     elsif user.leader?
-      can :manage, DailyWorkReport
+      can :update, User, id: user.id 
+      can :manage, DailyWorkReport 
+      
     elsif user.employee?
+      
+      # binding.pry
+      
+      can :update, User, id: user.id 
       can :create, DailyWorkReport, user_id: user.id
       can [:read, :update], DailyWorkReport, user_id: user.id           
     else

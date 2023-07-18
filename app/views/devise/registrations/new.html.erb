@@ -24,23 +24,13 @@
     <%= f.label :name %><br />
     <%= f.text_field :name, autocomplete: "name" %>
   </div>
-  <div class="field">
-    <%= f.label :dob %><br />
-    <%= f.text_field :dob %>
-  </div>
-  <div class="field">
-    <%= f.label :address %><br />
-    <%= f.text_field :address %>
-  </div>
-  <div class="field">
-    <%= f.label :contact %><br />
-    <%= f.text_field :contact %>
-  </div>
+
 
     
   <div>
     <%# <%= f.collection_check_boxes :role_ids, Role.all, :id, :name %>
-    </div>
+    <%= form.select :role, User.roles.keys.map {|key| [key.humanize, key]}%>
+  </div>
   <div class="actions">
     <%= f.submit "Sign up" %>
   </div>
