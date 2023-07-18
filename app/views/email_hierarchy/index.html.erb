@@ -1,0 +1,44 @@
+<h1>EmailHierarchy</h1>
+<html>
+<head>
+
+    <style>
+      table,tr,th,td {
+         border:1px solid black;
+      }
+    </style>
+</head>
+<body>
+    <table style="width: 100%">
+    <thead>
+        <tr>
+        <th style="text-align: center">user_id</th>
+        <th style="text-align: center">user mail</th>
+        <th style="text-align: center">To : mail</th>
+        <th style="text-align: center">Cc : mail</th>
+        <th style="text-align: center"> Action  </th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @email_hierarchy.each do |email| %>
+        <tr>
+            <td style="text-align: center"><%= email.user_id %> </td>
+            <td style="text-align: center"> <%= email.user.email%></td>
+            <%# @to = User.find(EmailHierarchy.find_by(user_id: work_report.user_id).to).email %>
+        <%# @cc = User.find((EmailHierarchy.find_by(user_id: work_report.user_id).cc).split(',')).pluck(:email) %>
+            <td style="text-align: center"><%= email.to %> | <%=  User.find(EmailHierarchy.find_by(user_id: email.user_id).to).email %></td>
+            <td style="text-align: center"><%= email.cc %> | <%=  User.find((EmailHierarchy.find_by(user_id: email.user_id).cc).split(',')).pluck(:email)%></td>
+            <td style="text-align: center"><%= link_to 'Show', email %> |
+                <%= link_to 'Edit', edit_email_hierarchy_path(email) %> |
+                <%= link_to 'Destroy', email, method: :delete, data: { confirm: 'Are you sure?' }%>
+            </td>
+            <%# <td> | <%= link_to 'Edit', edit_project_path(project) </td> %>
+            <%# <td> | <%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } </td> %>
+        </tr>
+        <% end %>
+    </tbody>
+    </table>
+</body>
+<br>
+
+<%= link_to 'New User Email Hierarchy', new_email_hierarchy_path %>

@@ -1,16 +1,15 @@
-<h1>Admin</h1>
+<h1>User List</h1>
 
-<%if current_user.super_admin? || current_user.company_admin?%>
-    
+<br>
+    <%= link_to 'Create New User', new_user_path %> <br><br>
+    <%= paginate @users %>
     <% @users.each do |user| %>
+        <%= user.id %> | 
         <%= user.email %> | 
         <%=  user.role%> | 
         <%= link_to 'edit role', edit_user_path(user) %>
         <br>
 
-    <% end %>
     <br> 
-    <%= link_to 'Create New User', new_user_path %> | 
-    <%= link_to 'home', root_path%>
+
 <% end %>
-<%= paginate @users %>

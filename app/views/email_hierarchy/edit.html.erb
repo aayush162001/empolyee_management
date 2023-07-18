@@ -1,0 +1,13 @@
+<h1>Edit Project</h1>
+
+<%= form_with(model: @email_hierarchy, local: true) do |form| %>
+  <div class="field">
+    <%= form.label :user_id %>
+    <%= form.text_field :user_id,:disabled=>true %>
+  </div>
+<% end %>
+<%= render 'form', email: @email_hierarchy %>
+
+<%= link_to 'Show', @email_hierarchy %> |
+<%= link_to 'Back', email_hierarchy_path %>
+<%= link_to 'Destroy', @email_hierarchy, method: :delete, data: { confirm: 'Are you sure?' }%>

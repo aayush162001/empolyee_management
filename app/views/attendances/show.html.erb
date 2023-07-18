@@ -1,0 +1,10 @@
+<h1>Project Details</h1>
+
+<p><strong>Name:</strong> <%= @project.name %></p>
+
+<%= link_to 'Edit', edit_project_path(@project) %> |
+<%= link_to 'Back', projects_path %> |
+<%= link_to 'Delete', @student, method: :delete, data:{
+        turbo_method: :delete,
+        turbo_confirm: "Are you sure"
+    } %>

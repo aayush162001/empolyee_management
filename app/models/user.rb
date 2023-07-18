@@ -6,10 +6,11 @@ class User < ApplicationRecord
   has_many :projects, through: :daily_work_reports
   has_many :daily_work_reports
   has_one :email_hierarchy
+  has_many :attendances
   after_initialize :set_default_role, :set_default_department, if: :new_record?
 
 
-  # paginates_per 2 
+  paginates_per 15
   # rolify
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
