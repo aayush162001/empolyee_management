@@ -13,6 +13,9 @@
 <%b = Date.today%>
 <%s = DailyWorkReport.where(user_id:current_user.id)%>
 <%= s.where(:current_date => a..b).pluck(:current_date).sort%>
+<% 
+binding.pry
+ %>
 <table>
   <thead>
     <tr>
@@ -25,7 +28,7 @@
     <% @attendances.each do |attendance| %>
       <tr>
         <td><%= attendance.user.name %></td>
-        <td><%= attendance.date.strftime('%d-%m-%Y') %></td>
+        <td><%= attendance.attendance_date.strftime('%d-%m-%Y') %></td>
         <td><%= attendance.present? ? 'Present' : 'Absent' %></td>
       </tr>
     <% end %>
