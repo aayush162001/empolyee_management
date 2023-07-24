@@ -1,14 +1,15 @@
-<h1>DailyWorkReport</h1>
+<h1>Daily Work Report Mail</h1>
 <html>
   <head>
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-   <%# <%= binding.pry  %>
-    <h3>Daily Work Report of user_id : <%= User.find_by(email: @user).id %></h3>
+   <%= binding.pry %>
+    <h3>Daily Work Report of Employee ID : <%= User.find_by(email: @user).id %></h3>
+    <h3>Daily Work Report of Employee Name : <%= User.find_by(email: @user).name %></h3>
     <p>
       has successfully send daily work report,<br>
-      your user status is: <%= DailyWorkReport.where(user_id: User.find_by(email: @user).id).last.status %>.<br>
+      User status is: <%= DailyWorkReport.where(user_id: User.find_by(email: @user).id).last.status %>.<br>
       Date = <%= DailyWorkReport.where(user_id: User.find_by(email: @user).id).last.current_date %> <br>
       Hours Worked : <%= DailyWorkReport.where(user_id: User.find_by(email: @user).id).last.hours %><br>
     </p>

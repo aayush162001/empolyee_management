@@ -15,9 +15,11 @@ class Ability
     elsif user.project_manager?
       can :manage, Project
       can :manage, DailyWorkReport
+      can :manage, Attendance, user_id: user.id
     elsif user.leader?
       can :update, User, id: user.id 
       can :manage, DailyWorkReport 
+      can :manage, Attendance, user_id: user.id
       
     elsif user.employee?
       
@@ -26,6 +28,7 @@ class Ability
       can :update, User, id: user.id 
       can :create, DailyWorkReport, user_id: user.id
       can [:read, :update], DailyWorkReport, user_id: user.id           
+      can :manage, Attendance, user_id: user.id
     else
       can :read, :all
     end

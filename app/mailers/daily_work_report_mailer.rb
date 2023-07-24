@@ -34,5 +34,24 @@ class DailyWorkReportMailer < ApplicationMailer
         # # Send email to admins
         # mail(to: @admin_emails, subject: 'New Work Report Created') if @admin_emails.present?
     end
+    
+    
+    def scheduled_report_mail(mail_to)
+        
+        binding.pry
+        
+        @mail_to = mail_to
+        @user = User.where(id:mail_to).pluck(:name)
+        @to = User.where(id:mail_to).pluck(:email)
+        # @cc = User.find((EmailHierarchy.find_by(user_id: mail_to).cc).split(',')).pluck(:email)
+        # sadxa
+
+        mail(
+            to: @to,
+            # cc: @cc,
+            subject: 'Forgot to Add Daily Work Report'
+        )
+
+    end
 
 end
