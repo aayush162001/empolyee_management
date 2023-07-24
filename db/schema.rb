@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_18_065752) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_20_043038) do
   create_table "attendances", force: :cascade do |t|
     t.integer "user_id", null: false
     t.date "attendance_date"
@@ -19,17 +19,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_18_065752) do
     t.datetime "updated_at", null: false
     t.datetime "check_in"
     t.datetime "check_out"
+    t.float "work_hours"
     t.index ["user_id"], name: "index_attendances_on_user_id"
   end
 
   create_table "daily_work_reports", force: :cascade do |t|
     t.date "current_date"
-    t.integer "project_id"
     t.integer "hours"
     t.string "status"
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "project_id"
     t.index ["user_id"], name: "index_daily_work_reports_on_user_id"
   end
 

@@ -5,3 +5,12 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+# binding.pry
+DailyWorkReport.all.each  do |report|
+    
+    # binding.pry
+    
+    Attendance.create(user_id:report.user_id,present:1,attendance_date:report.current_date)
+end
+    
+    
