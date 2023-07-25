@@ -5,7 +5,7 @@ class AttendancesController < ApplicationController
 		load_and_authorize_resource
     
 		def index
-				@attendances = Attendance.where(attendance_date: start_date..end_date).order(attendance_date: :desc)
+				@attendances = Attendance.where(attendance_date: start_date..end_date).accessible_by(current_ability).order(attendance_date: :desc)
 				# @attendances = current_user.attendances.where(date: start_date..end_date)
 				@check_out = Attendance.where(attendance_date:Date.today).where(user_id:current_user.id).where.not(check_in: [nil]).where(check_out: [nil])
 		end
