@@ -3,7 +3,7 @@ class DailyWorkReport < ApplicationRecord
   belongs_to :project
   validate :unique_report_per_day, :on => :create
   validate :number_of_hours
-  # after_save :present
+  after_save :present
   # validate :validate_user_entry    
   # validate :time_limit, :on => :create
   def self.ransackable_attributes(auth_object = nil)
@@ -36,16 +36,29 @@ class DailyWorkReport < ApplicationRecord
     end
   end
 
-  # def present
+  def present
     
-  #   binding.pry
+    binding.pry
     
-  #   if DailyWorkReport.exists?(user_id: user_id, current_date: current_date)
-  #     if self.hours >= 8
-  #       Attendance.create(user_id: user_id, attendance_date: current_date,present:1)
-  #     end
-  #   end
-  # end
+    if DailyWorkReport.exists?(user_id: user_id, current_date: current_date)
+      if self.hours >= 8
+        # Attendance.create(user_id: user_id, attendance_date: current_date,present:1)
+        if Attendance.exists?(user_id:user.id,attendance_date: current_date)
+          if user.attendances.where(attendance_date:Date.today).where.not(check_in: [nil]).where.not(check_out: [nil])
+            a = user.attendances.where(attendance_date:Date.today).where.not(check_in: [nil]).where.not(check_out: [nil])
+            if a.pluck(:work_hours).first >= 8
+              binding.pry
+              c = Attendance.find(a.pluck(:id).first)
+              # c = a.find{|data| data[:present] == nil }
+              # a.update(c[:present] = 1)
+#               person = Person.find(2)
+              c.update({present: true})
+            end
+          end
+        end
+      end
+    end
+  end
 
   def self.scheduled_report_mail
     

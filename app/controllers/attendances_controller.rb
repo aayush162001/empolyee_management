@@ -1,8 +1,9 @@
 class AttendancesController < ApplicationController
-		before_action :authenticate_user!
-		load_and_authorize_resource    
+    
 		before_action :set_project, only: [:show, :edit, :update, :destroy]    
-		
+    before_action :authenticate_user!
+		load_and_authorize_resource
+    
 		def index
 				@attendances = Attendance.where(attendance_date: start_date..end_date).order(attendance_date: :desc)
 				# @attendances = current_user.attendances.where(date: start_date..end_date)
@@ -42,8 +43,8 @@ class AttendancesController < ApplicationController
 			binding.pry
 			# params.fetch(:attendance)[:check_out]
 			if @attendance.update(attendance_params)
-				@attendance.work_hours = ((@attendance.check_out - @attendance.check_in) / 3600).round(2)
-				@attendance.save
+				# @attendance.work_hours = ((@attendance.check_out - @attendance.check_in) / 3600).round(2)
+				# @attendance.save
 				# @attendance.present_check
 				redirect_to attendances_path, notice: 'Attendance record updated successfully.'
 			else

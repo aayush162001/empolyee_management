@@ -27,8 +27,10 @@ class Ability
       
       can :update, User, id: user.id 
       can :create, DailyWorkReport, user_id: user.id
-      can [:read, :update], DailyWorkReport, user_id: user.id           
-      can :manage, Attendance, user_id: user.id
+      can [:read, :update], DailyWorkReport, user_id: user.id 
+      binding.pry          
+      can :create, Attendance, user_id: user.id
+      can [:read, :update], Attendance, user_id: user.id
     else
       can :read, :all
     end
