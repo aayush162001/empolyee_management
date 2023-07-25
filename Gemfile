@@ -79,3 +79,4 @@ gem 'ransack'
 gem 'cssbundling-rails'
 gem "whenever", "~> 1.0"
 gem "letter_opener", group: :development
+gem 'devise-token_authenticatable'

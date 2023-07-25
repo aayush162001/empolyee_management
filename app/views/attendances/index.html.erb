@@ -25,6 +25,7 @@ binding.pry
 <table>
   <thead>
     <tr>
+      <th>User_id<th>
       <th>Name</th>
       <th>Date</th>
       <th>Present</th>
@@ -36,6 +37,7 @@ binding.pry
   <tbody>
     <% @attendances.each do |attendance| %>
       <tr>
+        <td><%= attendance.user_id %></td>
         <td><%= User.find(attendance.user_id).name %></td>
         <td><%= attendance.attendance_date %></td>
         <td><%= attendance.present? ? 'Present' : 'Absent' %></td>

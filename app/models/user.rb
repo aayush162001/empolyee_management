@@ -17,7 +17,7 @@ class User < ApplicationRecord
   
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :trackable
+         :trackable, :token_authenticatable, :validatable
 
   # after_create :assign_default_role
 

@@ -13,6 +13,14 @@ Rails.application.routes.draw do
   resources :daily_work_reports
   resources :email_hierarchy
   resources :attendances 
+
+  namespace :api do
+    namespace :v1,defaults: { format: 'json' } do
+      post   '/login'  => 'users#create'
+      delete '/logout' => 'users#destroy'
+      get '/daily_work_reports' => 'daily_work_reports#index'
+    end
+  end
   get 'home/index'
   get 'work/check_index' => 'daily_work_reports#check_index'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
