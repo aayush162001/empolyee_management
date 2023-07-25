@@ -19,6 +19,7 @@ Rails.application.routes.draw do
       post   '/login'  => 'users#create'
       delete '/logout' => 'users#destroy'
       get '/daily_work_reports' => 'daily_work_reports#index'
+      get '/attendance' => 'attendance#index'
     end
   end
   get 'home/index'
