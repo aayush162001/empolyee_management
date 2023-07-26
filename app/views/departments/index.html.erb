@@ -1,0 +1,24 @@
+<h1>Designation#index</h1>
+<p>Find me in app/views/designation/index.html.erb</p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="2">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @designation.each do |designation| %>
+      <tr>
+        <td><%= designation.name %></td>
+        <td><%= link_to 'Show', designation %></td>
+        <td> | <%= link_to 'Edit', edit_designation_path(designation) %></td>
+        <td> | <%= link_to 'Destroy', designation, method: :delete %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New designation', new_designation_path %>
