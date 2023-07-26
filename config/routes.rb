@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'holidays/index'
 
   devise_for :users, :controllers => { :registrations => 'registrations'}
   
@@ -6,6 +7,7 @@ Rails.application.routes.draw do
   # post "/users/new" => "users#create"
     # config/routes.rb
     # Rails.application.routes.draw do
+  get 'holidays/index'
     #   devise_for :users
     # end
   # post "/email_hierarchy/new" => "email_hierarchy#create"

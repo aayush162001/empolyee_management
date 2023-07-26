@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_26_060448) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_26_071633) do
   create_table "attendances", force: :cascade do |t|
     t.integer "user_id", null: false
     t.date "attendance_date"
@@ -53,6 +53,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_26_060448) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_email_hierarchies_on_user_id"
+  end
+
+  create_table "holidays", force: :cascade do |t|
+    t.string "title"
+    t.date "holiday_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "projects", force: :cascade do |t|
