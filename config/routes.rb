@@ -1,13 +1,14 @@
 Rails.application.routes.draw do
-  get 'holidays/index'
 
-  devise_for :users, :controllers => { :registrations => 'registrations'}
+
+  devise_for :users, skip: [:registrations]
+  #  :controllers => { :registrations => 'registrations'}
   
   
   # post "/users/new" => "users#create"
     # config/routes.rb
     # Rails.application.routes.draw do
-  get 'holidays/index'
+
     #   devise_for :users
     # end
   # post "/email_hierarchy/new" => "email_hierarchy#create"
@@ -18,6 +19,7 @@ Rails.application.routes.draw do
   resources :attendances 
   resources :designations
   resources :departments
+  resources :holidays
   namespace :api do
     namespace :v1,defaults: { format: 'json' } do
       post   '/login'  => 'users#create'

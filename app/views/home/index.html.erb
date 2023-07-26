@@ -7,7 +7,8 @@
             Name : <%= current_user.name %> <br>
             Id : <%= current_user.id %> <br>
             Role : <%= current_user.role %> <br>
-            Department : <%= current_user.department %> <br>
+            Department : <%= Department.find(current_user.department_id).title %> <br>
+            Designation : <%= Designation.find(current_user.designation_id).name %> <br>
         <% if current_user.super_admin? or current_user.company_admin?%>
                 <%= link_to 'users list', users_path %>  | <%= link_to 'Create New User', new_user_path %> |<br>
         <% end %>

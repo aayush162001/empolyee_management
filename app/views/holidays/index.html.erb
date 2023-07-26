@@ -1,2 +1,27 @@
 <h1>Holidays#index</h1>
 <p>Find me in app/views/holidays/index.html.erb</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Date</th>
+      <th colspan="2">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @holidays.each do |holiday| %>
+      <tr>
+        <td><%= (holiday.title).titlecase %></td>
+        <td><%= holiday.holiday_date %></td>
+        <td><%= link_to 'Show', holiday %></td>
+        <td> | <%= link_to 'Edit', edit_holiday_path(holiday) %></td>
+        <td> | <%= link_to 'Destroy', holiday, method: :delete %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Add New holiday', new_holiday_path %>

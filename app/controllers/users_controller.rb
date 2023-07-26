@@ -16,7 +16,7 @@ class UsersController < ApplicationController
     def create
         binding.pry
         @user = User.new(user_params)
-        if @User.save
+        if @user.save
             redirect_to users_url
         else
             render :new , status: :unprocessable_entity
@@ -54,6 +54,6 @@ class UsersController < ApplicationController
             @users = User.find(params[:id])
         end
         def user_params
-            params.require(:user).permit(:email,:password,:name,:role,:department,:dob,:address,:contact)
+            params.require(:user).permit(:email,:password,:password_confirmation,:name,:role,:designation_id,:department_id,:dob,:address,:contact,:created_by)
         end
 end

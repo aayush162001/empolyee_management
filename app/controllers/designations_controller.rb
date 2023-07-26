@@ -1,7 +1,7 @@
 class DesignationsController < ApplicationController
   before_action :authenticate_user!
   load_and_authorize_resource
-  before_action :set_project, only: [:show, :edit, :update, :destroy]
+  before_action :set_designation, only: [:show, :edit, :update, :destroy]
 
   def index
     # @q = Project.ransack(params[:q])
@@ -43,7 +43,7 @@ class DesignationsController < ApplicationController
 
   private
 
-  def set_project
+  def set_designation
     @designation = Designation.find(params[:id])
   end
 

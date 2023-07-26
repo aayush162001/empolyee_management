@@ -25,11 +25,16 @@
                 <%= form.select :role, User.roles.keys.map {|key| [key.humanize, key]}%>
                 <%# <%= f.select(:role, User.roles.keys) %> 
             </div>
+            <div class="mb-3">
+                <%= form.label :designation_id ,{ class: "form-label"} %>
+                <%=  form.collection_select :designation_id, Designation.all, :id, :name , { class: "form-control", prompt: "Select a project", autocomplete: "dob" } %><br />
+            </div>
         <% end %>
         <div class="mb-3">
-            <%= form.select :department, User.departments.keys.map {|key| [key.humanize, key]}%>
-            <br>
+            <%= form.label :department_id ,{ class: "form-label"} %>
+            <%=  form.collection_select :department_id, Department.all, :id, :title , { class: "form-control", prompt: "Select a project", autocomplete: "dob" } %><br />
         </div>
+
             <%= form.button :submit %>
     </div>
   </div>

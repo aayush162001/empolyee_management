@@ -1,0 +1,9 @@
+<h1>Holiday Details</h1>
+
+<p><strong>Name:</strong> <%= (@holiday.title).titlecase %></p>
+
+<%= link_to 'Edit', edit_holiday_path(@holiday) %> |
+<%= link_to 'Back', holidays_path %> |
+<%= link_to 'Delete', @holiday, method: :delete, data:{
+        turbo_method: :delete
+    } %>

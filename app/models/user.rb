@@ -10,7 +10,7 @@ class User < ApplicationRecord
   belongs_to :designation
 
   after_initialize :set_default_role, :set_default_department, if: :new_record?
-
+  before_save :ensure_authentication_token
   paginates_per 15
   # rolify
   # Include default devise modules. Others available are:
