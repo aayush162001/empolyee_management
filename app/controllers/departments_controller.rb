@@ -38,7 +38,7 @@ class DepartmentsController < ApplicationController
 
   def destroy
     @department.destroy
-    redirect_to projects_path, notice: 'Department was successfully destroyed.'
+    redirect_to departments_path, notice: 'Department was successfully destroyed.'
   end
 
   private
@@ -48,6 +48,6 @@ class DepartmentsController < ApplicationController
   end
 
   def department_params
-    params.require(:department).permit(:name)
+    params.require(:department).permit(:title)
   end
 end

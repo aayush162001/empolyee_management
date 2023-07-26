@@ -1,5 +1,5 @@
-<h1>Designation#index</h1>
-<p>Find me in app/views/designation/index.html.erb</p>
+<h1>Department#index</h1>
+
 <table>
   <thead>
     <tr>
@@ -8,12 +8,12 @@
     </tr>
   </thead>
   <tbody>
-    <% @designation.each do |designation| %>
+    <% @departments.each do |department| %>
       <tr>
-        <td><%= designation.name %></td>
-        <td><%= link_to 'Show', designation %></td>
-        <td> | <%= link_to 'Edit', edit_designation_path(designation) %></td>
-        <td> | <%= link_to 'Destroy', designation, method: :delete %></td>
+        <td><%= (department.title).titlecase %></td>
+        <td><%= link_to 'Show', department %></td>
+        <td> | <%= link_to 'Edit', edit_department_path(department) %></td>
+        <td> | <%= link_to 'Destroy', department, method: :delete %></td>
       </tr>
     <% end %>
   </tbody>
@@ -21,4 +21,4 @@
 
 <br>
 
-<%= link_to 'New designation', new_designation_path %>
+<%= link_to 'Add New department', new_department_path %>

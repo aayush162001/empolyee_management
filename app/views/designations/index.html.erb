@@ -3,17 +3,18 @@
 <table>
   <thead>
     <tr>
-      <th>Name</th>
+      <th colspan="2">Name</th>
       <th colspan="2">Actions</th>
     </tr>
   </thead>
   <tbody>
-    <% @designation.each do |designation| %>
+    <% @designations.each do |designation| %>
       <tr>
-        <td><%= designation.name %></td>
-        <td><%= link_to 'Show', designation %></td>
+        <td ><%= (designation.name).titlecase %> </td>
+        <td ><%= link_to 'Show', designation %></td>
         <td> | <%= link_to 'Edit', edit_designation_path(designation) %></td>
-        <td> | <%= link_to 'Destroy', designation, method: :delete %></td>
+        <td> | <%= link_to 'Destroy', designation, method: :delete, data:{
+        turbo_method: :delete} %></td>
       </tr>
     <% end %>
   </tbody>
