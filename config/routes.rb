@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   resources :email_hierarchy
   resources :attendances 
   resources :designations
+  resources :departments
   namespace :api do
     namespace :v1,defaults: { format: 'json' } do
       post   '/login'  => 'users#create'
@@ -23,7 +24,7 @@ Rails.application.routes.draw do
       get '/attendance' => 'attendance#index'
     end
   end
-  get 'home/index'
+  # get 'home/index'
   get 'work/check_index' => 'daily_work_reports#check_index'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   # get 'users/index'

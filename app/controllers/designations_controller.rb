@@ -17,7 +17,7 @@ class DesignationsController < ApplicationController
   end
 
   def create
-    @designation = Designation.new(project_params)
+    @designation = Designation.new(designation_params)
     if @designation.save
       redirect_to @designation, notice: 'Designation was successfully created.'
     else
