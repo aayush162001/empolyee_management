@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   devise_for :users, :controllers => { :registrations => 'registrations'}
   
   
@@ -13,7 +14,7 @@ Rails.application.routes.draw do
   resources :daily_work_reports
   resources :email_hierarchy
   resources :attendances 
-
+  resources :designations
   namespace :api do
     namespace :v1,defaults: { format: 'json' } do
       post   '/login'  => 'users#create'
