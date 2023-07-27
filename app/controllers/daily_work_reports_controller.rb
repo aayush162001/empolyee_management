@@ -18,8 +18,12 @@ class DailyWorkReportsController < ApplicationController
       
       binding.pry
       
-      a = EmailHierarchy.where(to:current_user.id).pluck(:user_id)
-      b = EmailHierarchy.where("cc like ?","%#{current_user.id.to_s}%").pluck(:user_id)
+      a = EmailHierarchy.where("too like ?","%,#{current_user.id},%").or(EmailHierarchy.where("too like ?","#{current_user.id},%")).or(EmailHierarchy.where("too like ?","%,#{current_user.id}"))
+      .pluck(:user_id)
+      # a = EmailHierarchy.where("to like ?","%#{current_user.id.to_s}%").pluck(:user_id)
+      # b = EmailHierarchy.where("cc like ?","%#{current_user.id.to_s}%").pluck(:user_id)
+      b = EmailHierarchy.where("cc like ?","%,#{current_user.id},%").or(EmailHierarchy.where("cc like ?","#{current_user.id},%")).or(EmailHierarchy.where("cc like ?","%,#{current_user.id}"))
+      .pluck(:user_id)
       @daily_work_reports = DailyWorkReport.where(user_id: (a+b).split(',')).order(current_date: :desc)
     # end
   end
@@ -61,7 +65,7 @@ class DailyWorkReportsController < ApplicationController
               redirect_to daily_work_reports_path, notice: 'Daily work report was successfully created.'
             end
           else
-            render :new
+            render :new, status: :unprocessable_entity
           end
         else
           redirect_to new_daily_work_report_path, alert: 'Invalid project selection.'

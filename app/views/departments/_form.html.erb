@@ -1,6 +1,6 @@
 <%= form_with(model: department, local: true) do |form| %>
   <% if department.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" class="alert alert-danger">
       <h2><%= pluralize(department.errors.count, "error") %> prohibited this project from being saved:</h2>
 
       <ul>
@@ -11,12 +11,12 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :title %>
-    <%= form.text_field :title %>
+  <div class="mb-3">
+    <%= form.label :title, class: "form-label" %>
+    <%= form.text_field :title, class: "form-control" %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Save Department", class: "btn btn-primary" %>
   </div>
 <% end %>

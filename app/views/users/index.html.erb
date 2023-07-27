@@ -1,32 +1,62 @@
-<h1>User List</h1>
-<script>
-    $(document).ready(function(){
-  $("#hide").click(function(){
-    $("p").hide();
-  });
-  $("#show").click(function(){
-    $("p").show();
-  });
-});
-</script>
-<p>If you click on the "Hide" button, I will disappear.</p>
+<body>
 
-<button id="hide">Hide</button>
-<button id="show">Show</button>
+<div class="container">
+    <h1>User List</h1>
 
-<br>
-    <%= link_to 'Create New User', new_user_path %> <br><br>
+    <%# <div class="row">
+        <div class="col-md-12">
+            <button class="btn btn-primary" id="hide">Hide Users</button>
+            <button class="btn btn-primary" id="show">Show Users</button>
+        </div>
+    </div> %>
+
+    <br>
     <%= paginate @users %>
-    <% @users.each do |user| %>
-        <%= user.id %> | 
-        <%= user.email %> | 
-        <%=  user.role%> | 
-        <%= link_to 'edit role', edit_user_path(user) %>
-        <br>
+    <%= link_to 'Create New User', new_user_path ,class:"btn btn-primary"%> <br><br>
 
-    <br> 
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% @users.each do |user| %>
+                        <tr>
+                            <td><%= user.id %></td>
+                            <td><%= user.email %></td>
+                            <td><%= user.role %></td>
+                            <td><%= link_to 'Edit Role', edit_user_path(user), class: 'btn btn-sm btn-secondary' %></td>
+                        </tr>
+                    <% end %>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 
+</div>
 
+<!-- Include the Bootstrap JS and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-<% end %>
+<%# <script>
+    $(document).ready(function(){
+        $("#hide").click(function(){
+            $("table").toggle();
+        });
+        $("#show").click(function(){
+            $("table").show();
+        });
+    });
+</script> %>
+
+</body>
+</html>

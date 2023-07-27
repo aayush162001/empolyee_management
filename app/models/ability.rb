@@ -13,13 +13,18 @@ class Ability
     elsif user.company_admin?
       can :manage, :all
     elsif user.project_manager?
+        binding.pry     
       can :manage, Project
       can :manage, DailyWorkReport
       can :manage, Attendance, user_id: user.id
+      can :manage, CheckInOut, user_id: user.id
     elsif user.leader?
+        # binding.pry     
       can :update, User, id: user.id 
-      can :manage, DailyWorkReport 
+      can :manage, DailyWorkReport ,user_id: user.id
+      # can :manage, DailyWorkReport ,user.designation_id < 4, user.department_id
       can :manage, Attendance, user_id: user.id
+      can :manage, CheckInOut, user_id: user.id
       
     elsif user.employee?
       
@@ -31,6 +36,7 @@ class Ability
       # binding.pry          
       can :create, Attendance, user_id: user.id
       can [:read, :update], Attendance, user_id: user.id
+      can :manage, CheckInOut, user_id: user.id
     else
       can :read, :all
     end

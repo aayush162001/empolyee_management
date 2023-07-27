@@ -1,0 +1,45 @@
+<h1>Attendance Records</h1>
+<%
+#binding.pry
+%>
+<%= button_to 'Check-in', check_in_outs_path, method: :post, class: 'btn btn-primary' %> 
+<% if not @check_out[0].nil? %>
+  <%# <%= link_to 'show', attendance_path(@check_out[0].id) %>
+ <%= button_to 'Check-out', check_in_out_path(@check_out[0].id), method: :patch, class: 'btn btn-primary' %>
+
+<%end%>
+<br>
+<%# <%a = Date.today - 5.day
+<%b = Date.today
+<%s = DailyWorkReport.where(user_id:current_user.id)
+<%= s.where(:current_date => a..b).pluck(:current_date).sort %>
+<% 
+# binding.pry
+ %>
+
+<table>
+  <thead>
+    <tr>
+      <th>User_id</th>
+      <th>Name</th>
+      <th>Date</th>
+      <th>Chech_In</th>
+      <th>Check_Out</th>
+      <th>Hours</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @check_in_outs.each do |attendance| %>
+      <tr>
+        <td><%= attendance.user_id %></td>
+        <td><%= User.find(attendance.user_id).name %></td>
+        <td><%= attendance.attendance_date %></td>
+        <td><%= attendance.check_in%></td>
+        <td><%= attendance.check_out%></td>
+        <td><%= attendance.work_hours%></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+

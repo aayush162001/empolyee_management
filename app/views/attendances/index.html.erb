@@ -1,23 +1,46 @@
+<h1>Attendance Records</h1>
+<%
+#binding.pry
+%>
+<%= button_to 'Check-in', attendances_path, method: :post, class: 'btn btn-primary' %> <br>
+<% if not @check_out[0].nil? %>
+  <%# <%= link_to 'show', attendance_path(@check_out[0].id) %>
+ <%= button_to 'Check-out', attendance_path(@check_out[0].id), method: :patch, class: 'btn btn-primary' %>
 
+<%end%>
+<%# <%a = Date.today - 5.day
+<%b = Date.today
+<%s = DailyWorkReport.where(user_id:current_user.id)
+<%= s.where(:current_date => a..b).pluck(:current_date).sort %>
+<% 
+# binding.pry
+ %>
 
-<div class="container mt-5 text-center">
-  <h1>Attendance Records</h1>
-  <%= form_tag attendances_path, method: :get do %>
-  <%= label_tag 'start_date', 'Start Date:' %>
-  <%= text_field_tag 'start_date', params[:start_date] %>
+<table>
+  <thead>
+    <tr>
+      <th>User_id</th>
+      <th>Name</th>
+      <th>Date</th>
+      <th>Present</th>
+      <th>Chech_In</th>
+      <th>Check_Out</th>
+      <th>Hours</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @attendances.each do |attendance| %>
+      <tr>
+        <td><%= attendance.user_id %></td>
+        <td><%= User.find(attendance.user_id).name %></td>
+        <td><%= attendance.attendance_date %></td>
+        <td><%= attendance.present? ? 'Present' : 'Absent' %></td>
+        <td><%= attendance.check_in%></td>
+        <td><%= attendance.check_out%></td>
+        <td><%= attendance.work_hours%></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
-  <%= label_tag 'end_date', 'End Date:' %>
-  <%= text_field_tag 'end_date', params[:end_date] %>
-
-  <%= submit_tag 'Filter', class: 'btn btn-primary' %>
-  <% end %>
-  <%= month_calendar(attribute: :attendance_date,events: @attendances) do |date,attendances|%>
-    <div class="day">
-      <%= date.day %>
-    </div>
-    <% attendances.each do |attendance|   %>
-      <%= attendance.present? ? 'Present' : 'Absent' %>
-    <%end%>
-  <%end%>
-</div> 
 

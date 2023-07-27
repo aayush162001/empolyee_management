@@ -1,7 +1,6 @@
-
 <%= form_with(model: email, local: true) do |form| %>
   <% if email.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" class="alert alert-danger">
       <h2><%= pluralize(email.errors.count, "error") %> prohibited this email from being saved:</h2>
 
       <ul>
@@ -12,20 +11,22 @@
     </div>
   <% end %>
 
-  <%# <div class="field">
-    <%= form.label :user_id 
-    <%= form.text_field :user_id,:disabled=>true 
-  </div> %>
-    <div class="field">
-    <%= form.label :to %>
-    <%= form.text_field :to %>
+  <div class="mb-3">
+    <%= form.label :user_id, class: "form-label" %>
+    <%= form.text_field :user_id, class: "form-control", disabled: true %>
   </div>
-    <div class="field">
-    <%= form.label :cc %>
-    <%= form.text_field :cc %>
+
+  <div class="mb-3">
+    <%= form.label :to, class: "form-label" %>
+    <%= form.text_field :too, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :cc, class: "form-label" %>
+    <%= form.text_field :cc, class: "form-control" %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Save Email", class: "btn btn-primary" %>
   </div>
 <% end %>

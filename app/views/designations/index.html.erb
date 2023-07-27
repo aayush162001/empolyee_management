@@ -1,20 +1,24 @@
 <h1>Designation#index</h1>
 <p>Find me in app/views/designation/index.html.erb</p>
-<table>
+<%= link_to 'New designation', new_designation_path, class: 'btn btn-success' %>
+<br>
+<br>
+<table class="table table-striped">
   <thead>
     <tr>
-      <th colspan="2">Name</th>
-      <th colspan="2">Actions</th>
+      <th colspan="1">Name</th>
+      <th colspan="3">Actions</th>
     </tr>
   </thead>
   <tbody>
     <% @designations.each do |designation| %>
       <tr>
-        <td ><%= (designation.name).titlecase %> </td>
-        <td ><%= link_to 'Show', designation %></td>
-        <td> | <%= link_to 'Edit', edit_designation_path(designation) %></td>
-        <td> | <%= link_to 'Destroy', designation, method: :delete, data:{
-        turbo_method: :delete} %></td>
+        <td><%= designation.name.titlecase %></td>
+        <td><%= link_to 'Show', designation, class: "btn btn-primary btn-sm" %></td>
+        <td><%= link_to 'Edit', edit_designation_path(designation), class: "btn btn-secondary btn-sm" %></td>
+        <td>
+          <%= link_to 'Destroy', designation, method: :delete, data: { turbo_method: :delete }, class: "btn btn-danger btn-sm" %>
+        </td>
       </tr>
     <% end %>
   </tbody>
@@ -22,4 +26,4 @@
 
 <br>
 
-<%= link_to 'New designation', new_designation_path %>
+
