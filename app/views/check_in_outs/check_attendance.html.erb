@@ -1,0 +1,38 @@
+<h1>Attendance Records</h1>
+<%
+binding.pry
+%>
+
+<%# %>
+<% 
+# binding.pry
+ %>
+
+<table>
+  <thead>
+    <tr>
+      <th>User_id</th>
+      <th>Name</th>
+      <th>Date</th>
+      <th>Present</th>
+      <th>Chech_In</th>
+      <th>Check_Out</th>
+      <th>Hours</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @check_in_out.each do |attendance| %>
+      <tr>
+        <td><%= attendance.user_id %></td>
+        <td><%= User.find(attendance.user_id).name %></td>
+        <td><%= attendance.attendance_date %></td>
+        <td><%= attendance.present? ? 'Present' : 'Absent' %></td>
+        <td><%= attendance.check_in%></td>
+        <td><%= attendance.check_out%></td>
+        <td><%= attendance.work_hours%></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+

@@ -2,7 +2,7 @@ class DailyWorkReport < ApplicationRecord
   belongs_to :user
   belongs_to :project
   validate :unique_report_per_day, :on => :create
-  validate :number_of_hours
+  validate :number_of_hours, :on => [:create, :update]
   after_save :present
   # validate :validate_user_entry    
   # validate :time_limit, :on => :create
@@ -65,7 +65,7 @@ class DailyWorkReport < ApplicationRecord
     # binding.pry
     
     # if not DailyWorkReport.exists?(user_id: user_id, current_date: current_date)
-    a = DailyWorkReport.where(current_date: Date.today).pluck(:user_id)
+    a = DailyWorkReport.where(current_date: Date.yesterday).pluck(:user_id)
     # a =DailyWorkReport.where(current_date: Date.yesterday).pluck(:user_id)
     @mail_to = User.where.not(id:a).ids
     # @user.each do |u|

@@ -26,12 +26,16 @@ every 1.minutes do
     runner "puts 'Hello, world'"
 end
 
-# every 1.minutes do
-#     runner "DailyWorkReport.scheduled_report_mail"
-# end
+every 1.minutes do
+    runner "Attendance.scheduled_check_out_mail"
+end
 
 every [:tuesday, :wednesday, :thursday, :friday, :saturday], at: '12pm' do
     runner "DailyWorkReport.scheduled_report_mail"
+end
+
+every [:tuesday, :wednesday, :thursday, :friday, :saturday], at: '12pm' do
+    runner "Attendance.scheduled_check_in_mail"
 end
 
 # every 0 13 * * 2-6, at: '12pm' do

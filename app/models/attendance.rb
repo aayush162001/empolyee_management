@@ -42,5 +42,33 @@ class Attendance < ApplicationRecord
     end
   end
 
+  def self.scheduled_check_in_mail
+        # if not DailyWorkReport.exists?(user_id: user_id, current_date: current_date)
+        a = Attendance.where(attendance_date: Date.yesterday).pluck(:user_id).uniq
+        # a =DailyWorkReport.where(current_date: Date.yesterday).pluck(:user_id)
+        x = DailyWorkReport.where.not(user_id:a).where(current_date:Date.yesterday).pluck(:user_id)
+        @mail_to = User.where(id:x).ids
+        # @user.each do |u|
+        #   UsersMailer.weekly_mail(u.email).deliver
+        #   end
+        @mail_to.each do |u|
+          AttendanceMailer.check_in_mail(u).deliver_now
+        end
+  end
+
+  def self.scheduled_check_out_mail
+    # if not DailyWorkReport.exists?(user_id: user_id, current_date: current_date)
+    a = Attendance.where(attendance_date: Date.yesterday)
+    
+    # a =DailyWorkReport.where(current_date: Date.yesterday).pluck(:user_id)
+    x = a.where.not(check_in: [nil]).where(check_out: [nil]).pluck(:user_id)
+    @mail_to = User.where(id:x).ids
+    # @user.each do |u|
+    #   UsersMailer.weekly_mail(u.email).deliver
+    #   end
+    @mail_to.each do |u|
+      AttendanceMailer.check_out_mail(u).deliver_now
+    end
+  end
 
 end

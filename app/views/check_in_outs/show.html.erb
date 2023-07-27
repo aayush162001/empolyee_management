@@ -1,0 +1,23 @@
+<h1>check_out</h1>
+
+
+<%= form_with(model: @attendance, url: attendance_path, method: :patch, local: true) do |form| %>
+  <div class="card">
+    <div class="card-body">
+        <div class="mb-3">
+            <%= form.hidden_field :check_out,{ class: "form-label", value: Time.now, autocomplete: "name"} %>
+            <%= form.hidden_field :work_hours,{ class: "form-label", value: @attendance.calculate_attendance, autocomplete: "name"} %>
+            <br />
+        </div>     
+
+            <%= form.button :submit %>
+    </div>
+  </div>
+<% end %>
+<%# 
+<%= link_to 'Edit', edit_project_path(@project)  |
+<%= link_to 'Back', projects_path |
+<%= link_to 'Delete', @student, method: :delete, data:{
+        turbo_method: :delete,
+        turbo_confirm: "Are you sure"
+    } %> 

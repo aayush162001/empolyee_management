@@ -1,15 +1,18 @@
 <%= form_with(model: report, local: true) do |form| %>
   <% 
-  # binding.pry 
+  binding.pry 
    %>
+   
   <% if report.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(report.errors.count, "error") %> prohibited this daily work report from being saved:</h2>
 
       <ul>
-        <p>Error: <%= report.errors.full_messages[0]%><p>
+        <%# <p>Error: <%= report.errors.full_messages_for(:base)[0]%>
+        <%# <p>Error: <%= report.errors.full_messages[0]%>
         <% report.errors.full_messages.each do |message| %>
           <li><%= message %></li>
+          <%  binding.pry %>
         <% end %>
       </ul>
     </div>

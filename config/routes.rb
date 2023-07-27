@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   resources :designations
   resources :departments
   resources :holidays
+  resources :check_in_outs
   namespace :api do
     namespace :v1,defaults: { format: 'json' } do
       post   '/login'  => 'users#create'
@@ -30,6 +31,7 @@ Rails.application.routes.draw do
   end
   # get 'home/index'
   get 'work/check_index' => 'daily_work_reports#check_index'
+  get 'attendance/check_attendance' => 'check_in_outs#check_attendance'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   # get 'users/index'
   # Defines the root path route ("/")

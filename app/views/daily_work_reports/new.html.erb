@@ -7,8 +7,8 @@
  %>
 <br><br>
 <% if not current_user.email_hierarchy == nil%>
-    <% c = current_user.email_hierarchy[:to].to_i%> 
-    To : <%= User.find(c)[:email] %>
+    <% c = current_user.email_hierarchy[:too]%> 
+    To : <%= Userfind(a.split(',')).pluck(:email) %>
     <br><br>
     <% a = current_user.email_hierarchy[:cc]%>
     Cc = 

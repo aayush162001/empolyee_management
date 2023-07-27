@@ -9,7 +9,20 @@ class AttendancesController < ApplicationController
 			@attendances = current_user.attendances.where(attendance_date: start_date..end_date)
 			@check_out = Attendance.where(attendance_date:Date.today).where(user_id:current_user.id).where.not(check_in: [nil]).where(check_out: [nil])
 	end
-
+	def check_attendance
+		# if user_signed_in?  
+		  
+		  binding.pry
+		  
+		a = EmailHierarchy.where("too like ?","%,#{current_user.id},%").or(EmailHierarchy.where("too like ?","#{current_user.id},%")).or(EmailHierarchy.where("too like ?","%,#{current_user.id}"))
+		.pluck(:user_id)
+		# a = EmailHierarchy.where("to like ?","%#{current_user.id.to_s}%").pluck(:user_id)
+		# b = EmailHierarchy.where("cc like ?","%#{current_user.id.to_s}%").pluck(:user_id)
+		b = EmailHierarchy.where("cc like ?","%,#{current_user.id},%").or(EmailHierarchy.where("cc like ?","#{current_user.id},%")).or(EmailHierarchy.where("cc like ?","%,#{current_user.id}"))
+		.pluck(:user_id)
+		@attendances = Attendance.where(user_id: (a+b).split(',')).order(current_date: :desc)
+		# end
+	  end
 	def new
 			@attendance = Attendance.new
 	end
@@ -18,7 +31,7 @@ class AttendancesController < ApplicationController
 			
 			# binding.pry
 			
-			@attendance = Attendance.new(attendance_params)
+			@attendance = Attendance.new(user_id: current_user.id, attendance_date: Date.current, check_in: Time.current)
 			@attendance.user = current_user
 			
 			# @attendance.calculate_attendance
@@ -42,7 +55,12 @@ class AttendancesController < ApplicationController
 	def update
 		binding.pry
 		# params.fetch(:attendance)[:check_out]
-		if @attendance.update(attendance_params)
+		# if @attendance.update(attendance_params)
+		@attendance = Attendance.find_by(user_id: current_user.id, attendance_date: Date.current,check_out: [nil])
+    	
+		# @attendance =  Attendance.where(user_id: current_user.id, attendance_date: Date.current).where(check_out: [nil])
+		
+		if @attendance.update(check_out: Time.current, work_hours: @attendance.calculate_attendance)
 			# @attendance.work_hours = ((@attendance.check_out - @attendance.check_in) / 3600).round(2)
 			# @attendance.save
 			# @attendance.present_check
@@ -76,11 +94,11 @@ class AttendancesController < ApplicationController
 	end
 	
 	
-	def attendance_params
-		binding.pry
-		params.require(:attendance).permit(:user_id,:attendance_date,:present,:check_in,:check_out,:work_hours)
+	# def attendance_params
+	# 	binding.pry
+	# 	params.require(:attendance).permit(:user_id,:attendance_date,:present,:check_in,:check_out,:work_hours)
 
-	end
+	# end
 	
 
 	def start_date

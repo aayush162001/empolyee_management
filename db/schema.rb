@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_26_104941) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_27_134018) do
   create_table "attendances", force: :cascade do |t|
     t.integer "user_id", null: false
     t.date "attendance_date"
@@ -21,6 +21,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_26_104941) do
     t.datetime "check_out"
     t.float "work_hours"
     t.index ["user_id"], name: "index_attendances_on_user_id"
+  end
+
+  create_table "check_in_outs", force: :cascade do |t|
+    t.date "attendance_date"
+    t.datetime "check_in"
+    t.datetime "check_out"
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.float "work_hours"
+    t.index ["user_id"], name: "index_check_in_outs_on_user_id"
   end
 
   create_table "daily_work_reports", force: :cascade do |t|
@@ -48,7 +59,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_26_104941) do
 
   create_table "email_hierarchies", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.string "to"
+    t.string "too"
     t.string "cc"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -101,6 +112,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_26_104941) do
     t.string "created_by"
     t.integer "department_id"
     t.integer "designation_id"
+    t.string "unique_session_id"
     t.index ["authentication_token"], name: "index_users_on_authentication_token"
     t.index ["department_id"], name: "index_users_on_department_id"
     t.index ["designation_id"], name: "index_users_on_designation_id"
@@ -117,6 +129,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_26_104941) do
   end
 
   add_foreign_key "attendances", "users"
+  add_foreign_key "check_in_outs", "users"
   add_foreign_key "daily_work_reports", "users"
   add_foreign_key "email_hierarchies", "users"
   add_foreign_key "users", "departments"

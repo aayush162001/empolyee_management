@@ -1,0 +1,24 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">Home</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link active" aria-current="page" href="/daily_work_reports">Add Report</a>
+        <% if current_user&.super_admin? or current_user&.company_admin? or current_user&.project_manager? %>
+                <%= link_to 'Projects', projects_path ,class:"nav-link active"%> <br>
+        <% end %>
+        <% if current_user&.super_admin? || current_user&.company_admin? %>
+                <%= link_to 'Email Hierarchy', email_hierarchy_index_path ,class:"nav-link active"%> <br>
+        <% end %>       
+      </div>
+      <div class="navbar-nav">
+        <%= link_to "Signout", destroy_user_session_path, method: :delete,  data:{
+            turbo_method: :delete
+        } %>
+        </div>
+    </div>
+  </div>
+</nav>
