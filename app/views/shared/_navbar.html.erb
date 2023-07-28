@@ -40,51 +40,54 @@
   </style>
 </head>
 <body>
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <div class="row">
-      <div class="col-12">
-        <a class="nav-link" href="/">
-          <i class="fas fa-home"></i> <!-- Font Awesome home icon -->
-        </a>
-      </div>
-      <div class="col-12">
-        <a class="nav-link" aria-current="page" href="/daily_work_reports">
-          <i class="fas fa-clipboard-list"></i> <!-- Font Awesome clipboard list icon -->
-        </a>
-        
-      </div>
-      <% if current_user&.super_admin? || current_user&.company_admin? || current_user&.project_manager? %>
+  <% if user_signed_in?%>  
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="row">
         <div class="col-12">
-          <%= link_to projects_path, class: "nav-link" do %>
-            <i class="fas fa-tasks"></i> <!-- Font Awesome tasks icon -->
-          <% end %>
+          <a class="nav-link" href="/">
+            <i class="fas fa-home"></i> <!-- Font Awesome home icon -->
+          </a>
         </div>
-      <% end %>
-      <% if current_user&.super_admin? || current_user&.company_admin? %>
         <div class="col-12">
-          <%= link_to email_hierarchy_index_path, class: "nav-link" do %>
-            <i class="fas fa-envelope"></i> <!-- Font Awesome envelope icon -->
-          <% end %>
+          <a class="nav-link" aria-current="page" href="/daily_work_reports">
+            <i class="fas fa-clipboard-list"></i> <!-- Font Awesome clipboard list icon -->
+          </a>
+          
         </div>
-      <% end %>
-      <div class="col-12">
-        <%= link_to destroy_user_session_path, method: :delete, data: { turbo_method: :delete }, class: "nav-link" do %>
-          <i class="fas fa-sign-out-alt"></i> <!-- Font Awesome sign-out-alt icon -->
+        <% if current_user&.super_admin? || current_user&.company_admin? || current_user&.project_manager? %>
+          <div class="col-12">
+            <%= link_to projects_path, class: "nav-link" do %>
+              <i class="fas fa-tasks"></i> <!-- Font Awesome tasks icon -->
+            <% end %>
+          </div>
         <% end %>
+        <div class="m">
+        <% if current_user&.super_admin? || current_user&.company_admin? %>
+          <div class="col-12 " margin-bottom=250px >
+            <%= link_to  email_hierarchy_index_path, class: "nav-link" do %>
+              <i class="fas fa-envelope"></i> <!-- Font Awesome envelope icon -->
+            <% end %>
+          </div>
+        <% end %>
+        
+        <div class="col-12 "  >
+          <%= link_to destroy_user_session_path, method: :delete, data: { turbo_method: :delete }, class: "nav-link" do %>
+            <i class="fas fa-sign-out-alt"></i> <!-- Font Awesome sign-out-alt icon -->
+          <% end %>
+        </div>
+        </div>
       </div>
-      
     </div>
-  </div>
+    <%end%>  
+    <!-- Main content -->
+    <div class="container">
+      <h4 >Employee Management</h4>
+      <%# <h4 style="background-color: #ADD8E6; padding: 10px;">Employee Management</h4> %>
+      <!-- Your page content goes here -->
+    </div>
 
-  <!-- Main content -->
-  <div class="container">
-    <h4 >Employee Management</h4>
-    <%# <h4 style="background-color: #ADD8E6; padding: 10px;">Employee Management</h4> %>
-    <!-- Your page content goes here -->
-  </div>
+    <!-- Include Bootstrap JS and dependencies -->
 
-  <!-- Include Bootstrap JS and dependencies -->
-  
 </body>
 </html>

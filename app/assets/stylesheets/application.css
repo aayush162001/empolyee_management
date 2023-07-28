@@ -17,21 +17,8 @@
  .simple-calendar {
 
   }
-  .day {}
-  
-  .wday-0 {
-    color:red;
-  }
-  .wday-1 {}
-  .wday-2 {}
-  .wday-3 {}
-  .wday-4 {}
-  .wday-5 {}
-  .wday-6 {
-    color:red;
-  }
 
-  .today {}
+
   .past {}
   .future {}
 
@@ -46,8 +33,10 @@
     color: #ccc;
   }
   .current-month {
-    color:black;
+    color:rgb(0, 0, 0);
+    font-weight: bold;
   }
+
 
   .has-events {}
   table {
@@ -112,4 +101,36 @@
   .employee-heading {
     background-color: #ADD8E6;
     padding: 10px;
+  }
+  .day {}
+  
+  .wday-0 {
+    color:red;
+  }
+  .wday-1 {}
+  .wday-2 {}
+  .wday-3 {}
+  .wday-4 {}
+  .wday-5 {}
+  .wday-6 {
+    color:red;
+  }
+  .today {
+    color: blue;
+  }
+  .present {
+    color: purple;
+  }
+
+  .back-btn{
+    width:55px;
+    height: 55px;
+    border-radius: 50%;
+    position: fixed;
+    top: 50px;
+    right: 35px;
+    display: flex!important;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
   }

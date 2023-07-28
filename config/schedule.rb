@@ -27,7 +27,7 @@ every 1.minutes do
 end
 
 every 1.minutes do
-    runner "Attendance.scheduled_check_out_mail"
+    runner "CheckInOut.scheduled_check_out_mail"
 end
 
 every [:tuesday, :wednesday, :thursday, :friday, :saturday], at: '12pm' do
@@ -35,7 +35,7 @@ every [:tuesday, :wednesday, :thursday, :friday, :saturday], at: '12pm' do
 end
 
 every [:tuesday, :wednesday, :thursday, :friday, :saturday], at: '12pm' do
-    runner "Attendance.scheduled_check_in_mail"
+    runner "CheckInOut.scheduled_check_in_mail"
 end
 
 # every 0 13 * * 2-6, at: '12pm' do
