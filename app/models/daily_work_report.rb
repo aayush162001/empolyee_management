@@ -36,29 +36,46 @@ class DailyWorkReport < ApplicationRecord
     end
   end
 
+#   def present
+    
+#     binding.pry
+    
+#     if DailyWorkReport.exists?(user_id: user_id, current_date: current_date)
+#       if self.hours >= 8
+#         # Attendance.create(user_id: user_id, attendance_date: current_date,present:1)
+#         if Attendance.exists?(user_id:user.id,attendance_date: current_date)
+#           if user.attendances.where(attendance_date:Date.today).where.not(check_in: [nil]).where.not(check_out: [nil])
+#             a = user.attendances.where(attendance_date:Date.today).where.not(check_in: [nil]).where.not(check_out: [nil])
+#             if a.pluck(:work_hours).first >= 8
+#               binding.pry
+#               c = Attendance.find(a.pluck(:id).first)
+#               # c = a.find{|data| data[:present] == nil }
+#               # a.update(c[:present] = 1)
+# #               person = Person.find(2)
+#               c.update({present: true})
+#             end
+#           end
+#         end
+#       end
+#     end
+#   end
   def present
-    
     binding.pry
-    
-    if DailyWorkReport.exists?(user_id: user_id, current_date: current_date)
-      if self.hours >= 8
-        # Attendance.create(user_id: user_id, attendance_date: current_date,present:1)
-        if Attendance.exists?(user_id:user.id,attendance_date: current_date)
-          if user.attendances.where(attendance_date:Date.today).where.not(check_in: [nil]).where.not(check_out: [nil])
-            a = user.attendances.where(attendance_date:Date.today).where.not(check_in: [nil]).where.not(check_out: [nil])
-            if a.pluck(:work_hours).first >= 8
-              binding.pry
-              c = Attendance.find(a.pluck(:id).first)
-              # c = a.find{|data| data[:present] == nil }
-              # a.update(c[:present] = 1)
-#               person = Person.find(2)
-              c.update({present: true})
-            end
-          end
-        end
+    if CheckInOut.exists?(user_id:user.id,attendance_date: Date.today)
+      sum_of_hours = CheckInOut.where(user_id:user.id).where(attendance_date:Date.today).sum("work_hours")
+      if sum_of_hours >= 8.00
+        x = user.attendances.where(attendance_date:Date.today)
+        binding.pry
+        c = Attendance.find(x.pluck(:id).first)
+        c.update({present: true})
+      else
+        Attendance.create(user_id: user.id, attendance_date: Date.today,present:0)
       end
+    else
+      Attendance.create(user_id: user.id, attendance_date: Date.today,present:0)
     end
   end
+
 
   def self.scheduled_report_mail
     

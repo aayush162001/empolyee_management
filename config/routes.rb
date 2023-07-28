@@ -24,6 +24,8 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1,defaults: { format: 'json' } do
       post   '/login'  => 'users#create'
+      post '/check_in' => 'check_in_out#create'
+      put '/check_out' => 'check_in_out#update'
       delete '/logout' => 'users#destroy'
       get '/daily_work_reports' => 'daily_work_reports#index'
       get '/attendance' => 'attendance#index'

@@ -22,7 +22,7 @@ class Api::V1::UsersController < ApplicationController
 
   def session_params
       params.permit(:email, :password)
-    end
+  end
 
 end
 

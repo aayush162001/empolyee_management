@@ -35,8 +35,7 @@ class CheckInOutsController < ApplicationController
 	
 			if @check_in_out.save
 				redirect_to check_in_outs_path, notice: 'Attendance record created successfully.'
-			else
-				render :check_in_outs_path, status: :unprocessable_entity
+	
 			end
 	end
 
@@ -58,6 +57,7 @@ class CheckInOutsController < ApplicationController
 		# @attendance =  Attendance.where(user_id: current_user.id, attendance_date: Date.current).where(check_out: [nil])
 		
 		if @check_in_out.update(check_out: Time.current, work_hours: @check_in_out.calculate_attendance)
+			@check_in_out.hours_sum
 			# @attendance.work_hours = ((@attendance.check_out - @attendance.check_in) / 3600).round(2)
 			# @attendance.save
 			# @attendance.present_check

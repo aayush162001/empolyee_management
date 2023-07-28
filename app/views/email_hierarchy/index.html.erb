@@ -7,6 +7,7 @@
      <%= link_to 'New User Email Hierarchy', new_email_hierarchy_path, class: "btn btn-success" %>
 </head>
 <body>
+ <%= link_to 'Back', root_path , class: "btn btn-info back-btn" %>
   <div class="container mt-5">
     <h1>EmailHierarchy</h1> 
     <table class="table">
@@ -25,10 +26,16 @@
           <td style="text-align: center"><%= email.user_id %></td>
           <td style="text-align: center"><%= email.user.email %></td>
           <td style="text-align: center">
-            <%= email.too %> | <%= User.find((EmailHierarchy.find_by(user_id: email.user_id).too).split(',')).pluck(:email) %>
+             <% too = User.find((EmailHierarchy.find_by(user_id: email.user_id).too).split(',')).pluck(:email) %>
+             <% too.each do |i|%>
+             <%= i %>
+             <%end%>
           </td>
           <td style="text-align: center">
-            <%= email.cc %> | <%= User.find((EmailHierarchy.find_by(user_id: email.user_id).cc).split(',')).pluck(:email) %>
+             <% cc = User.find((EmailHierarchy.find_by(user_id: email.user_id).cc).split(',')).pluck(:email) %>
+              <% cc.each do |i|%>
+                <%=" #{i},  " %>
+              <%end%>
           </td>
           <td style="text-align: center">
             <%= link_to 'Show', email, class: "btn btn-primary btn-sm" %> |
