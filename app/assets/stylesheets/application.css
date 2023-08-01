@@ -134,3 +134,8 @@
     align-items: center;
     z-index: 2;
   }
+
+  .holiday-event {
+    color: green;
+    font-weight: bold; /* Optional: Makes the text bold */
+  }

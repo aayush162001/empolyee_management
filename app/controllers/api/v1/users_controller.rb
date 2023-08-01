@@ -8,15 +8,33 @@ class Api::V1::UsersController < ApplicationController
 
     if user && user.valid_password?(session_params[:password])
       sign_in user
-      render json: { message: 'Login successful', data: user, authentication_token: user.authentication_token }
+      render json: { status_code: 200, success: true, message: 'Login successful', data: user, authentication_token: user.authentication_token ,error: nil }
+    
     else
-      render json: { error: 'Invalid email or password' }, status: :unauthorized
+      # render json: { error: 'Invalid email or password' }, status: :unauthorized
+      render json:         {
+        "status_code": 401,
+        "success": false,
+        data: nil,
+        "message": nil,
+        "error": "Invalid email or password",
+       }, status: :unprocessable_entity
     end
   end
 
   def destroy
+    if user_signed_in?
       sign_out current_user
-      render json: { message: 'Logout successful' }
+      render json: { status_code: 200, success: true, message: 'Logout successful', data: nil ,error: nil}
+    else
+      render json:{
+        "status_code": 422,
+        "success": false,
+        data: nil,
+        "message": nil,
+        "error": "Log-In Before logout",
+       }, status: :unprocessable_entity
+    end
   end
 
 

@@ -15,9 +15,12 @@
     <p><strong>Cc User_id : </strong> <%= @email_hierarchy.cc %> | 
     <%= User.find(@email_hierarchy.cc.split(',')).pluck(:email).join(', ') %></p>
     <br><br>
-    <%= link_to 'Back', email_hierarchy_index_path, class: "btn btn-secondary" %> |
-    <%= link_to 'Edit', edit_email_hierarchy_path(@email_hierarchy), class: "btn btn-primary" %> |
-    <%= link_to 'Destroy', @email_hierarchy, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+    <%= link_to 'Back', email_hierarchy_index_path, class: "btn btn-secondary" %>
+
+    <%= link_to '<i class="fas fa-edit"></i>'.html_safe, edit_email_hierarchy_path(@email_hierarchy), class: 'btn btn-secondary btn-sm' %>
+    <%= link_to '<i class="fas fa-trash"></i>'.html_safe, @email_hierarchy, method: :delete, data: {turbo_method: :delete, }, class: 'btn btn-danger btn-sm' %>
+
+
   </div>
 
   <!-- Include Bootstrap JS and dependencies (optional) -->

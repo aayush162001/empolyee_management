@@ -6,13 +6,18 @@ class AttendancesController < ApplicationController
 
 	def index
 			# @attendances = Attendance.where(attendance_date: start_date..end_date).accessible_by(current_ability).order(attendance_date: :desc)
+
 			@attendances = current_user.attendances.where(attendance_date: start_date..end_date)
+			@holidays = Holiday.all
+		
+			@events = @attendances + @holidays
 			@check_out = Attendance.where(attendance_date:Date.today).where(user_id:current_user.id).where.not(check_in: [nil]).where(check_out: [nil])
+	
 	end
 	def check_attendance
 		# if user_signed_in?  
 		  
-		  binding.pry
+		#   binding.pry
 		  
 		a = EmailHierarchy.where("too like ?","%,#{current_user.id},%").or(EmailHierarchy.where("too like ?","#{current_user.id},%")).or(EmailHierarchy.where("too like ?","%,#{current_user.id}"))
 		.pluck(:user_id)
@@ -39,13 +44,13 @@ class AttendancesController < ApplicationController
 			if @attendance.save
 				redirect_to attendances_path, notice: 'Attendance record created successfully.'
 			else
-				render :new
 			end
+			render :new
 	end
 
 	def edit
 			
-			binding.pry
+			# binding.pry
 			
 			@attendance = Attendance.where(attendance_date:Date.today).where(user_id:current_user.id).where.not(check_in: [nil]).where(check_out: [nil])
 			
@@ -53,7 +58,7 @@ class AttendancesController < ApplicationController
 	end
 	
 	def update
-		binding.pry
+		# binding.pry
 		# params.fetch(:attendance)[:check_out]
 		# if @attendance.update(attendance_params)
 		@attendance = Attendance.find_by(user_id: current_user.id, attendance_date: Date.current,check_out: [nil])

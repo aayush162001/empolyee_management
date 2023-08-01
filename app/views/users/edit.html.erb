@@ -1,43 +1,63 @@
-<h1>Updating</h1>
-<%= form_with(model: @users, action: 'update') do |form|  %> 
- <%= link_to 'Back', root_path , class: "btn btn-info back-btn" %>
-    <%# <% binding.pry  %>
-  <div class="card">
-    <div class="card-body">
-        <div class="mb-3">
-            <%= form.label :name ,{ class: "form-label"} %>
-            <%= form.text_field :name, { class: "form-control", placeholder: "Site Code", autocomplete: "name" } %><br />
-        </div>
-        <div class="mb-3">
-            <%= form.label :dob ,{ class: "form-label"} %>
-            <%= form.date_field :dob, { class: "form-control", placeholder: "Site Code", autocomplete: "dob" } %><br />
-        </div>
-        <div class="mb-3">
-            <%= form.label :address,{ class: "form-label"} %>
-            <%= form.text_area :address, { class: "form-control", placeholder: "Site Code", autocomplete: "address" } %><br />
-        </div>
-        <div class="mb-3">
-            <%= form.label :contact,{ class: "form-label"} %>
-            <%= form.text_field :contact, { class: "form-control", placeholder: "Site Code", autocomplete: "contact" }%><br />
-        </div>    
-        <% if current_user.super_admin? or current_user.company_admin?%>
-            <div class="mb-3">    
-                <%# <%= f.select(:role, User.roles.keys) %> 
-                <%= form.select :role, User.roles.keys.map {|key| [key.humanize, key]}%>
-                <%# <%= f.select(:role, User.roles.keys) %> 
-            </div>
-            <div class="mb-3">
-                <%= form.label :designation_id ,{ class: "form-label"} %>
-                <%=  form.collection_select :designation_id, Designation.all, :id, :name , { class: "form-control", prompt: "Select a project", autocomplete: "dob" } %><br />
-            </div>
-        <% end %>
-        <div class="mb-3">
-            <%= form.label :department_id ,{ class: "form-label"} %>
-            <%=  form.collection_select :department_id, Department.all, :id, :title , { class: "form-control", prompt: "Select a project", autocomplete: "dob" } %><br />
-        </div>
 
-            <%= form.button :submit %>
+<div class="row justify-content-center">
+    <div class="col-md-9">
+    <h1>Updating</h1>
+        <%= form_with(model: @users, action: 'update') do |form|  %> 
+           
+  <% if @users.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@users.errors.count, "error") %> prohibited this daily work report from being saved:</h2>
+
+      <ul>
+        <%# <p>Error: <%= report.errors.full_messages_for(:base)[0]%>
+        <%# <p>Error: <%= report.errors.full_messages[0]%>
+        <% @users.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+          <% # binding.pry %>
+        <% end %>
+      </ul>
     </div>
-  </div>
-    <%= link_to "Back to user", users_path %>  
-<%end%>
+  <% end %>
+        <%= link_to 'Back', root_path , class: "btn btn-info back-btn" %>
+            <%# <% binding.pry  %>
+        <div class="card">
+            <div class="card-body">
+                <div class="mb-3">
+                    <%= form.label :name ,{ class: "form-label"} %>
+                    <%= form.text_field :name, { class: "form-control", placeholder: "Site Code", autocomplete: "name" } %><br />
+                </div>
+                <div class="mb-3">
+                    <%= form.label :dob ,{ class: "form-label"} %>
+                    <%= form.date_field :dob, { class: "form-control", placeholder: "Site Code", autocomplete: "dob" } %><br />
+                </div>
+                <div class="mb-3">
+                    <%= form.label :address,{ class: "form-label"} %>
+                    <%= form.text_area :address, { class: "form-control", placeholder: "Site Code", autocomplete: "address" } %><br />
+                </div>
+                <div class="mb-3">
+                    <%= form.label :contact,{ class: "form-label"} %>
+                    <%= form.text_field :contact, { class: "form-control", placeholder: "Site Code", autocomplete: "contact" }%><br />
+                </div>    
+                <% if current_user.super_admin? or current_user.company_admin?%>
+                    <div class="mb-3">    
+                        <%# <%= f.select(:role, User.roles.keys) %> 
+                        <%= form.select :role, User.roles.keys.map {|key| [key.humanize, key]}%>
+                        <%# <%= f.select(:role, User.roles.keys) %> 
+                    </div>
+                    <div class="mb-3">
+                        <%= form.label :designation_id ,{ class: "form-label"} %>
+                        <%=  form.collection_select :designation_id, Designation.all, :id, :name , { class: "form-control", prompt: "Select a project", autocomplete: "dob" } %><br />
+                    </div>
+                <% end %>
+                <div class="mb-3">
+                    <%= form.label :department_id ,{ class: "form-label"} %>
+                    <%=  form.collection_select :department_id, Department.all, :id, :title , { class: "form-control", prompt: "Select a project", autocomplete: "dob" } %><br />
+                </div>
+
+                    <%= form.button :submit %>
+            </div>
+        </div>
+            <%= link_to "Back to user", users_path %>  
+        <%end%>
+    </div>
+</div>

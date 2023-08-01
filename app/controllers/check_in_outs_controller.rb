@@ -8,18 +8,7 @@ class CheckInOutsController < ApplicationController
 			@check_in_outs = current_user.check_in_out.where(attendance_date: start_date..end_date)
 			@check_out = CheckInOut.where(attendance_date:Date.today).where(user_id:current_user.id).where.not(check_in: [nil]).where(check_out: [nil])
 	end
-	def check_attendance
-		# if user_signed_in?  
-		  
-		  binding.pry
-		  
-		a = EmailHierarchy.where("too like ?","%,#{current_user.id},%").or(EmailHierarchy.where("too like ?","#{current_user.id},%")).or(EmailHierarchy.where("too like ?","%,#{current_user.id}")).pluck(:user_id)
-		# a = EmailHierarchy.where("to like ?","%#{current_user.id.to_s}%").pluck(:user_id)
-		# b = EmailHierarchy.where("cc like ?","%#{current_user.id.to_s}%").pluck(:user_id)
-		b = EmailHierarchy.where("cc like ?","%,#{current_user.id},%").or(EmailHierarchy.where("cc like ?","#{current_user.id},%")).or(EmailHierarchy.where("cc like ?","%,#{current_user.id}")).pluck(:user_id)
-		@check_in_out = CheckInOut.where(user_id: (a+b).split(',')).order(current_date: :desc)
-		# end
-	  end
+
 	def new
 			@check_in_out = CheckInOut.new
 	end
@@ -35,13 +24,13 @@ class CheckInOutsController < ApplicationController
 	
 			if @check_in_out.save
 				redirect_to check_in_outs_path, notice: 'Attendance record created successfully.'
-	
+			
 			end
 	end
 
 	def edit
 			
-			binding.pry
+			# binding.pry
 			
 			@check_in_out = CheckInOut.where(attendance_date:Date.today).where(user_id:current_user.id).where.not(check_in: [nil]).where(check_out: [nil])
 			
@@ -49,7 +38,7 @@ class CheckInOutsController < ApplicationController
 	end
 	
 	def update
-		binding.pry
+		# binding.pry
 		# params.fetch(:attendance)[:check_out]
 		# if @attendance.update(attendance_params)
 		@check_in_out = CheckInOut.find_by(user_id: current_user.id, attendance_date: Date.current,check_out: [nil])

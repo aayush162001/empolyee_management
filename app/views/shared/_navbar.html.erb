@@ -37,6 +37,42 @@
     .sidebar a:hover {
       background-color: #d1d5db;
     }
+      .sidebar a span {
+    display: none; /* Hide the text by default */
+
+    color: #333; /* Text color */
+    border-radius: 5px; /* Rounded corners */
+  }
+      .sidebar a:hover i {
+    color: #fff; /* Change the icon color on hover */
+    background-color: #333; /* Change the background color on hover */
+    border-radius: 50%; /* Add a circular shape to the background */
+    padding: 0.3rem; /* Adjust the padding for better appearance */
+  }
+    .sidebar a:hover span {
+    display: block; /* Show the text on hover */
+  }
+  .dropdown-menu {
+      display: none; /* Hide the dropdown menu by default */
+      position: absolute;
+      background-color: #ADD8E6;
+      border-radius: 5px;
+      padding: 0.5rem;
+    }
+
+  .sidebar .dropdown:hover .dropdown-menu {
+      display: block; /* Show the dropdown menu on hover */
+      
+    }
+  .sign-out-icon {
+      position: absolute;
+      bottom: 0; /* Adjust the vertical position as needed */
+      left: 0; /* Adjust the horizontal position as needed */
+      
+      width: 70px;
+      padding-bottom: 1rem;
+  }
+    
   </style>
 </head>
 <body>
@@ -46,43 +82,69 @@
       <div class="row">
         <div class="col-12">
           <a class="nav-link" href="/">
-            <i class="fas fa-home"></i> <!-- Font Awesome home icon -->
+            <i class="fas fa-home"></i>
+            <span>Home</span> <!-- Font Awesome home icon -->
           </a>
         </div>
         <div class="col-12">
           <a class="nav-link" aria-current="page" href="/daily_work_reports">
             <i class="fas fa-clipboard-list"></i> <!-- Font Awesome clipboard list icon -->
+            <span>Daily Work Reports</span>
           </a>
           
-        </div>
-        <% if current_user&.super_admin? || current_user&.company_admin? || current_user&.project_manager? %>
+          </div>
           <div class="col-12">
-            <%= link_to projects_path, class: "nav-link" do %>
-              <i class="fas fa-tasks"></i> <!-- Font Awesome tasks icon -->
+            <%= link_to check_in_outs_path, class: "nav-link" do %>
+              <i class="fas fa-clock"></i> <!-- Font Awesome tasks icon -->
+              <span> Check-In-Out </span>
             <% end %>
           </div>
-        <% end %>
-        <div class="m">
-        <% if current_user&.super_admin? || current_user&.company_admin? %>
-          <div class="col-12 " margin-bottom=250px >
-            <%= link_to  email_hierarchy_index_path, class: "nav-link" do %>
-              <i class="fas fa-envelope"></i> <!-- Font Awesome envelope icon -->
+          <div class="col-12">
+            <%= link_to attendances_path, class: "nav-link" do %>
+             <i class='fas fa-calendar-alt'></i> <!-- Font Awesome tasks icon -->
+              <span> Attendance </span>
             <% end %>
           </div>
-        <% end %>
+
+        <% if current_user&.super_admin? || current_user&.company_admin?%>
+          
+            <div class="col-12 dropdown">
+              <a class="nav-link" href="#">
+                <i class="fas fa-tasks"></i> <!-- Font Awesome tasks icon -->
+              </a>
+              <div class="dropdown-menu">
+                <%= link_to 'Departments', departments_path,  class: "nav-link"%>
+                <%= link_to 'Designations', designations_path,  class: "nav-link"%>
+                <%= link_to 'Project', projects_path,  class: "nav-link"%>
+                
+                <%= link_to  'Email-Hierarchy', email_hierarchy_index_path, class: "nav-link"%>
+              
+                <%# <a class="dropdown-item" href="#">Project 1</a>holidays
+                <a class="dropdown-item" href="#">Project 2</a> %>
+                <!-- Add more project links here as needed -->
+              </div>
+            </div>
+        <%end%>
+
         
-        <div class="col-12 "  >
+          <div class="col-12 " margin-bottom=250px >
+            <%= link_to '<i class="fas fa-holly-berry"></i> <span> Holiday </span>'.html_safe, holidays_path,  class: "nav-link"%>
+          </div>
+        
+        
+        <div class="col-12  sign-out-icon"  >
+
           <%= link_to destroy_user_session_path, method: :delete, data: { turbo_method: :delete }, class: "nav-link" do %>
             <i class="fas fa-sign-out-alt"></i> <!-- Font Awesome sign-out-alt icon -->
+            <span> Sign-Out </span>
           <% end %>
-        </div>
         </div>
       </div>
     </div>
     <%end%>  
     <!-- Main content -->
     <div class="container">
-      <h4 >Employee Management</h4>
+      <%# <h4 >Employee Management</h4> %>
       <%# <h4 style="background-color: #ADD8E6; padding: 10px;">Employee Management</h4> %>
       <!-- Your page content goes here -->
     </div>

@@ -3,7 +3,9 @@ class DailyWorkReport < ApplicationRecord
   belongs_to :project
   validate :unique_report_per_day, :on => :create
   validate :number_of_hours, :on => [:create, :update]
+  validates :user_id, :project_id, :current_date, :hours, presence: true
   after_save :present
+  # enum status: [:in_process, :completed]
   # validate :validate_user_entry    
   # validate :time_limit, :on => :create
   def self.ransackable_attributes(auth_object = nil)
@@ -61,18 +63,18 @@ class DailyWorkReport < ApplicationRecord
 #   end
   def present
     binding.pry
-    if CheckInOut.exists?(user_id:user.id,attendance_date: Date.today)
-      sum_of_hours = CheckInOut.where(user_id:user.id).where(attendance_date:Date.today).sum("work_hours")
+    if CheckInOut.exists?(user_id:user.id,attendance_date: current_date)
+      sum_of_hours = CheckInOut.where(user_id:user.id).where(attendance_date:current_date).sum("work_hours")
       if sum_of_hours >= 8.00
-        x = user.attendances.where(attendance_date:Date.today)
+        x = user.attendances.where(attendance_date:current_date)
         binding.pry
         c = Attendance.find(x.pluck(:id).first)
         c.update({present: true})
       else
-        Attendance.create(user_id: user.id, attendance_date: Date.today,present:0)
+        Attendance.create(user_id: user.id, attendance_date: current_date,present:0)
       end
     else
-      Attendance.create(user_id: user.id, attendance_date: Date.today,present:0)
+      Attendance.create(user_id: user.id, attendance_date: current_date,present:0)
     end
   end
 

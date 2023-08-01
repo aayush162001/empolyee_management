@@ -1,18 +1,24 @@
-<%= form_with(model: report, local: true) do |form| %>
+<h1>New other work report</h1>
+
+<%# <%= render "form", other_work_report: @other_work_report  %>
+
+<br>
+
+<%= form_with(model: @other_work_report, url: other_work_reports_path, method: :post ,local: true) do |form| %>
   <% 
   binding.pry 
    %>
    
-  <% if report.errors.any? %>
+  <% if @other_work_report.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(report.errors.count, "error") %> prohibited this daily work report from being saved:</h2>
+      <h2><%= pluralize(@other_work_report.errors.count, "error") %> prohibited this daily work report from being saved:</h2>
 
       <ul>
         <%# <p>Error: <%= report.errors.full_messages_for(:base)[0]%>
         <%# <p>Error: <%= report.errors.full_messages[0]%>
-        <% report.errors.full_messages.each do |message| %>
+        <% @other_work_report.errors.full_messages.each do |message| %>
           <li><%= message %></li>
-          <% # binding.pry %>
+          <%  binding.pry %>
         <% end %>
       </ul>
     </div>
@@ -34,21 +40,14 @@
   <div class="card">
     <div class="card-body">
         <div class="mb-3">
+            <%= form.label :user_id ,{ class: "form-label"} %>
+            <%= form.text_field :user_id,{ class: "form-label"} %>
+            <br />
+        </div>  
+        <div class="mb-3">
             <%= form.label :current_date ,{ class: "form-label"} %>
             <%= form.date_field :current_date, { class: "form-control", placeholder: "Site Code", autocomplete: "name" } %><br />
         </div>
-        <%if current_user.employee?%>
-          <div class="mb-3">
-              <%= form.hidden_field :user_id,{ class: "form-label", value: current_user.id} %>
-              <br />
-          </div>
-        <%else %>    
-          <div class="mb-3">
-            <%= form.label :user_id,{ class: "form-label"} %>
-            <%= form.number_field :user_id, { class: "form-control"} %><br />
-          </div>
-        <%end%>
-
         <div class="mb-3">
             <%= form.label :project_id ,{ class: "form-label"} %>
             <%=  form.collection_select :project_id, Project.all, :id, :name , { class: "form-control", prompt: "Select a project", autocomplete: "dob" } %><br />
@@ -58,15 +57,16 @@
             <%= form.number_field :hours, { class: "form-control", autocomplete: "address" } %><br />
         </div>
         <div class="mb-3">
-            <%= form.label :task,{ class: "form-label"} %>
-            <%= form.text_area :task, { class: "form-control"} %><br />
-        </div>
-        <div class="mb-3">
             <%= form.label :status,{ class: "form-label"} %>
             <%= form.text_field :status, { class: "form-control", autocomplete: "address" } %><br />
         </div>
+          
 
             <%= form.button :submit %>
     </div>
   </div>
 <% end %>
+
+<div>
+  <%= link_to "Back to other work reports", other_work_reports_path %>
+</div>

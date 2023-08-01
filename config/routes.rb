@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :other_work_reports
 
 
   devise_for :users, skip: [:registrations]
@@ -8,6 +9,7 @@ Rails.application.routes.draw do
   # post "/users/new" => "users#create"
     # config/routes.rb
     # Rails.application.routes.draw do
+  # resources :other_work_reports
 
     #   devise_for :users
     # end
@@ -33,7 +35,7 @@ Rails.application.routes.draw do
   end
   # get 'home/index'
   get 'work/check_index' => 'daily_work_reports#check_index'
-  get 'attendance/check_attendance' => 'check_in_outs#check_attendance'
+  get 'attendance/check_attendance' => 'attendances#check_attendance'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   # get 'users/index'
   # Defines the root path route ("/")

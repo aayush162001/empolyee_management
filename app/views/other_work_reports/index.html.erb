@@ -1,4 +1,7 @@
-<h1>Daily Work Reports</h1>
+<%# <p style="color: green"><%= notice </p> %>
+
+<h1>Other work reports</h1>
+
 <%= search_form_for @q do |f| %>
   <div>
     <%= f.label :project_name_or_current_date %>
@@ -10,7 +13,7 @@
 <% end %>
 <br>
 <%= link_to 'Back', daily_work_reports_path , class: "btn btn-info back-btn" %>
-<%= link_to '+ others Daily Work Report', new_daily_work_report_path, class: "btn btn-primary" %>
+<%= link_to '+ others Daily Work Report', new_other_work_report_path, class: "btn btn-primary" %>
 
 <br>
 <br>
@@ -27,7 +30,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @daily_work_reports.each do |report| %>
+    <% @other_work_reports.each do |report| %>
       <tr>
         <td style="text-align: center"><%= report.user_id %></td>
         <td style="text-align: center"><%= report.current_date %></td>
@@ -45,3 +48,5 @@
     <% end %>
   </tbody>
 </table>
+
+<%= link_to "New other work report", new_other_work_report_path %>

@@ -1,56 +1,48 @@
-<h1>Edit Daily Work Report</h1>
+<div class="container">
+  <h1>Edit Daily Work Report</h1>
+<%= link_to 'Back', daily_work_reports_path , class: "btn btn-info back-btn" %>
+  <%= form_with(model: @daily_work_report, local: true) do |form| %>
+    <% if @daily_work_report.errors.any? %>
+      <div id="error_explanation" class="alert alert-danger">
+        <h2><%= pluralize(@daily_work_report.errors.count, "error") %> prohibited this daily work report from being saved:</h2>
 
-<%= form_with(model: @daily_work_report, local: true) do |form| %>
-  <% if @daily_work_report.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@daily_work_report.errors.count, "error") %> prohibited this daily work report from being saved:</h2>
+        <ul>
+          <% @daily_work_report.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
 
-      <ul>
-        <% @daily_work_report.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+    <div class="mb-3">
+      <%= form.label :current_date, class: "form-label" %>
+      <%= form.date_field :current_date, class: "form-control", disabled: true %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :project_id, class: "form-label" %>
+      <%= form.collection_select :project_id, Project.all, :id, :name, { prompt: "Select a project" }, class: "form-select" %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :hours, class: "form-label" %>
+      <%= form.number_field :hours, class: "form-control" %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :status, class: "form-label" %>
+      <%= form.text_field :status, class: "form-control" %>
+    </div>
+
+    <div>
+      <%= form.hidden_field :user_id, value: current_user.id %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.submit 'Submit', class: "btn btn-primary" %>
     </div>
   <% end %>
-  <% if @daily_work_report.errors.any? %>
-        <% @daily_work_report.errors.full_messages.each do |message| %>
-            <p><%= message  %></p>
-        <%end%>
-  <%end %>
 
+  <%= link_to '<i class="fas fa-eye"></i>'.html_safe, @daily_work_report, class: "btn btn-secondary" %> |
 
-
-
-  <div class="field">
-    <%= form.label :current_date %>
-    <%# <%= form.date_field :current_date %>
-    <%= form.date_field :current_date,:disabled=>true %>
-  </div>
-
-  <div class="field">
-    <%= form.label :project_id %>
-    <%= form.collection_select :project_id, Project.all, :id, :name, prompt: "Select a project" %>
-  </div>
-
-  <div class="field">
-    <%= form.label :hours %>
-    <%= form.number_field :hours %>
-  </div>
-
-  <div class="field">
-    <%= form.label :status %>
-    <%= form.text_field :status %>
-  </div>
-  <div>
-    <%= form.hidden_field :user_id, value: current_user.id %>
-  </div>
-  <div class="actions">
-    <%= form.submit 'Submit' %>
-  </div>
-<% end %>
-
-
-<%# <%= render 'form', report: @daily_work_report  %>
-
-<%= link_to 'Show', @daily_work_report %> |
-<%= link_to 'Back', daily_work_reports_path %>
+</div>

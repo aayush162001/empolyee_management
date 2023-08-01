@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_27_134018) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_01_043140) do
   create_table "attendances", force: :cascade do |t|
     t.integer "user_id", null: false
     t.date "attendance_date"
@@ -42,6 +42,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_27_134018) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "project_id"
+    t.string "task"
     t.index ["user_id"], name: "index_daily_work_reports_on_user_id"
   end
 
@@ -68,7 +69,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_27_134018) do
 
   create_table "holidays", force: :cascade do |t|
     t.string "title"
-    t.date "holiday_date"
+    t.date "attendance_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -113,6 +114,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_27_134018) do
     t.integer "department_id"
     t.integer "designation_id"
     t.string "unique_session_id"
+    t.boolean "is_active"
     t.index ["authentication_token"], name: "index_users_on_authentication_token"
     t.index ["department_id"], name: "index_users_on_department_id"
     t.index ["designation_id"], name: "index_users_on_designation_id"
