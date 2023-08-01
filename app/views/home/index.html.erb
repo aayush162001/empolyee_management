@@ -3,8 +3,9 @@
   <div class="row justify-content-center">
     <div class="col-md-6">
       <% if user_signed_in? %>
-        <div class="card mb-4">
+        <div class="card mb-4 shadow"> <!-- Add 'shadow' class here -->
           <div class="card-body">
+            <%= image_tag current_user.image, class: 'img-fluid' if current_user.image.attached? %>
             <%# Are you admin? <%= current_user.super_admin? or current_user.company_admin?%> <br>
             Name : <%= current_user.name %> <br>
             Id : <%= current_user.id %> <br>
@@ -31,7 +32,7 @@
           </div>
         </div>
       <% else %>
-        <div class="card">
+        <div class="card shadow"> <!-- Add 'shadow' class here -->
           <div class="card-body text-center">
             <%= link_to 'Sign In', new_user_session_path, class: 'btn btn-primary' %>
           </div>

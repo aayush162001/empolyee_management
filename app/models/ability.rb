@@ -89,7 +89,7 @@ class Ability
 
   def employees_under(user)
     
-    binding.pry
+    # binding.pry
     
     # Find employees under the given user using EmailHierarchy table
     a = EmailHierarchy.where("too like ?","%,#{user.id},%").or(EmailHierarchy.where("too like ?","#{user.id},%")).or(EmailHierarchy.where("too like ?","%,#{user.id}"))
