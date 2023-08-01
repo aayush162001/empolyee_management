@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @other_work_report %>
+
+<div>
+  <%= link_to "Edit this other work report", edit_other_work_report_path(@other_work_report) %> |
+  <%= link_to "Back to other work reports", other_work_reports_path %>
+
+  <%= button_to "Destroy this other work report", @other_work_report, method: :delete %>
+</div>

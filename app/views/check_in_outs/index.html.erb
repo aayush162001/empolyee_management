@@ -11,6 +11,7 @@
   <%
   #binding.pry
   %>
+
   <%= button_to 'Check-in', check_in_outs_path, method: :post, class: 'btn btn-primary' %> 
   <% if not @check_out[0].nil? %>
     <%# <%= link_to 'show', attendance_path(@check_out[0].id) %>

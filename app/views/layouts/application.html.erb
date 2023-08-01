@@ -3,6 +3,7 @@
   <head>
     <title>EmployeeManagement</title>
      <%= render partial: "shared/navbar"%>
+         <%# <%= render "shared/errors"  %>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -18,8 +19,9 @@
     <%end%>
 
     <div class="container">
-        <p class="notice"><%= notice %></p>
-        <p class="alert"><%= alert %></p>
+    <h4 >Employee Management</h4>
+        <p class="notice" style="color: green"><%= notice %></p>
+        <p class="alert" style="color: red"><%= alert %></p>
       <%= yield %>
     </div>
   </body>

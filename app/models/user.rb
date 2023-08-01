@@ -9,7 +9,10 @@ class User < ApplicationRecord
   has_many :attendances
   has_many :check_in_out
   belongs_to :designation
-
+  validates :name, :email, presence: true
+  validates :email, uniqueness: true
+  validates :name,  length: { minimum: 3, maximum: 50  }
+  validates :name, format: { with: /\A[a-zA-Z]+\z/, message: 'only letters are allowed'}
   after_initialize :set_default_role, if: :new_record?
   # after_initialize :set_default_role, :set_default_department, if: :new_record?
   before_save :ensure_authentication_token

@@ -1,8 +1,10 @@
 <body>
  <%= link_to 'Back', root_path , class: "btn btn-info back-btn" %>
 <div class="container">
+<div class="row justify-content-center">
+    <div class="col-md-9">
   <div class="widget-content widget-content-area p-15">
-    <h2 class="center-text">Create User</h2>
+    <h2 >Create User</h2>
 
     <%= form_with model: @user do |f| %>
         <div class="form-group">
@@ -44,6 +46,8 @@
             <%= f.submit "Create User", class: "btn btn-primary" %>
         </div>
     <% end %>
+  </div>
+  </div>
   </div>
 </div>
 

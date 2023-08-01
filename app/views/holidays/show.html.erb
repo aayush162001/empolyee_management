@@ -1,9 +1,12 @@
 <h1>Holiday Details</h1>
 
 <p><strong>Name:</strong> <%= (@holiday.title).titlecase %></p>
-<p><strong>Date:</strong> <%= (@holiday.holiday_date)    %></p>
+<p><strong>Date:</strong> <%= (@holiday.attendance_date)    %></p>
 <%= link_to 'Edit', edit_holiday_path(@holiday) %> |
 <%= link_to 'Back', holidays_path %> |
 <%= link_to 'Delete', @holiday, method: :delete, data:{
         turbo_method: :delete
     } %>
+
+              <%= link_to '<i class="fas fa-edit"></i>'.html_safe, edit_holiday_path(@holiday), class: 'btn btn-primary' %>
+              <%= link_to '<i class="fas fa-trash"></i>'.html_safe, @holiday, method: :delete, data: {turbo_method: :delete, }, class: 'btn btn-danger' %>
