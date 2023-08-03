@@ -1,7 +1,7 @@
-<h1>New Project</h1>
+<h1>New Email Hierarchy</h1>
 
  <%= link_to 'Back', email_hierarchy_index_path , class: "btn btn-info back-btn" %> 
-<%= form_with(model: @project, url: projects_path, method: :post, local: true) do |form| %>
+<%= form_with(model: @email_hierarchy, url: email_hierarchy_index_path, method: :post, local: true) do |form| %>
   <div class="mb-3">
     <%= form.label :user_id, class: "form-label" %>
     <%= form.text_field :user_id, class: "form-control" %>

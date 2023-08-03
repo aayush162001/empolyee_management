@@ -139,3 +139,25 @@
     color: green;
     font-weight: bold; /* Optional: Makes the text bold */
   }
+  .present-event {
+    color:#574100;
+    font-weight: bold;
+  }
+
+  .custom-box {
+    box-shadow: 0 10px 20px rgba(10, 0, 0, 0.1); /* Customize the shadow properties as needed */
+    padding: 20px; /* Optional: Add some padding to the box */
+    border-radius: 8px; /* Optional: Add rounded corners to the box */
+  }
+
+  .field p{
+    margin-top: 0;
+  }
+  
+  .error{
+    color: red;
+  }
+  
+  .invalid{
+    border: 1px solid red;
+  }

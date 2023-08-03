@@ -5,7 +5,7 @@
       
       <% if @users.errors.any? %>
         <div id="error_explanation">
-          <h2><%= pluralize(@users.errors.count, "error") %> prohibited this daily work report from being saved:</h2>
+          
           <ul>
             <%# <p>Error: <%= report.errors.full_messages_for(:base)[0]%>
             <%# <p>Error: <%= report.errors.full_messages[0]%>
@@ -23,19 +23,19 @@
         <div class="card-body">
           <div class="mb-3">
             <%= form.label :name, { class: "form-label" } %>
-            <%= form.text_field :name, { class: "form-control", placeholder: "Site Code", autocomplete: "name" } %><br />
+            <%= form.text_field :name, { class: "form-control", placeholder: "Name", required: true, autocomplete: "name" } %><br />
           </div>
           <div class="mb-3">
             <%= form.label :dob, { class: "form-label" } %>
-            <%= form.date_field :dob, { class: "form-control", placeholder: "Site Code", autocomplete: "dob" } %><br />
+            <%= form.date_field :dob, { class: "form-control", placeholder: "Date of Birth", autocomplete: "dob" } %><br />
           </div>
           <div class="mb-3">
             <%= form.label :address, { class: "form-label" } %>
-            <%= form.text_area :address, { class: "form-control", placeholder: "Site Code", autocomplete: "address" } %><br />
+            <%= form.text_area :address, { class: "form-control", placeholder: "Address", autocomplete: "address" } %><br />
           </div>
           <div class="mb-3">
             <%= form.label :contact, { class: "form-label" } %>
-            <%= form.text_field :contact, { class: "form-control", placeholder: "Site Code", autocomplete: "contact" }%><br />
+            <%= form.text_field :contact, { class: "form-control", placeholder: "Contact", autocomplete: "contact" }%><br />
           </div>  
           <div class="mb-3">
             <%= form.label :image, { class: "form-label" } %>
@@ -60,7 +60,7 @@
           <%= form.button :submit %>
         </div>
       </div>
-      <%= link_to "Back to user", users_path %>  
+
     <% end %>
   </div>
 </div>

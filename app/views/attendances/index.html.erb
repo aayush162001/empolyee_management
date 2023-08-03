@@ -20,7 +20,9 @@
 
     <% if attendances_for_date.any? %>
       <% attendances_for_date.each do |attendance| %>
+        <span class="present-event">
         <%= attendance.present? ? 'P' : 'A' %>
+        </span>
       <% end %>
     <% end %>
 

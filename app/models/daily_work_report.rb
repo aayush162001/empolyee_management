@@ -62,12 +62,12 @@ class DailyWorkReport < ApplicationRecord
 #     end
 #   end
   def present
-    binding.pry
+    # binding.pry
     if CheckInOut.exists?(user_id:user.id,attendance_date: current_date)
       sum_of_hours = CheckInOut.where(user_id:user.id).where(attendance_date:current_date).sum("work_hours")
       if sum_of_hours >= 8.00
         x = user.attendances.where(attendance_date:current_date)
-        binding.pry
+        # binding.pry
         c = Attendance.find(x.pluck(:id).first)
         c.update({present: true})
       else
@@ -82,7 +82,7 @@ class DailyWorkReport < ApplicationRecord
   def self.scheduled_report_mail
     
     # binding.pry
-    
+    puts "Hey "
     # if not DailyWorkReport.exists?(user_id: user_id, current_date: current_date)
     a = DailyWorkReport.where(current_date: Date.yesterday).pluck(:user_id)
     # a =DailyWorkReport.where(current_date: Date.yesterday).pluck(:user_id)

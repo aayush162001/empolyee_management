@@ -26,7 +26,7 @@ every 1.minutes do
     runner "puts 'Hello, world'"
 end
 
-every 1.minutes do
+every [:tuesday, :wednesday, :thursday, :friday, :saturday], at: '12pm' do
     runner "CheckInOut.scheduled_check_out_mail"
 end
 

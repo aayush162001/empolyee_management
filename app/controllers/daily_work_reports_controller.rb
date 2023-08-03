@@ -24,8 +24,8 @@ class DailyWorkReportsController < ApplicationController
       # b = EmailHierarchy.where("cc like ?","%#{current_user.id.to_s}%").pluck(:user_id)
       b = EmailHierarchy.where("cc like ?","%,#{current_user.id},%").or(EmailHierarchy.where("cc like ?","#{current_user.id},%")).or(EmailHierarchy.where("cc like ?","%,#{current_user.id}"))
       .pluck(:user_id)
-      @q = DailyWorkReport.where(user_id: (a+b).split(',')).ransack(params[:q])
-      @daily_work_reports = @q.result(distinct: true).accessible_by(current_ability).order(current_date: :desc)
+      @qs = DailyWorkReport.where(user_id: (a+b).split(',')).ransack(params[:q])
+      @daily_work_reports = @qs.result(distinct: true).accessible_by(current_ability).order(current_date: :desc)
     # end
   end
 
@@ -129,7 +129,7 @@ class DailyWorkReportsController < ApplicationController
   end
 
   def daily_work_report_params
-    params.require(:daily_work_report).permit(:current_date, :hours, :status, :user_id, :project_id, :task)
+    params.require(:daily_work_report).permit(:current_date, :hours, :status, :user_id, :project_id, :task, :created_by)
   end
 
 end

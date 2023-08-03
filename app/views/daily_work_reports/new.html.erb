@@ -1,21 +1,94 @@
 <h1>New Daily Work Report</h1>
 <%# <%= f.collection_check_boxes :role_ids, Role.all, :id, :name %>
 <%# <%= User.find(current_user.email_hierarchy[:user_id])[:email]%>
-<%= User.find(current_user.id)[:email] %>  <%= link_to 'Back', daily_work_reports_path , class: "btn btn-info back-btn" %>
-<% 
-# binding.pry
- %>
+<%# <%= User.find(current_user.id)[:email] %>  <%= link_to 'Back', daily_work_reports_path , class: "btn btn-info back-btn" %> 
+
 <br><br>
-<% if not current_user.email_hierarchy == nil%>
-    <% c = current_user.email_hierarchy[:too]%> 
-    To : <%= User.find(c.split(',')).pluck(:email) %>
+<%# <% if not current_user.email_hierarchy == nil
+    <% c = current_user.email_hierarchy[:too]
+    To : <%= User.find(c.split(',')).pluck(:email) 
     <br><br>
-    <% a = current_user.email_hierarchy[:cc]%>
+    <% a = current_user.email_hierarchy[:cc]
     Cc = 
-    <%= User.find(a.split(',')).pluck(:email)%>
+    <%= User.find(a.split(',')).pluck(:email)
 <%end%>
-<br><br>
-<%= render 'form', report: @daily_work_report %>
+<%= form_with(model: @daily_work_report, local: true) do |form| %>
+  <% 
+  # binding.pry 
+   %>
+   
+  <% if @daily_work_report.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@daily_work_report.errors.count, "error") %> prohibited this daily work report from being saved:</h2>
+
+      <ul>
+        <%# <p>Error: <%= report.errors.full_messages_for(:base)[0]%>
+        <%# <p>Error: <%= report.errors.full_messages[0]%>
+        <% @daily_work_report.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+          <% # binding.pry %>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%# <% if @daily_work_report.errors.any? 
+        <% @daily_work_report.errors.full_messages.each do |message| 
+            <p><%= message  </p>
+        <%end
+  <%end  %>
+
+
+
+
+
+
+
+
+
+  <div class="card">
+    <div class="card-body">
+        <div class="mb-3">
+            <%= form.label :current_date ,{ class: "form-label"} %>
+            <%= form.date_field :current_date, { class: "form-control", placeholder: "Site Code", autocomplete: "name" } %><br />
+        </div>
+        <%if current_user.employee?%>
+          <div class="mb-3">
+              <%= form.hidden_field :user_id,{ class: "form-label", value: current_user.id} %>
+              <br />
+          </div>
+        <%else %>    
+          <div class="mb-3">
+            <%= form.label :user_id,{ class: "form-label"} %>
+            <%= form.number_field :user_id, { class: "form-control"} %><br />
+          </div>
+        <%end%>
+
+        <div class="mb-3">
+            <%= form.label :project_id ,{ class: "form-label"} %>
+            <%=  form.collection_select :project_id, Project.all, :id, :name , { class: "form-control", prompt: "Select a project", autocomplete: "dob" } %><br />
+        </div>
+        <div class="mb-3">
+            <%= form.label :hours,{ class: "form-label"} %>
+            <%= form.number_field :hours, { class: "form-control", autocomplete: "address" } %><br />
+        </div>
+        <div class="mb-3">
+            <%= form.label :task,{ class: "form-label"} %>
+            <%= form.text_area :task, { class: "form-control"} %><br />
+        </div>
+        <div class="mb-3">
+            <%= form.label :status,{ class: "form-label"} %>
+            <%= form.text_field :status, { class: "form-control", autocomplete: "address" } %><br />
+        </div>
+        <div class="mb-3">
+              <%= form.hidden_field :created_by,{ class: "form-label", value: current_user.id} %>
+              <br />
+        </div>
+
+            <%= form.button :submit %>
+    </div>
+  </div>
+<% end %>
+<%# <%= render 'form', report: @daily_work_report  %>
 
 
 
