@@ -7,7 +7,7 @@ class AttendancesController < ApplicationController
 	def index
 			# @attendances = Attendance.where(attendance_date: start_date..end_date).accessible_by(current_ability).order(attendance_date: :desc)
 
-			@attendances = current_user.attendances.where(attendance_date: start_date..end_date)
+			@attendances = current_user.attendances.all
 			@holidays = Holiday.all
 		
 			@events = @attendances + @holidays

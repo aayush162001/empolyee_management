@@ -6,8 +6,6 @@
   <%= label_tag 'start_date', 'Start Date:' %>
   <%= text_field_tag 'start_date', params[:start_date] %>
 
-  <%= label_tag 'end_date', 'End Date:' %>
-  <%= text_field_tag 'end_date', params[:end_date] %>
 
   <%= submit_tag 'Filter', class: 'btn btn-primary' %>
   <% end %>
@@ -22,7 +20,9 @@
 
     <% if attendances_for_date.any? %>
       <% attendances_for_date.each do |attendance| %>
+        <span class="present-event">
         <%= attendance.present? ? 'P' : 'A' %>
+        </span>
       <% end %>
     <% end %>
 

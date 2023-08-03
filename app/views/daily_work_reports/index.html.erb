@@ -23,7 +23,9 @@
 
   <br>
   <%= link_to 'Add New Daily Work Report', new_daily_work_report_path, class: 'btn btn-primary' %>
-  <%= link_to 'Others Work Report', work_check_index_path, class: 'btn btn-primary' %>
+  <%if not current_user.employee?%>
+    <%= link_to 'Others Work Report', work_check_index_path, class: 'btn btn-primary' %>
+  <%end%>
   <br>
   <br>
 

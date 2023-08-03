@@ -86,6 +86,9 @@
             <span>Home</span> <!-- Font Awesome home icon -->
           </a>
         </div>
+          <div class="col-12 " margin-bottom=250px >
+            <%= link_to '<i class="fas fa-user-alt"></i> <span> Profile </span>'.html_safe, user_path(current_user),  class: "nav-link"%>
+          </div>
         <div class="col-12">
           <a class="nav-link" aria-current="page" href="/daily_work_reports">
             <i class="fas fa-clipboard-list"></i> <!-- Font Awesome clipboard list icon -->
@@ -126,7 +129,7 @@
             </div>
         <%end%>
 
-        
+
           <div class="col-12 " margin-bottom=250px >
             <%= link_to '<i class="fas fa-holly-berry"></i> <span> Holiday </span>'.html_safe, holidays_path,  class: "nav-link"%>
           </div>

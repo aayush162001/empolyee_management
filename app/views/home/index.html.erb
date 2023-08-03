@@ -3,26 +3,32 @@
   <div class="row justify-content-center">
     <div class="col-md-6">
       <% if user_signed_in? %>
-        <div class="card mb-4">
+        <div class="card mb-4 shadow"> <!-- Add 'shadow' class here -->
           <div class="card-body">
-            <%# Are you admin? <%= current_user.super_admin? or current_user.company_admin?%> <br>
-            Name : <%= current_user.name %> <br>
-            Id : <%= current_user.id %> <br>
-            Role : <%= current_user.role %> <br>
-            <% if not current_user.department_id == nil%>
-              Department : <%= Department.find(current_user.department_id).title %> <br>
-              Designation : <%= Designation.find(current_user.designation_id).name %> <br>
-            <% end %>
-
-            <%= link_to 'Edit', edit_user_path(current_user), class: 'btn btn-primary mb-2 me-2' %>
-
-            <% if current_user.super_admin? or current_user.company_admin?%>
-              <%= link_to 'Users List', users_path, class: 'btn btn-primary mb-2 me-2' %>
-              <%= link_to 'Create New User', new_user_path, class: 'btn btn-primary mb-2 me-2' %>
-            <% end %>
             
-            <%# <%= link_to 'Change Password', edit_user_password_path, class: 'btn btn-secondary' %>
 
+              <div class="row">
+                <div class="col-md-4">
+                  <%= image_tag current_user.image, class: 'img-fluid' if current_user.image.attached? %>
+                </div>
+                <div class="col-md-8">
+                        Name : <%= current_user.name %> <br>
+                        Id : <%= current_user.id %> <br>
+                        Role : <%= current_user.role %> <br>
+                        <% if not current_user.department_id == nil%>
+                          Department : <%= Department.find(current_user.department_id).title %> <br>
+                          Designation : <%= Designation.find(current_user.designation_id).name %> <br>
+                        <% end %>
+
+                        <% if current_user.super_admin? or current_user.company_admin?%>
+                          <%= link_to 'Users List', users_path, class: 'btn btn-primary mb-2 me-2' %>
+                          <%= link_to 'Create New User', new_user_path, class: 'btn btn-primary mb-2 me-2' %>
+                        <% end %>
+                        
+                </div>            
+              </div>
+            <%# <%= link_to 'Change Password', edit_user_password_path, class: 'btn btn-secondary' %>
+            <%# <%= link_to 'Profile',user_path(current_user), class: 'btn btn-primary mb-2 me-2'  %>
             <%# <%= link_to "Sign Out", destroy_user_session_path, method: :delete, data: {
               turbo_method: :delete,
               confirm: "Are you sure you want to logout?"
@@ -31,7 +37,7 @@
           </div>
         </div>
       <% else %>
-        <div class="card">
+        <div class="card shadow"> <!-- Add 'shadow' class here -->
           <div class="card-body text-center">
             <%= link_to 'Sign In', new_user_session_path, class: 'btn btn-primary' %>
           </div>

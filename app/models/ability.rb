@@ -41,8 +41,8 @@ class Ability
     elsif user.employee?
       
       # binding.pry
-      
-      can :update, User, id: user.id 
+      can [:read, :update], User, id: user.id
+      # can :update, User, id: user.id 
       can :create, DailyWorkReport, user_id: user.id
       can [:read, :update], DailyWorkReport, user_id: user.id 
       can :read, Holiday
@@ -89,7 +89,7 @@ class Ability
 
   def employees_under(user)
     
-    binding.pry
+    # binding.pry
     
     # Find employees under the given user using EmailHierarchy table
     a = EmailHierarchy.where("too like ?","%,#{user.id},%").or(EmailHierarchy.where("too like ?","#{user.id},%")).or(EmailHierarchy.where("too like ?","%,#{user.id}"))

@@ -12,6 +12,7 @@ class UsersController < ApplicationController
         @user = User.new
     end
     def show
+        @user = User.find(params[:id])
     end
     def create
         # binding.pry
@@ -31,7 +32,7 @@ class UsersController < ApplicationController
 
             if @users.update(user_params)
                 # binding.pry
-                redirect_to users_url, notice: "User was successfully update"
+                redirect_to root_path, notice: "User was successfully update"
             else
                 render :edit, status: :unprocessable_entity
             end
@@ -54,6 +55,6 @@ class UsersController < ApplicationController
             @users = User.find(params[:id])
         end
         def user_params
-            params.require(:user).permit(:email,:password,:password_confirmation,:name,:role,:designation_id,:department_id,:dob,:address,:contact,:created_by)
+            params.require(:user).permit(:email,:password,:password_confirmation,:name,:role,:designation_id,:department_id,:dob,:address,:contact,:created_by,:image)
         end
 end
