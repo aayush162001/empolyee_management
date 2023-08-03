@@ -79,21 +79,21 @@ class DailyWorkReport < ApplicationRecord
   end
 
 
-  def self.scheduled_report_mail
+  # def self.scheduled_report_mail
     
-    # binding.pry
-    puts "Hey "
-    # if not DailyWorkReport.exists?(user_id: user_id, current_date: current_date)
-    a = DailyWorkReport.where(current_date: Date.yesterday).pluck(:user_id)
-    # a =DailyWorkReport.where(current_date: Date.yesterday).pluck(:user_id)
-    @mail_to = User.where.not(id:a).ids
-    # @user.each do |u|
-    #   UsersMailer.weekly_mail(u.email).deliver
-    #   end
-    @mail_to.each do |u|
-        DailyWorkReportMailer.scheduled_report_mail(u).deliver_now
-    end
-  end
+  #   # binding.pry
+  #   puts "Hey "
+  #   # if not DailyWorkReport.exists?(user_id: user_id, current_date: current_date)
+  #   a = DailyWorkReport.where(current_date: Date.yesterday).pluck(:user_id)
+  #   # a =DailyWorkReport.where(current_date: Date.yesterday).pluck(:user_id)
+  #   @mail_to = User.where.not(id:a).ids
+  #   # @user.each do |u|
+  #   #   UsersMailer.weekly_mail(u.email).deliver
+  #   #   end
+  #   @mail_to.each do |u|
+  #       DailyWorkReportMailer.scheduled_report_mail(u).deliver_now
+  #   end
+  # end
 
   # def validate_user_entry
     
