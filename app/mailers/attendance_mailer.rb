@@ -1,7 +1,7 @@
 class AttendanceMailer < ApplicationMailer
     def check_in_mail(mail_to)
         
-        binding.pry
+        # binding.pry
         
         @mail_to = mail_to
         @user = User.where(id:mail_to).pluck(:name)

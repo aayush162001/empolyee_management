@@ -5,8 +5,9 @@
   </head>
   <body>
 
-    <h3>Daily Work Report of Employee ID : <%= User.find_by(name: @user).id %></h3>
-    <h3>Daily Work Report of Employee Name : <%= @user %></h3>
+    <h3>Daily Work Report of Employee Id : <%= @mail_to %></h3>
+    <h3>Daily Work Report of Employee Name : <%= User.find(@mail_to).name %></h3>
+    <%# <h3>Daily Work Report of Employee Name : <%= @user %>
     <p>
       Your Daily Work Report of yesterday is pending.
     </p>
