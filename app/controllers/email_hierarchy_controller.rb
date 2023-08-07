@@ -56,7 +56,7 @@ class EmailHierarchyController < ApplicationController
     
     binding.pry
     
-    params.require(:email_hierarchy).permit(:user_id,:to,:cc)
+    params.require(:email_hierarchy).permit(:user_id,:too,:cc)
   end
 
 end

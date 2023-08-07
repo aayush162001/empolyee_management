@@ -1,6 +1,6 @@
 <%= form_with(model: holiday, local: true) do |form| %>
   <% if holiday.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" class="alert alert-danger">
       <h2><%= pluralize(holiday.errors.count, "error") %> prohibited this project from being saved:</h2>
 
       <ul>
@@ -11,16 +11,17 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :title %>
-    <%= form.text_field :title %>
+  <div class="mb-3">
+    <%= form.label :title, class: "form-label" %>
+    <%= form.text_field :title, class: "form-control" %>
   </div>
-    <div class="field">
-    <%= form.label :holiday_date %>
-    <%= form.date_field :holiday_date %>
+
+  <div class="mb-3">
+    <%= form.label :holiday_date, class: "form-label" %>
+    <%= form.date_field :holiday_date, class: "form-control" %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Save Holiday", class: "btn btn-primary" %>
   </div>
 <% end %>

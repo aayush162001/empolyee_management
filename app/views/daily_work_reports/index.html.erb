@@ -1,58 +1,77 @@
-<h1>Daily Work Reports</h1>
-    <style>
-      table,tr,th,td {
-         border:1px solid black;
-      }
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Daily Work Reports</title>
+  <style>
 
 
+    /* Add any other custom styles here */
+  </style>
+</head>
+<body>
+ <%= link_to 'Back', root_path , class: "btn btn-info back-btn" %>
+  <h1>Daily Work Reports</h1>
 
-
-
-    </style>
-<%= search_form_for @q do |f|%>
-<%# <%= @daily_work_reports.each do |f| %> 
-  <div>
-     <%# <%= f.label :current_date %>
-     <%# <%= f.search_field :current_date_cont %>
+  <%= search_form_for @q do |f|%>
+    <div>
       <%= f.label :project_name_or_current_date %>
       <%= f.search_field :project_name_or_current_date_cont %>
-  </div>
-  <div>
-    <%= f.submit %>
-  </div>
-<% end %>
-<br>
-<%= link_to 'Add New Daily Work Report', new_daily_work_report_path %>
-<br>
-<br>
+      <%= f.submit 'Search', class: "btn-primary" %>
+      
+    </div>
+  <% end %>
 
-<table style="width: 50%", class="table table-striped">
-  <thead>
-    <tr>
-  
-      <th style="text-align: center">User_id</th>
-      <th style="text-align: center">Date</th>
-      <th style="text-align: center">Project</th>
-      <th style="text-align: center">Hours</th>
-      <th style="text-align: center">status</th>
-      <th style="text-align: center">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @daily_work_reports.each do |report| %>
-      <%# <% if current_user.id == report.user_id%> 
+  <br>
+  <%= link_to 'Add New Daily Work Report', new_daily_work_report_path, class: 'btn btn-primary' %>
+  <%if not current_user.employee?%>
+    <%= link_to 'Others Work Report', work_check_index_path, class: 'btn btn-primary' %>
+  <%end%>
+  <br>
+  <br>
+
+  <table>
+    <thead>
+      <tr>
+        <th>User_id</th>
+        <th>Date</th>
+        <th>Project</th>
+        <th>Hours</th>
+        <th>Task</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @daily_work_reports.each do |report| %>
         <tr>
-          <td style="text-align: center"><%= report.user_id %></td>
-          <td style="text-align: center"><%= report.current_date %></td>
-          <td style="text-align: center"><%= report.project.name %></td>
-          <td style="text-align: center"><%= report.hours %></td>
-          <td style="text-align: center"><%= report.status %></td>
-          <td style="text-align: center"><%= link_to 'Show', report %> | <%= link_to 'Edit', edit_daily_work_report_path(report) %>
-          | <%= link_to 'Destroy', report, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
-      <%# <% end  %>
-    <% end %>
-  </tbody>
-</table>
+          <td><%= report.user_id %></td>
+          <td><%= report.current_date %></td>
+          <td><%= report.project.name %></td>
+          <td><%= report.hours %></td>
+          <td><%= report.task %></td>
+          <td>
+            <% if report.status == 'In Progress' %>
+              <span class="badge badge-warning">In Progress</span>
+            <% elsif report.status == 'Completed' %>
+              <span class="badge badge-success">Completed</span>
+            <% elsif report.status == 'Pending' %>
+              <span class="badge badge-info">Pending</span>
+            <% else %>
+              <%= report.status %>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to '<i class="fas fa-eye"></i>'.html_safe , report, class: 'btn btn-secondary' %>
 
-<br>
+            <%= link_to '<i class="fas fa-edit"></i>'.html_safe, edit_daily_work_report_path(report), class: 'btn btn-primary' %>
+            <%= link_to '<i class="fas fa-trash"></i>'.html_safe, report, method: :delete, data: {turbo_method: :delete, }, class: 'btn btn-danger' %>
+               
+        
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+</body>
+</html>

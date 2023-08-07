@@ -1,0 +1,52 @@
+<%# <p style="color: green"><%= notice </p> %>
+
+<h1>Other work reports</h1>
+
+<%= search_form_for @q do |f| %>
+  <div>
+    <%= f.label :project_name_or_current_date %>
+    <%= f.search_field :project_name_or_current_date_cont %>
+  </div>
+  <div>
+    <%= f.submit %>
+  </div>
+<% end %>
+<br>
+<%= link_to 'Back', daily_work_reports_path , class: "btn btn-info back-btn" %>
+<%= link_to '+ others Daily Work Report', new_other_work_report_path, class: "btn btn-primary" %>
+
+<br>
+<br>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th style="text-align: center">User_id</th>
+      <th style="text-align: center">Date</th>
+      <th style="text-align: center">Project</th>
+      <th style="text-align: center">Hours</th>
+      <th style="text-align: center">Status</th>
+      <th style="text-align: center">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @other_work_reports.each do |report| %>
+      <tr>
+        <td style="text-align: center"><%= report.user_id %></td>
+        <td style="text-align: center"><%= report.current_date %></td>
+        <td style="text-align: center"><%= report.project.name %></td>
+        <td style="text-align: center"><%= report.hours %></td>
+        <td style="text-align: center"><%= report.status %></td>
+        <td style="text-align: center">
+            <%= link_to '<i class="fas fa-eye"></i>'.html_safe , report, class: 'btn btn-secondary' %>
+
+            <%= link_to '<i class="fas fa-edit"></i>'.html_safe, edit_daily_work_report_path(report), class: 'btn btn-primary' %>
+            <%= link_to '<i class="fas fa-trash"></i>'.html_safe, report, method: :delete, data: {turbo_method: :delete, }, class: 'btn btn-danger' %>
+               
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "New other work report", new_other_work_report_path %>

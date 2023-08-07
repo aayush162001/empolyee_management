@@ -1,23 +1,40 @@
 
-
+ <%= link_to 'Back', root_path , class: "btn btn-info back-btn" %>
 <div class="container mt-5 text-center">
   <h1>Attendance Records</h1>
   <%= form_tag attendances_path, method: :get do %>
   <%= label_tag 'start_date', 'Start Date:' %>
   <%= text_field_tag 'start_date', params[:start_date] %>
 
-  <%= label_tag 'end_date', 'End Date:' %>
-  <%= text_field_tag 'end_date', params[:end_date] %>
 
   <%= submit_tag 'Filter', class: 'btn btn-primary' %>
   <% end %>
-  <%= month_calendar(attribute: :attendance_date,events: @attendances) do |date,attendances|%>
-    <div class="day">
-      <%= date.day %>
-    </div>
-    <% attendances.each do |attendance|   %>
-      <%= attendance.present? ? 'Present' : 'Absent' %>
-    <%end%>
-  <%end%>
+  
+<%= month_calendar(attribute: :attendance_date, events: @events) do |date, events| %>
+  <div class="day">
+    <%= date.day %>
+  </div>
+  <p>
+    <% attendances_for_date = events.select { |event| event.is_a?(Attendance) && event.attendance_date.to_date == date } %>
+    <% holidays_for_date = events.select { |event| event.is_a?(Holiday) && event.attendance_date.to_date == date } %>
+
+    <% if attendances_for_date.any? %>
+      <% attendances_for_date.each do |attendance| %>
+        <span class="present-event">
+        <%= attendance.present? ? 'P' : 'A' %>
+        </span>
+      <% end %>
+    <% end %>
+
+    <% if holidays_for_date.any? %>
+      <% holidays_for_date.each do |holiday| %>
+      <span class="holiday-event"><%= holiday.title %></span> <!-- Display the first character of the holiday name -->
+        <%# <%= holiday.title  <!-- Display the first character of the holiday name --> %>
+      <% end %>
+    <% end %>
+  </p>
+<% end %>
+
+
 </div> 
 

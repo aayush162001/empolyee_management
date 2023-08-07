@@ -2,8 +2,7 @@
 
 <p><strong>Name:</strong> <%= (@department.title).titlecase %></p>
 
-<%= link_to 'Edit', edit_department_path(@department) %> |
-<%= link_to 'Back', departments_path %> |
-<%= link_to 'Delete', @department, method: :delete, data:{
-        turbo_method: :delete
-    } %>
+
+ <%= link_to 'Back', departments_path , class: "btn btn-info back-btn" %>
+<%= link_to '<i class="fas fa-edit"></i>'.html_safe, edit_department_path(@department), class: 'btn btn-primary' %>
+<%= link_to '<i class="fas fa-trash"></i>'.html_safe, @department, method: :delete, data: {turbo_method: :delete, }, class: 'btn btn-danger' %>

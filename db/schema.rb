@@ -10,7 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_26_104941) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_02_095605) do
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.string "service_name", null: false
+    t.bigint "byte_size", null: false
+    t.string "checksum"
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "active_storage_variant_records", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.string "variation_digest", null: false
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
   create_table "attendances", force: :cascade do |t|
     t.integer "user_id", null: false
     t.date "attendance_date"
@@ -23,6 +51,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_26_104941) do
     t.index ["user_id"], name: "index_attendances_on_user_id"
   end
 
+  create_table "check_in_outs", force: :cascade do |t|
+    t.date "attendance_date"
+    t.datetime "check_in"
+    t.datetime "check_out"
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.float "work_hours"
+    t.index ["user_id"], name: "index_check_in_outs_on_user_id"
+  end
+
   create_table "daily_work_reports", force: :cascade do |t|
     t.date "current_date"
     t.integer "hours"
@@ -31,6 +70,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_26_104941) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "project_id"
+    t.string "task"
+    t.string "created_by"
     t.index ["user_id"], name: "index_daily_work_reports_on_user_id"
   end
 
@@ -48,7 +89,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_26_104941) do
 
   create_table "email_hierarchies", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.string "to"
+    t.string "too"
     t.string "cc"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -57,7 +98,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_26_104941) do
 
   create_table "holidays", force: :cascade do |t|
     t.string "title"
-    t.date "holiday_date"
+    t.date "attendance_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -101,6 +142,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_26_104941) do
     t.string "created_by"
     t.integer "department_id"
     t.integer "designation_id"
+    t.string "unique_session_id"
+    t.boolean "is_active"
     t.index ["authentication_token"], name: "index_users_on_authentication_token"
     t.index ["department_id"], name: "index_users_on_department_id"
     t.index ["designation_id"], name: "index_users_on_designation_id"
@@ -116,7 +159,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_26_104941) do
     t.index ["user_id"], name: "index_users_roles_on_user_id"
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "attendances", "users"
+  add_foreign_key "check_in_outs", "users"
   add_foreign_key "daily_work_reports", "users"
   add_foreign_key "email_hierarchies", "users"
   add_foreign_key "users", "departments"

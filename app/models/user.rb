@@ -1,15 +1,22 @@
 class User < ApplicationRecord
   # has_and_belongs_to_many :roles
   enum role: [:employee, :leader, :project_manager, :company_admin, :super_admin]
-  enum department: [:ror, :fullstack , :python, :admin, :ceo]
+  # enum department: [:ror, :fullstack , :python, :admin, :ceo]
 
   has_many :projects, through: :daily_work_reports
   has_many :daily_work_reports
   has_one :email_hierarchy
   has_many :attendances
+  has_many :check_in_out
   belongs_to :designation
+  has_one_attached :image
 
-  after_initialize :set_default_role, :set_default_department, if: :new_record?
+  validates :name, :email, presence: true
+  validates :email, uniqueness: true
+  validates :name,  length: { minimum: 3, maximum: 50  }
+  # validates :name, format: { with: /\A[a-zA-Z]+\z/, message: 'only letters are allowed'}
+  after_initialize :set_default_role, if: :new_record?
+  # after_initialize :set_default_role, :set_default_department, if: :new_record?
   before_save :ensure_authentication_token
   paginates_per 15
   # rolify
@@ -18,7 +25,7 @@ class User < ApplicationRecord
   
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :trackable, :token_authenticatable, :validatable
+         :trackable, :token_authenticatable, :validatable, :session_limitable
 
   # after_create :assign_default_role
 
@@ -33,9 +40,9 @@ class User < ApplicationRecord
   def set_default_role
     self.role ||= :employee
   end
-  def set_default_department
-    self.department ||= :ror
-  end
+  # def set_default_department
+  #   self.department ||= :ror
+  # end
 
   # def must_have_a_role
   #   unless roles.any?

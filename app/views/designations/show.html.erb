@@ -2,8 +2,7 @@
 
 <p><strong>Name:</strong> <%= @designation.name %></p>
 
-<%= link_to 'Edit', edit_designation_path(@designation) %> |
-<%= link_to 'Back', designations_path %> |
-<%= link_to 'Delete', @designation, method: :delete, data:{
-        turbo_method: :delete
-    } %>
+
+ <%= link_to 'Back', designations_path , class: "btn btn-info back-btn" %>
+<%= link_to '<i class="fas fa-edit"></i>'.html_safe, edit_designation_path(@designation), class: 'btn btn-primary' %>
+<%= link_to '<i class="fas fa-trash"></i>'.html_safe, @designation, method: :delete, data: {turbo_method: :delete, }, class: 'btn btn-danger' %>

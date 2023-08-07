@@ -1,6 +1,24 @@
-<% @users.each do |user| %>
-    <%= user.email %>
-    <%=  user.roles.pluck(:name)  %>
-    <%= link_to 'edit role', "users/#{user.id}/edit" %>
-    <br>
-<% end %>
+  <h1>User Details</h1>
+<div class="container mt-4 custom-box">
+ <%= link_to 'Back', root_path , class: "btn btn-info back-btn" %>
+  <div class="d-flex justify-content-end">
+        <%= link_to edit_user_path(current_user), class: 'btn btn-primary mb-2 me-2' do %>
+      <i class="fas fa-plus me-1"></i> <!-- Font Awesome plus icon -->
+    <% end %>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <%= image_tag @user.image, class: "img-fluid rounded" if @user.image.attached? %>
+    </div>
+    <div class="col-md-8">
+      <p><strong>Name:</strong> <%= @user.name %></p>
+      <p><strong>Email:</strong> <%= @user.email %></p>
+      <p><strong>Date of Birth:</strong> <%= @user.dob %></p>
+      <p><strong>Address:</strong> <%= @user.address %></p>
+      <p><strong>Department:</strong> <%= Department.find(@user.department_id).title %></p>
+      <p><strong>Designation:</strong> <%= Designation.find(@user.designation_id).name %></p>
+      <p><strong>Contact:</strong> <%= @user.contact %></p>
+      <p><strong>Created by:</strong> <%= @user.created_by %></p>
+    </div>
+  </div>
+</div>

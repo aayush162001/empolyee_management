@@ -1,24 +1,158 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/">Home</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-link active" aria-current="page" href="/daily_work_reports">Add Report</a>
-        <% if current_user&.super_admin? or current_user&.company_admin? or current_user&.project_manager? %>
-                <%= link_to 'Projects', projects_path ,class:"nav-link active"%> <br>
-        <% end %>
-        <% if current_user&.super_admin? || current_user&.company_admin? %>
-                <%= link_to 'Email Hierarchy', email_hierarchy_index_path ,class:"nav-link active"%> <br>
-        <% end %>       
-      </div>
-      <div class="navbar-nav">
-        <%= link_to "Signout", destroy_user_session_path, method: :delete,  data:{
-            turbo_method: :delete
-        } %>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My App</title>
+  <!-- Include Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Include Font Awesome CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <!-- Add custom CSS for the sidebar -->
+  <style>
+    body {
+      padding-top: 50px; /* To give space for the fixed top navbar */
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 70px; /* Smaller width for the sidebar */
+      background-color: #ADD8E6;
+      padding-top: 1rem;
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 0.5rem 0; /* Adjusted padding for smaller size */
+      text-align: center; /* Center the icon and text vertically */
+      text-decoration: none;
+      color: #333;
+    }
+
+    .sidebar a i {
+      font-size: 1.2rem; /* Smaller icon size */
+    }
+
+    .sidebar a:hover {
+      background-color: #d1d5db;
+    }
+      .sidebar a span {
+    display: none; /* Hide the text by default */
+
+    color: #333; /* Text color */
+    border-radius: 5px; /* Rounded corners */
+  }
+      .sidebar a:hover i {
+    color: #fff; /* Change the icon color on hover */
+    background-color: #333; /* Change the background color on hover */
+    border-radius: 50%; /* Add a circular shape to the background */
+    padding: 0.3rem; /* Adjust the padding for better appearance */
+  }
+    .sidebar a:hover span {
+    display: block; /* Show the text on hover */
+  }
+  .dropdown-menu {
+      display: none; /* Hide the dropdown menu by default */
+      position: absolute;
+      background-color: #ADD8E6;
+      border-radius: 5px;
+      padding: 0.5rem;
+    }
+
+  .sidebar .dropdown:hover .dropdown-menu {
+      display: block; /* Show the dropdown menu on hover */
+      
+    }
+  .sign-out-icon {
+      position: absolute;
+      bottom: 0; /* Adjust the vertical position as needed */
+      left: 0; /* Adjust the horizontal position as needed */
+      
+      width: 70px;
+      padding-bottom: 1rem;
+  }
+    
+  </style>
+</head>
+<body>
+  <% if user_signed_in?%>  
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="row">
+        <div class="col-12">
+          <a class="nav-link" href="/">
+            <i class="fas fa-home"></i>
+            <span>Home</span> <!-- Font Awesome home icon -->
+          </a>
         </div>
+          <div class="col-12 " margin-bottom=250px >
+            <%= link_to '<i class="fas fa-user-alt"></i> <span> Profile </span>'.html_safe, user_path(current_user),  class: "nav-link"%>
+          </div>
+        <div class="col-12">
+          <a class="nav-link" aria-current="page" href="/daily_work_reports">
+            <i class="fas fa-clipboard-list"></i> <!-- Font Awesome clipboard list icon -->
+            <span>Daily Work Reports</span>
+          </a>
+          
+          </div>
+          <div class="col-12">
+            <%= link_to check_in_outs_path, class: "nav-link" do %>
+              <i class="fas fa-clock"></i> <!-- Font Awesome tasks icon -->
+              <span> Check-In-Out </span>
+            <% end %>
+          </div>
+          <div class="col-12">
+            <%= link_to attendances_path, class: "nav-link" do %>
+             <i class='fas fa-calendar-alt'></i> <!-- Font Awesome tasks icon -->
+              <span> Attendance </span>
+            <% end %>
+          </div>
+
+        <% if current_user&.super_admin? || current_user&.company_admin?%>
+          
+            <div class="col-12 dropdown">
+              <a class="nav-link" href="#">
+                <i class="fas fa-tasks"></i> <!-- Font Awesome tasks icon -->
+              </a>
+              <div class="dropdown-menu">
+                <%= link_to 'Departments', departments_path,  class: "nav-link"%>
+                <%= link_to 'Designations', designations_path,  class: "nav-link"%>
+                <%= link_to 'Project', projects_path,  class: "nav-link"%>
+                
+                <%= link_to  'Email-Hierarchy', email_hierarchy_index_path, class: "nav-link"%>
+              
+                <%# <a class="dropdown-item" href="#">Project 1</a>holidays
+                <a class="dropdown-item" href="#">Project 2</a> %>
+                <!-- Add more project links here as needed -->
+              </div>
+            </div>
+        <%end%>
+
+
+          <div class="col-12 " margin-bottom=250px >
+            <%= link_to '<i class="fas fa-holly-berry"></i> <span> Holiday </span>'.html_safe, holidays_path,  class: "nav-link"%>
+          </div>
+        
+        
+        <div class="col-12  sign-out-icon"  >
+
+          <%= link_to destroy_user_session_path, method: :delete, data: { turbo_method: :delete }, class: "nav-link" do %>
+            <i class="fas fa-sign-out-alt"></i> <!-- Font Awesome sign-out-alt icon -->
+            <span> Sign-Out </span>
+          <% end %>
+        </div>
+      </div>
     </div>
-  </div>
-</nav>
+    <%end%>  
+    <!-- Main content -->
+    <div class="container">
+      <%# <h4 >Employee Management</h4> %>
+      <%# <h4 style="background-color: #ADD8E6; padding: 10px;">Employee Management</h4> %>
+      <!-- Your page content goes here -->
+    </div>
+
+    <!-- Include Bootstrap JS and dependencies -->
+
+</body>
+</html>

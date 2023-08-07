@@ -6,6 +6,6 @@ class Api::V1::AttendanceController < ApplicationController
         attendance = Attendance.accessible_by(current_ability)
     
         # Return the daily work reports as JSON response
-        render json: attendance
+        render json: {status_code: 200, success: true, message: 'successful can see attendace', data: attendance, error: nil }
     end
 end

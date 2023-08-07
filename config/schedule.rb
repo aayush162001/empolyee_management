@@ -24,14 +24,25 @@ set :output, './log/cron.log'
 
 every 1.minutes do
     runner "puts 'Hello, world'"
+end 
+
+every 1.minutes do
+    rake "batch:send_messages"
 end
 
-# every 1.minutes do
-#     runner "DailyWorkReport.scheduled_report_mail"
-# end
+every [:tuesday, :wednesday, :thursday, :friday, :saturday], at: '12pm' do
+    # runner "CheckInOut.scheduled_check_out_mail"
+    rake "batch:scheduled_check_out_mail"
+end
 
 every [:tuesday, :wednesday, :thursday, :friday, :saturday], at: '12pm' do
-    runner "DailyWorkReport.scheduled_report_mail"
+    # runner "DailyWorkReport.scheduled_report_mail"
+    rake "batch:scheduled_report_mail"
+end
+
+every [:tuesday, :wednesday, :thursday, :friday, :saturday], at: '12pm' do
+    # runner "CheckInOut.scheduled_check_in_mail"
+    rake "batch:scheduled_check_in_mail"
 end
 
 # every 0 13 * * 2-6, at: '12pm' do

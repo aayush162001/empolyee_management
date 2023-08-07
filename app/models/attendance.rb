@@ -3,7 +3,7 @@ class Attendance < ApplicationRecord
   validate :unique_check_in, :on => :create
   # validate :calculate_attendance, :on => :update
   # validate :present_check
-  after_update :present_check
+  # after_update :present_check
   def calculate_attendance
     
     binding.pry
@@ -20,17 +20,17 @@ class Attendance < ApplicationRecord
     
   end
 
-  def present_check
-    binding.pry
-    if user.daily_work_reports.exists?(current_date: attendance_date)
-      binding.pry
-      if self.work_hours >= 8.00
-        self.present = 1
-      end
-    # else
-      # flash[:notice] = "Add Your Work Report"
-    end
-  end
+  # def present_check
+  #   binding.pry
+  #   if user.daily_work_reports.exists?(current_date: attendance_date)
+  #     binding.pry
+  #     if self.work_hours >= 8.00
+  #       self.present = 1
+  #     end
+  #   # else
+  #     # flash[:notice] = "Add Your Work Report"
+  #   end
+  # end
 
   def unique_check_in
     if Attendance.where.not(check_in: [nil]).where(check_out: [nil]).exists?(user_id: user_id, attendance_date: Date.today)
@@ -42,5 +42,33 @@ class Attendance < ApplicationRecord
     end
   end
 
+  # def self.scheduled_check_in_mail
+  #       # if not DailyWorkReport.exists?(user_id: user_id, current_date: current_date)
+  #       a = Attendance.where(attendance_date: Date.yesterday).pluck(:user_id).uniq
+  #       # a =DailyWorkReport.where(current_date: Date.yesterday).pluck(:user_id)
+  #       x = DailyWorkReport.where.not(user_id:a).where(current_date:Date.yesterday).pluck(:user_id)
+  #       @mail_to = User.where(id:x).ids
+  #       # @user.each do |u|
+  #       #   UsersMailer.weekly_mail(u.email).deliver
+  #       #   end
+  #       @mail_to.each do |u|
+  #         AttendanceMailer.check_in_mail(u).deliver_now
+  #       end
+  # end
+
+  # def self.scheduled_check_out_mail
+  #   # if not DailyWorkReport.exists?(user_id: user_id, current_date: current_date)
+  #   a = Attendance.where(attendance_date: Date.yesterday)
+    
+  #   # a =DailyWorkReport.where(current_date: Date.yesterday).pluck(:user_id)
+  #   x = a.where.not(check_in: [nil]).where(check_out: [nil]).pluck(:user_id)
+  #   @mail_to = User.where(id:x).ids
+  #   # @user.each do |u|
+  #   #   UsersMailer.weekly_mail(u.email).deliver
+  #   #   end
+  #   @mail_to.each do |u|
+  #     AttendanceMailer.check_out_mail(u).deliver_now
+  #   end
+  # end
 
 end

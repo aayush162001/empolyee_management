@@ -81,3 +81,6 @@ gem "whenever", "~> 1.0"
 gem "letter_opener", group: :development
 gem 'devise-token_authenticatable'
 gem "simple_calendar", "~> 3.0"
+
+gem "devise-security", "~> 0.18.0"
+gem "image_processing", ">= 1.2"

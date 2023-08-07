@@ -2,14 +2,17 @@
   <% 
   # binding.pry 
    %>
+   
   <% if report.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(report.errors.count, "error") %> prohibited this daily work report from being saved:</h2>
 
       <ul>
-        <p>Error: <%= report.errors.full_messages[0]%><p>
+        <%# <p>Error: <%= report.errors.full_messages_for(:base)[0]%>
+        <%# <p>Error: <%= report.errors.full_messages[0]%>
         <% report.errors.full_messages.each do |message| %>
           <li><%= message %></li>
+          <% # binding.pry %>
         <% end %>
       </ul>
     </div>
@@ -34,6 +37,18 @@
             <%= form.label :current_date ,{ class: "form-label"} %>
             <%= form.date_field :current_date, { class: "form-control", placeholder: "Site Code", autocomplete: "name" } %><br />
         </div>
+        <%if current_user.employee?%>
+          <div class="mb-3">
+              <%= form.hidden_field :user_id,{ class: "form-label", value: current_user.id} %>
+              <br />
+          </div>
+        <%else %>    
+          <div class="mb-3">
+            <%= form.label :user_id,{ class: "form-label"} %>
+            <%= form.number_field :user_id, { class: "form-control"} %><br />
+          </div>
+        <%end%>
+
         <div class="mb-3">
             <%= form.label :project_id ,{ class: "form-label"} %>
             <%=  form.collection_select :project_id, Project.all, :id, :name , { class: "form-control", prompt: "Select a project", autocomplete: "dob" } %><br />
@@ -43,13 +58,13 @@
             <%= form.number_field :hours, { class: "form-control", autocomplete: "address" } %><br />
         </div>
         <div class="mb-3">
+            <%= form.label :task,{ class: "form-label"} %>
+            <%= form.text_area :task, { class: "form-control"} %><br />
+        </div>
+        <div class="mb-3">
             <%= form.label :status,{ class: "form-label"} %>
             <%= form.text_field :status, { class: "form-control", autocomplete: "address" } %><br />
         </div>
-        <div class="mb-3">
-            <%= form.hidden_field :user_id,{ class: "form-label", value: current_user.id} %>
-            <br />
-        </div>    
 
             <%= form.button :submit %>
     </div>

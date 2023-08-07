@@ -16,7 +16,7 @@ class DailyWorkReportMailer < ApplicationMailer
         
         @work_report = work_report
         @user = work_report.user.email
-        @to = User.find(EmailHierarchy.find_by(user_id: work_report.user_id).to).email
+        @to = User.find((EmailHierarchy.find_by(user_id: work_report.user_id).too).split(',')).pluck(:email)
         @cc = User.find((EmailHierarchy.find_by(user_id: work_report.user_id).cc).split(',')).pluck(:email)
         # @admin_emails = User.where(role: [:super_admin, :company_admin]).pluck(:email)
     
@@ -38,7 +38,7 @@ class DailyWorkReportMailer < ApplicationMailer
     
     def scheduled_report_mail(mail_to)
         
-        binding.pry
+        # binding.pry
         
         @mail_to = mail_to
         @user = User.where(id:mail_to).pluck(:name)
