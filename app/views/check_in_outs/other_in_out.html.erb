@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Attendance Records</title>
+  <title>Other Chech_In/Check_Out Records</title>
   <!-- Add Bootstrap 5 CSS -->
    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
  <%= link_to 'Back', root_path , class: "btn btn-info back-btn" %>
-  <h1>Attendance Records</h1>
+  <h1> Other Chech_In/Check_Out Records </h1>
   <%
   #binding.pry
   %>
@@ -29,13 +29,7 @@
             <button class="btn btn-primary" id="show">Show Users</button>
         </div>
     </div> %>
- 
-  <% if not @check_out[0].nil? %>
-    <%# <%= link_to 'show', attendance_path(@check_out[0].id) %>
-    <%= button_to 'Check-out', check_in_out_path(@check_out[0].id), method: :patch, class: 'btn btn-primary',  id: 'btnToggle' %>
-  <%else%>
-    <%= button_to 'Check-in', check_in_outs_path, method: :post, class: 'btn btn-primary',  id: 'btnHide'%> 
-  <%end%>
+
   <br>
   <%# <%a = Date.today - 5.day
   <%b = Date.today
@@ -74,20 +68,6 @@
   <!-- Add Bootstrap 5 JS (Optional, only required for certain Bootstrap features) -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-<script>
-  $(document).ready(function() {
-    // Hide the target element on click of "btnHide" and show "btnToggle"
-    $("#btnHide").on("click", function() {
-      $(this).hide();
-     
-    });
 
-    // Hide the target element on click of "btnToggle" and show "btnHide"
-    $("#btnToggle").on("click", function() {
-     
-      $("#btnHide").show();
-    });
-  });
-</script>
 </html>
 

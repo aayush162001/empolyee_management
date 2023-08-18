@@ -1,5 +1,12 @@
 {
   "dependencies": {
-    "jquery": "^3.7.0"
-  }
+    "jquery": "^3.7.0",
+    "jquery-ujs": "^1.2.3"
+  },
+  "name": "empl",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:aayush162001/empolyee_management.git",
+  "author": "Aayush Gandhi <aayushgandhi162001@gmail.com>",
+  "license": "MIT"
 }

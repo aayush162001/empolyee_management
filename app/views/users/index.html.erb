@@ -1,17 +1,21 @@
 <body>
  <%= link_to 'Back', root_path , class: "btn btn-info back-btn" %>
 <div class="container">
-    <h1>User List</h1>
 
-    <%# <div class="row">
+    <h1>User List</h1>
+ <%# <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <div class="row">
         <div class="col-md-12">
             <button class="btn btn-primary" id="hide">Hide Users</button>
             <button class="btn btn-primary" id="show">Show Users</button>
         </div>
-    </div> %>
+    </div>
+<button id="btnHide">Hide</button>
+<button id="btnToggle">Toggle</button> %>
+
 
     <br>
-    <%= paginate @users %>
+
     <%= link_to 'Create New User', new_user_path ,class:"btn btn-primary"%> <br><br>
 
     <div class="row">
@@ -31,7 +35,7 @@
                             <td><%= user.id %></td>
                             <td><%= user.email %></td>
                             <td><%= user.role %></td>
-                            <td><%= link_to 'Edit Role', edit_user_path(user), class: 'btn btn-sm btn-secondary' %></td>
+                            <td><%= link_to 'Edit User', edit_user_path(user), class: 'btn btn-sm btn-secondary' %></td>
                         </tr>
                     <% end %>
                 </tbody>
@@ -39,11 +43,14 @@
         </div>
     </div>
 
-
+    <%= paginate @users %>
 </div>
 
 
 
+
+
+</body>
 <%# <script>
     $(document).ready(function(){
         $("#hide").click(function(){
@@ -53,7 +60,18 @@
             $("table").show();
         });
     });
-</script> %>
+$(document).ready(function() {
+  // Hide the target element on click of "btnHide" and show "btnToggle"
+  $("#btnHide").on("click", function() {
+    $(this).hide();
+    $("#btnToggle").show();
+  });
 
-</body>
+  // Hide the target element on click of "btnToggle" and show "btnHide"
+  $("#btnToggle").on("click", function() {
+    $(this).hide();
+    $("#btnHide").show();
+  });
+});
+</script> %>
 </html>

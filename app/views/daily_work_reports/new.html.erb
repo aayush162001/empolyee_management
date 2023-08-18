@@ -16,18 +16,22 @@
   <% 
   # binding.pry 
    %>
-   
-  <% if @daily_work_report.errors.any? %>
+          <% if @daily_work_report.errors[:base].any? %>
+            <div class="error">
+            <%=  @daily_work_report.errors[:base].join(', ') %>
+            </div>
+          <%end%> 
+  <%# <% if @daily_work_report.errors.any? 
     <div id="error_explanation">
-      <h2><%= pluralize(@daily_work_report.errors.count, "error") %> prohibited this daily work report from being saved:</h2>
+      <h2><%= pluralize(@daily_work_report.errors.count, "error")  prohibited this daily work report from being saved:</h2>
 
       <ul>
-        <%# <p>Error: <%= report.errors.full_messages_for(:base)[0]%>
-        <%# <p>Error: <%= report.errors.full_messages[0]%>
-        <% @daily_work_report.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-          <% # binding.pry %>
-        <% end %>
+        <%# <p>Error: <%= report.errors.full_messages_for(:base)[0]
+        <%# <p>Error: <%= report.errors.full_messages[0]
+        <% @daily_work_report.errors.full_messages.each do |message| 
+          <li><%= message </li>
+          <% # binding.pry 
+        <% end 
       </ul>
     </div>
   <% end %>
@@ -49,40 +53,70 @@
     <div class="card-body">
         <div class="mb-3">
             <%= form.label :current_date ,{ class: "form-label"} %>
-            <%= form.date_field :current_date, { class: "form-control", placeholder: "Site Code", autocomplete: "name" } %><br />
+            <%= form.date_field :current_date, { class: "form-control", placeholder: "Date ", :required => true, autocomplete: "name" } %><br />
+          <% if @daily_work_report.errors[:current_date].any? %>
+            <div class="error">
+            <%=  @daily_work_report.errors[:current_date].join(', ') %>
+            </div>
+          <%end%>
         </div>
-        <%if current_user.employee?%>
+<%# category: "other_work_reports" %>
+
+        <%# <%if current_user.employee? %>
+        <%binding.pry%>
+        <%if params["category"] == "other_work_reports"%>
           <div class="mb-3">
-              <%= form.hidden_field :user_id,{ class: "form-label", value: current_user.id} %>
-              <br />
-          </div>
-        <%else %>    
-          <div class="mb-3">
+          <%a = EmailHierarchy.where("too like ?","%,#{current_user.id},%").or(EmailHierarchy.where("too like ?","#{current_user.id},%")).or(EmailHierarchy.where("too like ?","%,#{current_user.id}")).or(EmailHierarchy.where("cc like ?","#{current_user.id}")).pluck(:user_id)%>
+          <%b = EmailHierarchy.where("cc like ?","%,#{current_user.id},%").or(EmailHierarchy.where("cc like ?","#{current_user.id},%")).or(EmailHierarchy.where("cc like ?","%,#{current_user.id}")).or(EmailHierarchy.where("cc like ?","#{current_user.id}")).pluck(:user_id)%>
+              <%binding.pry%>
+          <%c = a + b%>
+          <%#User.where(id:c.uniq).pluck(:email)%>    
             <%= form.label :user_id,{ class: "form-label"} %>
-            <%= form.number_field :user_id, { class: "form-control"} %><br />
+            <%= form.collection_select :user_id, User.where(id:c.uniq), :id, :email, { class: "form-control" , prompt: "Select a User" } %><br />
+          <%#= f.collection_select :department_id, Department.all, :id, :title, { class: "form-control", prompt: "Select a department" } %>
+
+          </div>           
+        <%else%>
+          <div class="mb-3">
+            <%= form.hidden_field :user_id,{ class: "form-label", value: current_user.id} %>
           </div>
+          <%# <div class="mb-3">
+            <%= form.label :user_id,{ class: "form-label"} %>
+            <%# <%= form.number_field :user_id, { class: "form-control"} %><br />
+          <%# </div>  %>
         <%end%>
 
         <div class="mb-3">
             <%= form.label :project_id ,{ class: "form-label"} %>
-            <%=  form.collection_select :project_id, Project.all, :id, :name , { class: "form-control", prompt: "Select a project", autocomplete: "dob" } %><br />
+            <%=  form.collection_select :project_id, Project.all, :id, :name , { class: "form-control", prompt: "Select a project",:required => true} %><br />
+          <% if @daily_work_report.errors[:project_id].any? %>
+            <div class="error">
+            <%=  @daily_work_report.errors[:project_id].join(', ') %>
+            </div>
+          <%end%>
         </div>
         <div class="mb-3">
             <%= form.label :hours,{ class: "form-label"} %>
-            <%= form.number_field :hours, { class: "form-control", autocomplete: "address" } %><br />
+            <%= form.number_field :hours, { class: "form-control", autocomplete: "Hours" } %><br />
+          <% if @daily_work_report.errors[:hours].any? %>
+            <div class="error">
+            <%=  @daily_work_report.errors[:hours].join(', ') %>
+            </div>
+          <%end%>
         </div>
         <div class="mb-3">
             <%= form.label :task,{ class: "form-label"} %>
-            <%= form.text_area :task, { class: "form-control"} %><br />
+            <%= form.text_area :task, { class: "form-control", :required => true} %><br />
         </div>
         <div class="mb-3">
             <%= form.label :status,{ class: "form-label"} %>
-            <%= form.text_field :status, { class: "form-control", autocomplete: "address" } %><br />
+            <%= form.text_field :status, { class: "form-control", autocomplete: "Status" } %><br />
         </div>
         <div class="mb-3">
               <%= form.hidden_field :created_by,{ class: "form-label", value: current_user.id} %>
               <br />
         </div>
+
 
             <%= form.button :submit %>
     </div>

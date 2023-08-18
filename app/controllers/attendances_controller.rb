@@ -27,7 +27,7 @@ class AttendancesController < ApplicationController
 		.pluck(:user_id)
 		@attendances = Attendance.where(user_id: (a+b).split(',')).order(current_date: :desc)
 		# end
-	  end
+	end
 	def new
 			@attendance = Attendance.new
 	end

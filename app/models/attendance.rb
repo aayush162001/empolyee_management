@@ -13,10 +13,10 @@ class Attendance < ApplicationRecord
     self.work_hours = b
     # c = 0 
     #   a.all.each do |b|
-    #     c += ((b.check_out )-(b.check_in))/3600
+    #     c += ((b.check_out )-(b.creck_in))/3600
     #   end
 
-    # self.present = user.daily_work_reports.exists?(user_id: user_id, current_date: attendance_date)
+    # self.present = user.daily_work\'njnzxsgdll.vfda.bf[b[_reports.exists?(user_id: user_id, current_date: attendance_date)
     
   end
 

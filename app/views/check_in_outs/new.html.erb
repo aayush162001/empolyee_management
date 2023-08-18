@@ -1,4 +1,4 @@
-<h1>New attendance</h1>
+<h1>Other Chech_In/Check_Out</h1>
 <%= form_with(model: @attendance, url: attendances_path, method: :post, local: true) do |form| %>
   <div class="card">
     <div class="card-body">
@@ -6,15 +6,26 @@
             <%= form.label :date ,{ class: "form-label"} %>
             <%= form.date_field :attendance_date, { class: "form-control", autocomplete: "name"} %><br />
         </div>
-        <div class="mb-3">
-            <%= form.hidden_field :user_id,{ class: "form-label", value: current_user.id} %>
+        <%# <div class="mb-3">
+            <%= form.hidden_field :user_id,{ class: "form-label", value: current_user.id} 
             <br />
-        </div>  
-        <div class="mb-3">
-            <%= form.hidden_field :check_in,{ class: "form-label", value: Time.now, autocomplete: "name"} %>
+        </div>   %>
+        <%# <div class="mb-3">
+            <%= form.hidden_field :check_in,{ class: "form-label", value: Time.now, autocomplete: "name"} 
             <br />
-        </div>     
-
+        </div> %>
+        <div class="mb-3">
+            <%= form.label :User_Id,{ class: "form-label"} %>
+            <%= form.number_field :user_id, { class: "form-control"} %><br />
+        </div>      
+        <div class="mb-3">
+            <%= form.label :check_in,{ class: "form-label"} %>
+            <%= form.datetime_select :check_in, { class: "form-control"} %><br />
+        </div> 
+        <div class="mb-3">
+            <%= form.label :check_out,{ class: "form-label"} %>
+            <%= form.datetime_select :check_out, { class: "form-control"} %><br />
+        </div> 
             <%= form.button :submit %>
     </div>
   </div>

@@ -10,6 +10,8 @@ class User < ApplicationRecord
   has_many :check_in_out
   belongs_to :designation
   has_one_attached :image
+  # validate :custom_email_validation
+
 
   validates :name, :email, presence: true
   validates :email, uniqueness: true
@@ -49,6 +51,15 @@ class User < ApplicationRecord
   #     errors.add(:roles, 'must have at least 1 role')
   #   end
   # end
-
+  def custom_email_validation
+    
+    binding.pry
+    
+    if email.blank?
+      errors.add(:email, "Email can't be blank")
+    elsif !email.include?('@')
+      errors.add(:email, "Invalid email format")
+    end
+  end
 
 end

@@ -11,19 +11,37 @@
 <body>
  <%= link_to 'Back', root_path , class: "btn btn-info back-btn" %>
   <h1>Daily Work Reports</h1>
-
-  <%= search_form_for @q do |f|%>
-    <div>
-      <%= f.label :project_name_or_current_date %>
-      <%= f.search_field :project_name_or_current_date_cont %>
-      <%= f.submit 'Search', class: "btn-primary" %>
-      
-    </div>
-  <% end %>
+  <%if params["category"] == "other_work_reports"%>
+    <%= search_form_for @q do |f|%>
+      <div>
+        <%= f.label :project_name_or_current_date %>
+        <%= f.search_field :project_name_or_current_date_cont %>
+        <%= f.hidden_field :category, value: params[:category] %>
+        <%= f.submit 'Search', class: "btn-primary" %>
+        
+      </div>
+    <% end %>
+  <%else%>
+    <%= search_form_for @q do |f|%>
+      <div>
+        <%= f.label :project_name_or_current_date %>
+        <%= f.search_field :project_name_or_current_date_cont %>
+        <%= f.submit 'Search', class: "btn-primary" %>
+        
+      </div>
+    <% end %>
+  <%end%>
 
   <br>
-  <%= link_to 'Add New Daily Work Report', new_daily_work_report_path, class: 'btn btn-primary' %>
+  <%if params["category"] == "other_work_reports"%>
+    <%#binding%>
+    <%= link_to 'Add New Daily Work Report', new_daily_work_report_path(category: "other_work_reports"), class: 'btn btn-primary' %>
+  <%else%>
+    <%= link_to 'Add New Daily Work Report', new_daily_work_report_path, class: 'btn btn-primary' %>
+  <%end%>
+  
   <%if not current_user.employee?%>
+  <%= link_to "Show Filtered Products", daily_work_reports_path(category: "other_work_reports") %>
     <%= link_to 'Others Work Report', work_check_index_path, class: 'btn btn-primary' %>
   <%end%>
   <br>

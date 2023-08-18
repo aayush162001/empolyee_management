@@ -11,14 +11,13 @@
             <%# <p>Error: <%= report.errors.full_messages[0]%>
             <% @users.errors.full_messages.each do |message| %>
               <li><%= message %></li>
-              <% # binding.pry %>
             <% end %>
           </ul>
         </div>
       <% end %>
       <%= link_to 'Back', root_path, class: "btn btn-info back-btn" %>
       
-      <%# <% binding.pry  %>
+
       <div class="card shadow"> <!-- Add 'shadow' class here -->
         <div class="card-body">
           <div class="mb-3">
@@ -42,16 +41,19 @@
             <%= form.file_field :image %><br />
           </div>                     
           <% if current_user.super_admin? or current_user.company_admin? %>
-            <div class="mb-3">    
-              <%# <%= f.select(:role, User.roles.keys) %> 
-              <%= form.select :role, User.roles.keys.map {|key| [key.humanize, key]}%>
-              <%# <%= f.select(:role, User.roles.keys) %> 
-            </div>
-            <div class="mb-3">
-              <%= form.label :designation_id, { class: "form-label" } %>
-              <%= form.collection_select :designation_id, Designation.all, :id, :name , { class: "form-control", prompt: "Select a project", autocomplete: "dob" } %><br />
-            </div>
-          <% end %>
+            <%if not current_user.id == params[:id].to_i %>
+                  <% #binding.pry %>
+              <div class="mb-3">    
+                <%# <%= f.select(:role, User.roles.keys) %> 
+                <%= form.select :role, User.roles.keys.map {|key| [key.humanize, key]}%>
+                <%# <%= f.select(:role, User.roles.keys) %> 
+              </div>
+              <div class="mb-3">
+                <%= form.label :designation_id, { class: "form-label" } %>
+                <%= form.collection_select :designation_id, Designation.all, :id, :name , { class: "form-control", prompt: "Select a project", autocomplete: "dob" } %><br />
+              </div>
+            <% end %>
+          <%end%>  
           <div class="mb-3">
             <%= form.label :department_id, { class: "form-label" } %>
             <%= form.collection_select :department_id, Department.all, :id, :title , { class: "form-control", prompt: "Select a project", autocomplete: "dob" } %><br />

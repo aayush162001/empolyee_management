@@ -13,8 +13,10 @@ class Ability
     elsif user.company_admin?
       # binding.pry
       can :manage, :all
+      cannot :manage, User, role: :super_admin
     elsif user.project_manager?
         # binding.pry     
+        
       can :manage, Project
       can :manage, DailyWorkReport ,user_id: employees_under(user)
       can :manage, DailyWorkReport ,user_id: user.id
