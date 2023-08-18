@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   resources :other_work_reports
 
 
-  devise_for :users, skip: [:registrations]
+  devise_for :users, skip: [:registrations] 
   #  :controllers => { :registrations => 'registrations'}
   
   
@@ -36,6 +36,9 @@ Rails.application.routes.draw do
   # get 'home/index'
   get 'work/check_index' => 'daily_work_reports#check_index'
   get 'attendance/check_attendance' => 'attendances#check_attendance'
+  get 'check_in/other_in_out' => 'check_in_outs#other_in_out'
+  post 'check_in/other_in_out' => 'check_in_outs#create_other'
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   # get 'users/index'
   # Defines the root path route ("/")

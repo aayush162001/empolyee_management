@@ -136,8 +136,8 @@
         
         
         <div class="col-12  sign-out-icon"  >
-
-          <%= link_to destroy_user_session_path, method: :delete, data: { turbo_method: :delete }, class: "nav-link" do %>
+<%# <%= button_to('<i class="fas fa-holly-berry"></i> <span> Holiday </span>'.html_safe, destroy_user_session_path, :method => :delete)%>
+          <%= link_to destroy_user_session_path, :method => :delete, class: "nav-link" do %>
             <i class="fas fa-sign-out-alt"></i> <!-- Font Awesome sign-out-alt icon -->
             <span> Sign-Out </span>
           <% end %>

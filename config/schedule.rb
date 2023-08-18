@@ -36,8 +36,8 @@ every [:tuesday, :wednesday, :thursday, :friday, :saturday], at: '12pm' do
 end
 
 every [:tuesday, :wednesday, :thursday, :friday, :saturday], at: '12pm' do
-    # runner "DailyWorkReport.scheduled_report_mail"
-    rake "batch:scheduled_report_mail"
+    runner "DailyWorkReport.scheduled_report_mail"
+    # rake "batch:scheduled_report_mail"
 end
 
 every [:tuesday, :wednesday, :thursday, :friday, :saturday], at: '12pm' do

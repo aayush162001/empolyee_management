@@ -84,3 +84,4 @@ gem "simple_calendar", "~> 3.0"
 
 gem "devise-security", "~> 0.18.0"
 gem "image_processing", ">= 1.2"
+gem 'active_model_serializers'

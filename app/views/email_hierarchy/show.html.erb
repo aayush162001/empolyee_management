@@ -18,7 +18,7 @@
     <%= link_to 'Back', email_hierarchy_index_path, class: "btn btn-secondary" %>
 
     <%= link_to '<i class="fas fa-edit"></i>'.html_safe, edit_email_hierarchy_path(@email_hierarchy), class: 'btn btn-secondary btn-sm' %>
-    <%= link_to '<i class="fas fa-trash"></i>'.html_safe, @email_hierarchy, method: :delete, data: {turbo_method: :delete, }, class: 'btn btn-danger btn-sm' %>
+    <%= link_to '<i class="fas fa-trash"></i>'.html_safe, @email_hierarchy, data: { "turbo-method": :delete }, class: 'btn btn-danger btn-sm' %>
 
 
   </div>

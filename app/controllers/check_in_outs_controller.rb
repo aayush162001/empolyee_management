@@ -1,5 +1,5 @@
 class CheckInOutsController < ApplicationController
-    before_action :set_project, only: [:show, :edit, :update, :destroy]    
+    # before_action :set_project, only: [:show, :edit, :update, :destroy]    
 	before_action :authenticate_user!
 	load_and_authorize_resource
 
@@ -26,6 +26,10 @@ class CheckInOutsController < ApplicationController
 				redirect_to check_in_outs_path, notice: 'Attendance record created successfully.'
 			
 			end
+	end
+
+	def create_other
+		pass
 	end
 
 	def edit
@@ -55,6 +59,20 @@ class CheckInOutsController < ApplicationController
 			render :edit
 		end
 	end
+	def other_in_out
+		# if user_signed_in?  
+		  
+		  binding.pry
+		  
+		  a = EmailHierarchy.where("too like ?","%,#{current_user.id},%").or(EmailHierarchy.where("too like ?","#{current_user.id},%")).or(EmailHierarchy.where("too like ?","%,#{current_user.id}")).or(EmailHierarchy.where("cc like ?","#{current_user.id}"))
+		  .pluck(:user_id)
+		  # a = EmailHierarchy.where("to like ?","%#{current_user.id.to_s}%").pluck(:user_id)
+		  # b = EmailHierarchy.where("cc like ?","%#{current_user.id.to_s}%").pluck(:user_id)
+		  b = EmailHierarchy.where("cc like ?","%,#{current_user.id},%").or(EmailHierarchy.where("cc like ?","#{current_user.id},%")).or(EmailHierarchy.where("cc like ?","%,#{current_user.id}")).or(EmailHierarchy.where("cc like ?","#{current_user.id}")).pluck(:user_id)
+	
+		@check_in_outs = Attendance.where(user_id: (a+b).split(',')).order(current_date: :desc)
+		# end
+	end
 
 	def check_in
 		@check_in_out = CheckInOut.new(attendance_date: params[:date], user_id: current_user.id, check_in: Time.current)
@@ -75,16 +93,16 @@ class CheckInOutsController < ApplicationController
 
 	private
 
-	def set_project
-		@check_in_out = CheckInOut.find(params[:id])
-	end
-	
-	
-	# def attendance_params
-	# 	binding.pry
-	# 	params.require(:attendance).permit(:user_id,:attendance_date,:present,:check_in,:check_out,:work_hours)
-
+	# def set_project
+	# 	@check_in_out = CheckInOut.find(params[:id])
 	# end
+	
+	
+	def check_in_out_params
+		# binding.pry
+		params.require(:attendance).permit(:user_id,:attendance_date,:check_in,:check_out,:work_hours)
+
+	end
 	
 
 	def start_date
