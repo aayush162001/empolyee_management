@@ -4,7 +4,9 @@ class UsersController < ApplicationController
     before_action :set_user, only: [:show, :edit, :update, :destroy]
 
     def index
-        @users = User.all.page(params[:page])
+        # @users = User.all.page(params[:page])
+        @q = User.ransack(params[:q])
+        @users = @q.result.page(params[:page]).accessible_by(current_ability)
     end
 
     def new
@@ -48,6 +50,15 @@ class UsersController < ApplicationController
         else 
             render :edit, status: :unprocessable_entity
         end
+    end
+    def active_for_authentication?
+        super && is_active
+    end
+    def soft_delete
+        @user = User.find(params[:id])
+        @user.soft_delete
+    
+        redirect_to users_path, notice: 'User was successfully soft deleted.'
     end
     
     private

@@ -35,15 +35,15 @@
   <br>
   <%if params["category"] == "other_work_reports"%>
     <%#binding%>
-    <%= link_to 'Add New Daily Work Report', new_daily_work_report_path(category: "other_work_reports"), class: 'btn btn-primary' %>
+    <%= link_to 'Add New Daily Work Report', new_daily_work_report_path(category: "other_work_reports"), class: 'btn btn-success' %>
   <%else%>
-    <%= link_to 'Add New Daily Work Report', new_daily_work_report_path, class: 'btn btn-primary' %>
+    <%= link_to 'Add New Daily Work Report', new_daily_work_report_path, class: 'btn btn-success' %>
   <%end%>
   
-  <%if not current_user.employee?%>
-  <%= link_to "Show Filtered Products", daily_work_reports_path(category: "other_work_reports") %>
-    <%= link_to 'Others Work Report', work_check_index_path, class: 'btn btn-primary' %>
-  <%end%>
+  <%# <%if not current_user.employee?
+  <%= link_to "Show Filtered Products", daily_work_reports_path(category: "other_work_reports") 
+    <%= link_to 'Others Work Report', work_check_index_path, class: 'btn btn-primary' 
+  <%end%> 
   <br>
   <br>
 

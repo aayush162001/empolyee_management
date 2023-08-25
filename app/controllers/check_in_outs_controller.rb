@@ -5,7 +5,10 @@ class CheckInOutsController < ApplicationController
 
 	def index
 			# @attendances = Attendance.where(attendance_date: start_date..end_date).accessible_by(current_ability).order(attendance_date: :desc)
-			@check_in_outs = current_user.check_in_out.where(attendance_date: start_date..end_date)
+			category = (params[:category] or (params[:q][:category] if params[:q].present?))
+			# binding.pry
+			@check_in_outs = fetch_products(category)
+			# @check_in_outs = current_user.check_in_out.order(attendance_date: :desc)
 			@check_out = CheckInOut.where(attendance_date:Date.today).where(user_id:current_user.id).where.not(check_in: [nil]).where(check_out: [nil])
 	end
 
@@ -14,15 +17,23 @@ class CheckInOutsController < ApplicationController
 	end
 
 	def create
-			
-			# binding.pry
-			
-			@check_in_out = CheckInOut.new(user_id: current_user.id, attendance_date: Date.current, check_in: Time.current)
-			@check_in_out.user = current_user
+
+			if params[:check_in_out].present?
+				if params[:check_in_out][:category] == "other_work_reports"
+					@check_in_out = CheckInOut.new(check_in_out_params)
+					
+					@check_in_out.work_hours = @check_in_out.calculate_attendance
+					@check_in_out.hours_sum
+				end
+			else
+				@check_in_out = CheckInOut.new(user_id: current_user.id, attendance_date: Date.current, check_in: Time.current,created_by: current_user.id)
+				@check_in_out.user = current_user
+			end
 			
 			# @attendance.calculate_attendance
 	
 			if @check_in_out.save
+
 				redirect_to check_in_outs_path, notice: 'Attendance record created successfully.'
 			
 			end
@@ -62,7 +73,7 @@ class CheckInOutsController < ApplicationController
 	def other_in_out
 		# if user_signed_in?  
 		  
-		  binding.pry
+
 		  
 		  a = EmailHierarchy.where("too like ?","%,#{current_user.id},%").or(EmailHierarchy.where("too like ?","#{current_user.id},%")).or(EmailHierarchy.where("too like ?","%,#{current_user.id}")).or(EmailHierarchy.where("cc like ?","#{current_user.id}"))
 		  .pluck(:user_id)
@@ -99,18 +110,43 @@ class CheckInOutsController < ApplicationController
 	
 	
 	def check_in_out_params
-		# binding.pry
-		params.require(:attendance).permit(:user_id,:attendance_date,:check_in,:check_out,:work_hours)
-
+		if params[:check_in_out].present?
+			params.require(:check_in_out).permit(:user_id,:attendance_date,:check_in,:check_out,:work_hours,:created_by)
+		end
 	end
-	
+	def fetch_products(category)
+		# binding.pry
+		if category == "other_work_reports"
+		  
+		  # binding.pry
+		  
+		  a = EmailHierarchy.where("too like ?","%,#{current_user.id},%").or(EmailHierarchy.where("too like ?","#{current_user.id},%")).or(EmailHierarchy.where("too like ?","%,#{current_user.id}")).or(EmailHierarchy.where("cc like ?","#{current_user.id}"))
+		  .pluck(:user_id)
+		  # a = EmailHierarchy.where("to like ?","%#{current_user.id.to_s}%").pluck(:user_id)
+		  # b = EmailHierarchy.where("cc like ?","%#{current_user.id.to_s}%").pluck(:user_id)
+		  b = EmailHierarchy.where("cc like ?","%,#{current_user.id},%").or(EmailHierarchy.where("cc like ?","#{current_user.id},%")).or(EmailHierarchy.where("cc like ?","%,#{current_user.id}")).or(EmailHierarchy.where("cc like ?","#{current_user.id}")).pluck(:user_id)
+		  @check_in_outs = CheckInOut.where(user_id: (a+b).split(',')).accessible_by(current_ability).order(current_date: :desc)
+		  # @daily_work_reports = @qs.result(distinct: true).accessible_by(current_ability).order(current_date: :desc)
+		#   @q = DailyWorkReport.where(user_id: (a+b)).ransack(params[:q])
+		#   @q.result(distinct: true).accessible_by(current_ability).order(current_date: :desc)
+		# end
+		else
+		  
+		  # binding.pry
+		  
+		  @check_in_outs = current_user.check_in_out.accessible_by(current_ability).order(attendance_date: :desc)
+		#   @q.result(distinct: true).accessible_by(current_ability).order(current_date: :desc)
+		# @daily_work_reports = DailyWorkReport.accessible_by(current_ability)
+		# @daily_work_reports = DailyWorkReport.all.order(created_at: :desc)
+		end
+	end	
 
 	def start_date
-			Date.current.beginning_of_month
+		Date.current.beginning_of_month
 	end
 	
 	def end_date
-			Date.current.end_of_month
+		Date.current.end_of_month
 	end
 
 end

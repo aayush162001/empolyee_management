@@ -3,6 +3,14 @@
 <div class="container">
 
     <h1>User List</h1>
+
+        <%= search_form_for @q do |f| %>  
+      <div class="mb-2">
+        <%= f.label :email_cont, class: "form-label" %>
+        <%= f.search_field :email_cont, class: "form-control" %>
+      </div>
+      <%= f.submit "Search", class: "btn btn-primary" %>
+    <% end %>
  <%# <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <div class="row">
         <div class="col-md-12">
@@ -26,6 +34,7 @@
                         <th>ID</th>
                         <th>Email</th>
                         <th>Role</th>
+                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -35,7 +44,16 @@
                             <td><%= user.id %></td>
                             <td><%= user.email %></td>
                             <td><%= user.role %></td>
-                            <td><%= link_to 'Edit User', edit_user_path(user), class: 'btn btn-sm btn-secondary' %></td>
+                            <td>
+                                <% if user.is_active %>
+                                    <span class="status-icon active">✅</span>
+                                <% else %>
+                                    <span class="status-icon inactive">❌</span>
+                                <% end %>
+                            </td>
+                            <td><%= link_to 'Edit User', edit_user_path(user), class: 'btn btn-sm btn-secondary' %> | 
+                            <%# <%= link_to 'Soft Delete', soft_delete_user_path(user), method: :delete , data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-secondary'%>
+                            <%= link_to '<i class="fas fa-trash"></i>'.html_safe, soft_delete_user_path(user), method: :delete, data: {turbo_method: :delete, }, class: 'btn btn-danger' %></td>
                         </tr>
                     <% end %>
                 </tbody>

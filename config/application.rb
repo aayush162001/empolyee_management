@@ -11,7 +11,8 @@ module EmployeeManagement
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
     config.assets.enabled = true
-
+    # config.active_record.default_timezone = :local
+    config.time_zone = "Asia/Kolkata"
     # config.api_only = true  
     # config.middleware.use ActionDispatch::Flash
     # config.session_store :cookie_store, key: '_interslice_session'

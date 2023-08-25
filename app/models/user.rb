@@ -30,8 +30,14 @@ class User < ApplicationRecord
          :trackable, :token_authenticatable, :validatable, :session_limitable
 
   # after_create :assign_default_role
-
+  validates :is_active, inclusion: { in: [true, false] }
   # validate :must_have_a_role, on: :update
+  def self.ransackable_attributes(auth_object = nil)
+    ["email"]
+  end
+  def soft_delete
+    update_attribute(:is_active, false)
+  end
 
   private
 
@@ -53,7 +59,7 @@ class User < ApplicationRecord
   # end
   def custom_email_validation
     
-    binding.pry
+    # binding.pry
     
     if email.blank?
       errors.add(:email, "Email can't be blank")
@@ -61,5 +67,6 @@ class User < ApplicationRecord
       errors.add(:email, "Invalid email format")
     end
   end
+
 
 end

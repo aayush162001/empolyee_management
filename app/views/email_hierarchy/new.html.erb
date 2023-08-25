@@ -3,9 +3,12 @@
  <%= link_to 'Back', email_hierarchy_index_path , class: "btn btn-info back-btn" %> 
 <%= form_with(model: @email_hierarchy, url: email_hierarchy_index_path, method: :post, local: true) do |form| %>
   <div class="mb-3">
+    <%# <%= form.label :user_id, "Select User" %>
+    <%# <%= form.collection_select :user_id, User.all, :id,:email,  {class: "form-control", prompt: "Select users", multiple: true } %> 
     <%= form.label :user_id, class: "form-label" %>
     <%= form.text_field :user_id, class: "form-control" %>
   </div>
+
   <div class="mb-3">
     <%= form.label :to, class: "form-label" %>
     <%= form.text_field :too, class: "form-control" %>
@@ -14,6 +17,12 @@
     <%= form.label :cc, class: "form-label" %>
     <%= form.text_field :cc, class: "form-control" %>
   </div>
+<%= form.collection_check_boxes :user_id, User.all, :id, :id%>
+  <% User.all.each do |option| %>
+    <%= form.check_box :attribute_name, { multiple: true }, option.id, nil %>
+    <%= option.email %>
+  <% end %>
+
 
   <div class="actions">
     <%= form.submit "Save Email Hierarchy", class: "btn btn-primary" %>

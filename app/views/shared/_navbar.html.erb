@@ -89,25 +89,82 @@
           <div class="col-12 " margin-bottom=250px >
             <%= link_to '<i class="fas fa-user-alt"></i> <span> Profile </span>'.html_safe, user_path(current_user),  class: "nav-link"%>
           </div>
-        <div class="col-12">
-          <a class="nav-link" aria-current="page" href="/daily_work_reports">
-            <i class="fas fa-clipboard-list"></i> <!-- Font Awesome clipboard list icon -->
-            <span>Daily Work Reports</span>
-          </a>
+        <% if not current_user&.employee?%>
           
-          </div>
+            <div class="col-12 dropdown">
+              <a class="nav-link" href="#">
+                <i class="fas fa-clipboard-list"></i> <!-- Font Awesome tasks icon -->
+              </a>
+              <div class="dropdown-menu">
+                <%= link_to 'Daily Work Reports', daily_work_reports_path,  class: "nav-link"%>
+                <%= link_to 'Other Reports', daily_work_reports_path(category: "other_work_reports"),  class: "nav-link"%>
+                <%# <a class="dropdown-item" href="#">Project 1</a>holidays
+                <a class="dropdown-item" href="#">Project 2</a> %>
+                <!-- Add more project links here as needed -->
+              </div>
+            </div>
+        <%else%>          
           <div class="col-12">
+            <a class="nav-link" aria-current="page" href="/daily_work_reports">
+              <i class="fas fa-clipboard-list"></i> <!-- Font Awesome clipboard list icon -->
+              <span>Daily Work Reports</span>
+            </a>
+            </div>
+        <%end%>    
+        <% if not current_user&.employee?%>
+                    <%# <div class="col-12">
             <%= link_to check_in_outs_path, class: "nav-link" do %>
-              <i class="fas fa-clock"></i> <!-- Font Awesome tasks icon -->
+              <%# <i class="fas fa-clock"></i> <!-- Font Awesome tasks icon -->
               <span> Check-In-Out </span>
-            <% end %>
-          </div>
+            <% end 
+          </div> %> 
+            <div class="col-12 dropdown">
+              <a class="nav-link" href="#">
+                <i class="fas fa-clock"></i> <!-- Font Awesome tasks icon -->
+              </a>
+              <div class="dropdown-menu">
+                <%= link_to ' Check-In-Out', check_in_outs_path,  class: "nav-link"%>
+                <%= link_to 'Other Check-In-Out', check_in_outs_path(category: "other_work_reports"),  class: "nav-link"%>
+                <%# <a class="dropdown-item" href="#">Project 1</a>holidays
+                <a class="dropdown-item" href="#">Project 2</a> %>
+                <!-- Add more project links here as needed -->
+              </div>
+            </div>
+        <%else%>          
           <div class="col-12">
+            <a class="nav-link" aria-current="page" href="/check_in_outs">
+              <i class="fas fa-clock"></i> <!-- Font Awesome clipboard list icon -->
+              <span> Check-In-Out</span>
+            </a>
+            </div>
+        <%end%>    
+        <% if not current_user&.employee?%>
+          <%# <div class="col-12">
             <%= link_to attendances_path, class: "nav-link" do %>
-             <i class='fas fa-calendar-alt'></i> <!-- Font Awesome tasks icon -->
+             <%# <i class='fas fa-calendar-alt'></i> <!-- Font Awesome tasks icon -->
               <span> Attendance </span>
-            <% end %>
-          </div>
+            <% end 
+          </div> %> 
+            <div class="col-12 dropdown">
+              <a class="nav-link" href="#">
+                <i class="fas fa-calendar-alt"></i> <!-- Font Awesome tasks icon -->
+              </a>
+              <div class="dropdown-menu">
+                <%= link_to ' Attendance', attendances_path,  class: "nav-link"%>
+                <%= link_to 'Other Attendance', attendance_check_attendance_path,  class: "nav-link"%>
+                <%# <a class="dropdown-item" href="#">Project 1</a>holidays
+                <a class="dropdown-item" href="#">Project 2</a> %>
+                <!-- Add more project links here as needed -->
+              </div>
+            </div>
+        <%else%>          
+          <div class="col-12">
+            <a class="nav-link" aria-current="page" href="/attendances">
+              <i class="fas fa-calendar-alt"></i> <!-- Font Awesome clipboard list icon -->
+              <span> Attendance </span>
+            </a>
+            </div>
+        <%end%>  
 
         <% if current_user&.super_admin? || current_user&.company_admin?%>
           

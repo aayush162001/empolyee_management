@@ -32,13 +32,6 @@
               </div>
             <%end%>
         </div>
-                    <div class="form-group">    
-                    <%= f.label :Role %><br />
-              <%# <%= f.select(:role, User.roles.keys) %> 
-              <%= f.select :role, User.roles.keys.map {|key| [key.humanize, key]}%>
-              <%# <%= f.select(:role, User.roles.keys) %> 
-            </div>
-
         <div class="form-group">
             <%= f.label :password_confirmation %><br />
             <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
@@ -49,7 +42,6 @@
             </div>
           <%end%>
         </div>
-
         <div class="form-group">
             <%= f.label :name %><br />
             <%= f.text_field :name, autocomplete: "name", class: "form-control" %>
@@ -61,6 +53,17 @@
               </div>
             <%end%>
         </div>
+
+                    <div class="form-group">    
+                    <%= f.label :Role %><br />
+              <%# <%= f.select(:role, User.roles.keys) %> 
+
+              <%= f.select :role, (User.roles.map {|v,key| [v.humanize, key] if key<3}).compact! %>
+              <%# <%= f.select(:role, User.roles.keys) %> 
+            </div>
+
+
+
 
         <div class="form-group">
             <%= f.label :department_id ,{ class: "form-label"} %>

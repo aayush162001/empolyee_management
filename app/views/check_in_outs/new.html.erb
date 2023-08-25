@@ -1,5 +1,5 @@
 <h1>Other Chech_In/Check_Out</h1>
-<%= form_with(model: @attendance, url: attendances_path, method: :post, local: true) do |form| %>
+<%= form_with(model: @check_in_out, url: check_in_outs_path, method: :post, local: true) do |form| %>
   <div class="card">
     <div class="card-body">
         <div class="mb-3">
@@ -16,7 +16,7 @@
         </div> %>
         <div class="mb-3">
             <%= form.label :User_Id,{ class: "form-label"} %>
-            <%= form.number_field :user_id, { class: "form-control"} %><br />
+            <%= form.collection_select :user_id, User.all, :id,:email,  {class: "form-control", prompt: "Select users", multiple: true } %><br />
         </div>      
         <div class="mb-3">
             <%= form.label :check_in,{ class: "form-label"} %>
@@ -26,6 +26,8 @@
             <%= form.label :check_out,{ class: "form-label"} %>
             <%= form.datetime_select :check_out, { class: "form-control"} %><br />
         </div> 
+        <%= form.hidden_field :category, value: params[:category] %>
+        <%= form.hidden_field :created_by,{ class: "form-label", value: current_user.id} %>
             <%= form.button :submit %>
     </div>
   </div>
