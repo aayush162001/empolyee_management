@@ -4,11 +4,14 @@ class CheckInOut < ApplicationRecord
   def calculate_attendance
 
     # binding.pry
-
-    a = CheckInOut.where(attendance_date:Date.today).where(user_id:user.id)
-    b = ((Time.current - a.last.check_in)/3600).round(2)
-    self.work_hours = b
-
+    if self.user_id != self.created_by
+      b = ((self.check_out - self.check_in)/3600).round(2)
+      self.work_hours = b
+    else
+      a = CheckInOut.where(attendance_date:Date.today).where(user_id:user.id)
+      b = ((Time.current - a.last.check_in)/3600).round(2)
+      self.work_hours = b
+    end
   end
 
   def hours_sum

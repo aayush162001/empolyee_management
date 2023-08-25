@@ -32,12 +32,12 @@ class OtherWorkReportsController < ApplicationController
 
   # POST /other_work_reports or /other_work_reports.json
   def create
-    binding.pry
+    # binding.pry
 
     @other_work_report = DailyWorkReport.new(other_work_report_params)
 
     # @daily_work_report = DailyWorkReport.new(daily_work_report_params)
-    binding.pry
+    # binding.pry
 
       if not current_user.id == params[:daily_work_report][:user_id].to_i
       # @daily_work_report.current_date = Time.now

@@ -25,6 +25,10 @@
             <%= form.text_field :name, { class: "form-control", placeholder: "Name", required: true, autocomplete: "name" } %><br />
           </div>
           <div class="mb-3">
+            <%= form.label :email, { class: "form-label" } %>
+            <%= form.text_field :email, { class: "form-control", placeholder: "Email", required: true, autocomplete: "name" } %><br />
+          </div>
+          <div class="mb-3">
             <%= form.label :dob, { class: "form-label" } %>
             <%= form.date_field :dob, { class: "form-control", placeholder: "Date of Birth", autocomplete: "dob" } %><br />
           </div>

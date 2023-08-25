@@ -20,7 +20,7 @@ class EmailHierarchyController < ApplicationController
 
   def create
     
-    binding.pry
+    # binding.pry
     
     @email_hierarchy = EmailHierarchy.new(email_hierarchy_params)
     if @email_hierarchy.save
@@ -54,7 +54,7 @@ class EmailHierarchyController < ApplicationController
 
   def email_hierarchy_params
     
-    binding.pry
+    # binding.pry
     
     params.require(:email_hierarchy).permit(:user_id,:too,:cc)
   end

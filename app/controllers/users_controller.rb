@@ -4,7 +4,9 @@ class UsersController < ApplicationController
     before_action :set_user, only: [:show, :edit, :update, :destroy]
 
     def index
-        @users = User.all.page(params[:page])
+        # @users = User.all.page(params[:page])
+        @q = User.ransack(params[:q])
+        @users = @q.result.page(params[:page]).accessible_by(current_ability)
     end
 
     def new
@@ -18,6 +20,7 @@ class UsersController < ApplicationController
         # binding.pry
         @user = User.new(user_params)
         if @user.save
+            Time.zone = @user.time_zone
             redirect_to users_url
         else
             render :new , status: :unprocessable_entity
@@ -49,12 +52,22 @@ class UsersController < ApplicationController
             render :edit, status: :unprocessable_entity
         end
     end
+    def active_for_authentication?
+        super && is_active
+    end
+    def soft_delete
+        @user = User.find(params[:id])
+        @user.soft_delete
+    
+        redirect_to users_path, notice: 'User was successfully soft deleted.'
+    end
     
     private
         def set_user
             @users = User.find(params[:id])
         end
         def user_params
-            params.require(:user).permit(:email,:password,:password_confirmation,:name,:role,:designation_id,:department_id,:dob,:address,:contact,:created_by,:image)
+            params[:user][:role] = params[:user][:role].to_i
+            params.require(:user).permit(:email,:password,:password_confirmation,:name,:role,:designation_id,:department_id,:dob,:address,:contact,:created_by,:image, :time_zone)
         end
 end

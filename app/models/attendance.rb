@@ -6,7 +6,6 @@ class Attendance < ApplicationRecord
   # after_update :present_check
   def calculate_attendance
     
-    binding.pry
 
     a = Attendance.where(attendance_date:Date.today).where(user_id:user.id)
     b = ((Time.current - a[0].check_in)/3600).round(2)
@@ -34,7 +33,7 @@ class Attendance < ApplicationRecord
 
   def unique_check_in
     if Attendance.where.not(check_in: [nil]).where(check_out: [nil]).exists?(user_id: user_id, attendance_date: Date.today)
-      binding.pry
+
   #     if Attendance.
       errors.add(:base, 'You are already check in')
   #     # flash[:notice] = "You can only add one work report per day."

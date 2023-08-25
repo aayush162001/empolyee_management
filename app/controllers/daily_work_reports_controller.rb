@@ -39,7 +39,7 @@ class DailyWorkReportsController < ApplicationController
   end
 
   def new
-      binding.pry 
+      # binding.pry 
       @daily_work_report = DailyWorkReport.new
   end
 
@@ -57,7 +57,7 @@ class DailyWorkReportsController < ApplicationController
   #   # end
   # end
   def create
-    binding.pry
+    # binding.pry
     @daily_work_report = DailyWorkReport.new(daily_work_report_params)
     # binding.pry
 
@@ -91,7 +91,7 @@ class DailyWorkReportsController < ApplicationController
           render :new, status: :unprocessable_entity
         end
       elsif not current_user.id == params[:daily_work_report][:user_id].to_i
-        binding.pry
+        # binding.pry
 
         if Project.exists?(params[:daily_work_report][:project_id])
           if @daily_work_report.save
@@ -105,7 +105,7 @@ class DailyWorkReportsController < ApplicationController
             render :new, status: :unprocessable_entity
           end
         else
-          binding.pry
+          # binding.pry
           @daily_work_report.errors.add(:project_id, "Select the Project selection. ")
           # query_params = { category: "other_work_reports" } # Replace with your query parameters
           # render :new, status: :unprocessable_entity

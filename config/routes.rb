@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   resources :other_work_reports
 
 
-  devise_for :users, skip: [:registrations] 
+  devise_for :users, skip: [:registrations] , controllers: { sessions: 'users/sessions' }
   #  :controllers => { :registrations => 'registrations'}
   
   
@@ -14,7 +14,11 @@ Rails.application.routes.draw do
     #   devise_for :users
     # end
   # post "/email_hierarchy/new" => "email_hierarchy#create"
-  resources :users
+  resources :users do 
+    member do
+      delete :soft_delete
+    end
+  end
   resources :projects
   resources :daily_work_reports
   resources :email_hierarchy
