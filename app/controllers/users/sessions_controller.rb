@@ -10,23 +10,24 @@ class Users::SessionsController < Devise::SessionsController
 
   # POST /resource/sign_in
   def create
-    binding.pry
-    self.resource = warden.authenticate!(auth_options)
-    
-    if resource.is_active
-      set_flash_message!(:notice, :signed_in)
-      sign_in(resource_name, resource)
-      yield resource if block_given?
-      respond_with resource, location: after_sign_in_path_for(resource)
+    user = User.find_by_email(params[:user][:email])
+
+    if user && user.valid_password?(params[:user][:password])
+      if user.is_active
+        super # Proceed with the default Devise sign-in process
+      else
+        flash[:error] = "Your account is currently inactive."
+        redirect_to new_user_session_path
+      end
     else
-      flash[:error] = "Your account is currently inactive."
+      flash[:error] = "Invalid email or password."
       redirect_to new_user_session_path
     end
   end
 
-  def active_for_authentication?
-    super && is_active
-  end
+  # def active_for_authentication?
+  #   super && is_active
+  # end
 
 
   # DELETE /resource/sign_out

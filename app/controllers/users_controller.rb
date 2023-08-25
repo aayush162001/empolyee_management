@@ -20,6 +20,7 @@ class UsersController < ApplicationController
         # binding.pry
         @user = User.new(user_params)
         if @user.save
+            Time.zone = @user.time_zone
             redirect_to users_url
         else
             render :new , status: :unprocessable_entity
@@ -66,6 +67,7 @@ class UsersController < ApplicationController
             @users = User.find(params[:id])
         end
         def user_params
-            params.require(:user).permit(:email,:password,:password_confirmation,:name,:role,:designation_id,:department_id,:dob,:address,:contact,:created_by,:image)
+            params[:user][:role] = params[:user][:role].to_i
+            params.require(:user).permit(:email,:password,:password_confirmation,:name,:role,:designation_id,:department_id,:dob,:address,:contact,:created_by,:image, :time_zone)
         end
 end

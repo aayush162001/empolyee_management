@@ -63,12 +63,12 @@
 <%# category: "other_work_reports" %>
 
         <%# <%if current_user.employee? %>
-        <%binding.pry%>
+        <%#binding.pry%>
         <%if params["category"] == "other_work_reports"%>
           <div class="mb-3">
           <%a = EmailHierarchy.where("too like ?","%,#{current_user.id},%").or(EmailHierarchy.where("too like ?","#{current_user.id},%")).or(EmailHierarchy.where("too like ?","%,#{current_user.id}")).or(EmailHierarchy.where("cc like ?","#{current_user.id}")).pluck(:user_id)%>
           <%b = EmailHierarchy.where("cc like ?","%,#{current_user.id},%").or(EmailHierarchy.where("cc like ?","#{current_user.id},%")).or(EmailHierarchy.where("cc like ?","%,#{current_user.id}")).or(EmailHierarchy.where("cc like ?","#{current_user.id}")).pluck(:user_id)%>
-              <%binding.pry%>
+              <%#binding.pry%>
           <%c = a + b%>
           <%#User.where(id:c.uniq).pluck(:email)%>    
             <%= form.label :user_id,{ class: "form-label"} %>

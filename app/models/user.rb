@@ -2,7 +2,7 @@ class User < ApplicationRecord
   # has_and_belongs_to_many :roles
   enum role: [:employee, :leader, :project_manager, :company_admin, :super_admin]
   # enum department: [:ror, :fullstack , :python, :admin, :ceo]
-
+  attr_accessor :time_zone
   has_many :projects, through: :daily_work_reports
   has_many :daily_work_reports
   has_one :email_hierarchy

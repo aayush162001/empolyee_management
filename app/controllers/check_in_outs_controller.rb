@@ -24,19 +24,25 @@ class CheckInOutsController < ApplicationController
 					
 					@check_in_out.work_hours = @check_in_out.calculate_attendance
 					@check_in_out.hours_sum
+					if @check_in_out.save
+
+						redirect_to check_in_outs_path(category: "other_work_reports"), notice: 'Attendance record created successfully.'
+					
+					end
 				end
 			else
 				@check_in_out = CheckInOut.new(user_id: current_user.id, attendance_date: Date.current, check_in: Time.current,created_by: current_user.id)
 				@check_in_out.user = current_user
+				if @check_in_out.save
+
+					redirect_to check_in_outs_path, notice: 'Attendance record created successfully.'
+				
+				end
 			end
 			
 			# @attendance.calculate_attendance
 	
-			if @check_in_out.save
 
-				redirect_to check_in_outs_path, notice: 'Attendance record created successfully.'
-			
-			end
 	end
 
 	def create_other
