@@ -17,11 +17,6 @@
     <%= form.label :cc, class: "form-label" %>
     <%= form.text_field :cc, class: "form-control" %>
   </div>
-<%= form.collection_check_boxes :user_id, User.all, :id, :id%>
-  <% User.all.each do |option| %>
-    <%= form.check_box :attribute_name, { multiple: true }, option.id, nil %>
-    <%= option.email %>
-  <% end %>
 
 
   <div class="actions">

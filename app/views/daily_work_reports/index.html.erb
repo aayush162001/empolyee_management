@@ -3,50 +3,85 @@
 <head>
   <title>Daily Work Reports</title>
   <style>
-
-
     /* Add any other custom styles here */
   </style>
 </head>
 <body>
- <%= link_to 'Back', root_path , class: "btn btn-info back-btn" %>
+  <%= link_to 'Back', root_path, class: "btn btn-info back-btn" %>
   <h1>Daily Work Reports</h1>
-  <%if params["category"] == "other_work_reports"%>
-    <%= search_form_for @q do |f|%>
-      <div>
-        <%= f.label :project_name_or_current_date %>
-        <%= f.search_field :project_name_or_current_date_cont %>
-        <%= f.hidden_field :category, value: params[:category] %>
-        <%= f.submit 'Search', class: "btn-primary" %>
-        
-      </div>
-    <% end %>
-  <%else%>
-    <%= search_form_for @q do |f|%>
-      <div>
-        <%= f.label :project_name_or_current_date %>
-        <%= f.search_field :project_name_or_current_date_cont %>
-        <%= f.submit 'Search', class: "btn-primary" %>
-        
-      </div>
-    <% end %>
-  <%end%>
+  
+  <% if params["category"] == "other_work_reports" %>
+    <%= form_tag daily_work_reports_path(category: "other_work_reports"), method: :get, class: "user-filter-form" do %>
+      <%= hidden_field_tag :category, "other_work_reports" %>
+      
+      <div class="input-group row">
+        <div class="col-md-3">
+          <h4>User</h4>
+          <%= select_tag :selected_user, options_for_select(User.accessible_by(current_ability).pluck(:email, :id), params[:selected_user]), class: "form-control", prompt: "Select a user" %>
+        </div>
 
+        <div class="col-md-4">
+          <h4>Project</h4>
+          <%= select_tag :selected_project, options_for_select(Project.pluck(:name, :id), params[:selected_project]), class: "form-control", prompt: "Select a project" %>
+        </div>
+
+        <div class="col-md-2">
+          <h4>Start Date</h4>
+          <%= date_field_tag :start_date, params[:start_date], class: "form-control", placeholder: "Start Date" %>
+        </div>
+
+        <div class="col-md-2">
+          <h4>End Date</h4>
+          <%= date_field_tag :end_date, params[:end_date], class: "form-control", placeholder: "End Date" %>
+        </div>
+    
+        <div class="col-md-1">
+          <button class="btn btn-primary btn-block" type="submit" title="Search">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <%= form_tag daily_work_reports_path, method: :get, class: "user-filter-form" do %>
+      
+      <div class="input-group row">
+        <div class="col-md-4">
+          <h4>Project</h4>
+          <%= select_tag :selected_project, options_for_select(Project.pluck(:name, :id), params[:selected_project]), class: "form-control", prompt: "Select a project" %>
+        </div>
+
+        <div class="col-md-4">
+          <h4>Start Date</h4>
+          <%= date_field_tag :start_date, params[:start_date], class: "form-control", placeholder: "Start Date" %>
+        </div>
+
+        <div class="col-md-3">
+          <h4>End Date</h4>
+          <%= date_field_tag :end_date, params[:end_date], class: "form-control", placeholder: "End Date" %>
+        </div>
+    
+        <div class="col-md-1">
+          <button class="btn btn-primary btn-block" type="submit" title="Search">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+  
   <br>
-  <%if params["category"] == "other_work_reports"%>
+  
+  <% if params["category"] == "other_work_reports" %>
     <%#binding%>
     <%= link_to 'Add New Daily Work Report', new_daily_work_report_path(category: "other_work_reports"), class: 'btn btn-success' %>
-  <%else%>
+  <% else %>
     <%= link_to 'Add New Daily Work Report', new_daily_work_report_path, class: 'btn btn-success' %>
-  <%end%>
+  <% end %>
   
-  <%# <%if not current_user.employee?
-  <%= link_to "Show Filtered Products", daily_work_reports_path(category: "other_work_reports") 
-    <%= link_to 'Others Work Report', work_check_index_path, class: 'btn btn-primary' 
-  <%end%> 
   <br>
   <br>
-
+  
   <table>
     <thead>
       <tr>
@@ -79,17 +114,13 @@
             <% end %>
           </td>
           <td>
-            <%= link_to '<i class="fas fa-eye"></i>'.html_safe , report, class: 'btn btn-secondary' %>
-
+            <%= link_to '<i class="fas fa-eye"></i>'.html_safe, report, class: 'btn btn-secondary' %>
             <%= link_to '<i class="fas fa-edit"></i>'.html_safe, edit_daily_work_report_path(report), class: 'btn btn-primary' %>
-            <%= link_to '<i class="fas fa-trash"></i>'.html_safe, report, method: :delete, data: {turbo_method: :delete, }, class: 'btn btn-danger' %>
-               
-        
+            <%= link_to '<i class="fas fa-trash"></i>'.html_safe, report, method: :delete, data: { turbo_method: :delete }, class: 'btn btn-danger' %>
           </td>
         </tr>
       <% end %>
     </tbody>
   </table>
-
 </body>
 </html>

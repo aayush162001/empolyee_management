@@ -34,7 +34,20 @@
     <%# <%= link_to 'show', attendance_path(@check_out[0].id) %>
     <%= button_to 'Check-out', check_in_out_path(@check_out[0].id), method: :patch, class: 'btn btn-primary',  id: 'btnToggle' %>
   <%elsif params["category"] == "other_work_reports"%>
-    <%= link_to '+ Other Check-IN/OUT',new_check_in_out_path(category: "other_work_reports"), class: 'btn btn-success',  id: 'btnToggle' %> <br>
+   <%= link_to '+ Other Check-IN/OUT',new_check_in_out_path(category: "other_work_reports"), class: 'btn btn-success',  id: 'btnToggle' %> <br>
+<%= form_tag check_in_outs_path(category: "other_work_reports"), method: :get, class: "user-filter-form" do %>
+      <%= hidden_field_tag :category, "other_work_reports" %>
+  
+    <div class="input-group" style="width: 300px;"> <!-- Adjust the width as needed -->
+      <%= select_tag :selected_user, options_for_select(User.accessible_by(current_ability).pluck(:email, :id), params[:selected_user]), class: "form-control", prompt: "Select a user" %>
+      
+      <div class="input-group-append">
+        <button class="btn btn-primary" type="submit" title="Search">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+    </div>
+    <% end %>
   <%else%>
     <%= button_to 'Check-in', check_in_outs_path, method: :post, class: 'btn btn-primary',  id: 'btnHide'%> 
   <%end%>

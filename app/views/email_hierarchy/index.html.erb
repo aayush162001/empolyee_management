@@ -24,7 +24,7 @@
         <% @email_hierarchy.each do |email| %>
         <tr>
           <td style="text-align: center"><%= email.user_id %></td>
-          <td><%= email.user.email %></td>
+          <td><%= User.find(email.user_id).email %></td>
           <td>
              <% too = User.find((EmailHierarchy.find_by(user_id: email.user_id).too).split(',')).pluck(:email) %>
              <% too.each do |i|%>
