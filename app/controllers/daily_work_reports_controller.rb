@@ -10,6 +10,10 @@ class DailyWorkReportsController < ApplicationController
       
       
       category = (params[:category] or (params[:q][:category] if params[:q].present?))
+      @selected_user = params[:selected_user]
+      @selected_project = params[:selected_project]
+      @start_date = params[:start_date]
+      @end_date = params[:end_date]
       # binding.pry
       @daily_work_reports = fetch_products(category)
       # @q = current_user.daily_work_reports.ransack(params[:q])
@@ -43,19 +47,6 @@ class DailyWorkReportsController < ApplicationController
       @daily_work_report = DailyWorkReport.new
   end
 
-  # def create
-  #   @daily_work_report = DailyWorkReport.new(daily_work_report_params)
-  #   # if(@daily_work_report.valid?)
-  #     binding.pry
-  #     if @daily_work_report.save
-  #       redirect_to @daily_work_report, notice: 'Daily work report was successfully created.'
-  #     else
-  #       render :new
-  #     end
-  #   # else
-  #   #   redirect_to @daily_work_report
-  #   # end
-  # end
   def create
     # binding.pry
     @daily_work_report = DailyWorkReport.new(daily_work_report_params)
@@ -170,20 +161,28 @@ class DailyWorkReportsController < ApplicationController
       b = EmailHierarchy.where("cc like ?","%,#{current_user.id},%").or(EmailHierarchy.where("cc like ?","#{current_user.id},%")).or(EmailHierarchy.where("cc like ?","%,#{current_user.id}")).or(EmailHierarchy.where("cc like ?","#{current_user.id}")).pluck(:user_id)
       # @qs = DailyWorkReport.where(user_id: (a+b).split(',')).ransack(params[:q])
       # @daily_work_reports = @qs.result(distinct: true).accessible_by(current_ability).order(current_date: :desc)
-      @q = DailyWorkReport.where(user_id: (a+b)).ransack(params[:q])
-      @q.result(distinct: true).accessible_by(current_ability).order(current_date: :desc)
-    # end
+      q = DailyWorkReport.where(user_id: (a+b)) 
+      q = q.where(user_id: @selected_user) if @selected_user.present?
+      q = q.where(project_id: @selected_project) if @selected_project.present?
+      q = q.where(current_date: @start_date..@end_date) if date_range_present?
+      q.accessible_by(current_ability).order(current_date: :desc)    
+      # end
     else
       
       # binding.pry
       
-      @q = current_user.daily_work_reports.ransack(params[:q])
-      @q.result(distinct: true).accessible_by(current_ability).order(current_date: :desc)
+      q = current_user.daily_work_reports 
+      q = q.where(project_id: @selected_project) if @selected_project.present?
+      q = q.where(current_date: @start_date..@end_date) if date_range_present?
+      q.accessible_by(current_ability).order(current_date: :desc)    
     # @daily_work_reports = DailyWorkReport.accessible_by(current_ability)
     # @daily_work_reports = DailyWorkReport.all.order(created_at: :desc)
     end
   end
 
+  def date_range_present?
+    @start_date.present? && @end_date.present?
+  end
 
   def set_daily_work_report
     @daily_work_report = DailyWorkReport.find(params[:id])

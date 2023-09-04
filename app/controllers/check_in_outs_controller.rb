@@ -5,6 +5,9 @@ class CheckInOutsController < ApplicationController
 
 	def index
 			# @attendances = Attendance.where(attendance_date: start_date..end_date).accessible_by(current_ability).order(attendance_date: :desc)
+			
+			binding.pry
+			
 			category = (params[:category] or (params[:q][:category] if params[:q].present?))
 			# binding.pry
 			@check_in_outs = fetch_products(category)
@@ -124,28 +127,35 @@ class CheckInOutsController < ApplicationController
 		# binding.pry
 		if category == "other_work_reports"
 		  
-		  # binding.pry
-		  
-		  a = EmailHierarchy.where("too like ?","%,#{current_user.id},%").or(EmailHierarchy.where("too like ?","#{current_user.id},%")).or(EmailHierarchy.where("too like ?","%,#{current_user.id}")).or(EmailHierarchy.where("cc like ?","#{current_user.id}"))
-		  .pluck(:user_id)
-		  # a = EmailHierarchy.where("to like ?","%#{current_user.id.to_s}%").pluck(:user_id)
-		  # b = EmailHierarchy.where("cc like ?","%#{current_user.id.to_s}%").pluck(:user_id)
-		  b = EmailHierarchy.where("cc like ?","%,#{current_user.id},%").or(EmailHierarchy.where("cc like ?","#{current_user.id},%")).or(EmailHierarchy.where("cc like ?","%,#{current_user.id}")).or(EmailHierarchy.where("cc like ?","#{current_user.id}")).pluck(:user_id)
-		  @check_in_outs = CheckInOut.where(user_id: (a+b).split(',')).accessible_by(current_ability).order(current_date: :desc)
-		  # @daily_work_reports = @qs.result(distinct: true).accessible_by(current_ability).order(current_date: :desc)
-		#   @q = DailyWorkReport.where(user_id: (a+b)).ransack(params[:q])
-		#   @q.result(distinct: true).accessible_by(current_ability).order(current_date: :desc)
-		# end
+		#   binding.pry
+			if params[:selected_user].present?
+				
+				# binding.pry
+				
+				@check_in_outs = CheckInOut.where(user_id: (params[:selected_user]).split(',')).accessible_by(current_ability).order(current_date: :desc)
+			else
+				
+				a = EmailHierarchy.where("too like ?","%,#{current_user.id},%").or(EmailHierarchy.where("too like ?","#{current_user.id},%")).or(EmailHierarchy.where("too like ?","%,#{current_user.id}")).or(EmailHierarchy.where("cc like ?","#{current_user.id}"))
+				.pluck(:user_id)
+				# a = EmailHierarchy.where("to like ?","%#{current_user.id.to_s}%").pluck(:user_id)
+				# b = EmailHierarchy.where("cc like ?","%#{current_user.id.to_s}%").pluck(:user_id)
+				b = EmailHierarchy.where("cc like ?","%,#{current_user.id},%").or(EmailHierarchy.where("cc like ?","#{current_user.id},%")).or(EmailHierarchy.where("cc like ?","%,#{current_user.id}")).or(EmailHierarchy.where("cc like ?","#{current_user.id}")).pluck(:user_id)
+				@check_in_outs = CheckInOut.where(user_id: (a+b).split(',')).accessible_by(current_ability).order(current_date: :desc)
+				# @daily_work_reports = @qs.result(distinct: true).accessible_by(current_ability).order(current_date: :desc)
+				#   @q = DailyWorkReport.where(user_id: (a+b)).ransack(params[:q])
+				#   @q.result(distinct: true).accessible_by(current_ability).order(current_date: :desc)
+				# end
+			end
 		else
-		  
-		  # binding.pry
-		  
-		  @check_in_outs = current_user.check_in_out.accessible_by(current_ability).order(attendance_date: :desc)
-		#   @q.result(distinct: true).accessible_by(current_ability).order(current_date: :desc)
-		# @daily_work_reports = DailyWorkReport.accessible_by(current_ability)
-		# @daily_work_reports = DailyWorkReport.all.order(created_at: :desc)
-		end
-	end	
+			
+			# binding.pry
+			
+				@check_in_outs = current_user.check_in_out.accessible_by(current_ability).order(attendance_date: :desc)
+			#   @q.result(distinct: true).accessible_by(current_ability).order(current_date: :desc)
+			# @daily_work_reports = DailyWorkReport.accessible_by(current_ability)
+			# @daily_work_reports = DailyWorkReport.all.order(created_at: :desc)
+				end
+		end	
 
 	def start_date
 		Date.current.beginning_of_month

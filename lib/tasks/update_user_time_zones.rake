@@ -2,7 +2,7 @@ namespace :users do
     desc "Update time zones for existing users to Asia/Kolkata (IST)"
     task update_time_zones: :environment do
         
-        binding.pry
+        # binding.pry
         
       User.where(time_zone: nil).find_each do |user|
         user.update(time_zone: Time.zone.name)

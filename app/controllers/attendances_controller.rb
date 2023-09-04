@@ -18,14 +18,23 @@ class AttendancesController < ApplicationController
 		# if user_signed_in?  
 		  
 		#   binding.pry
-		  
-		a = EmailHierarchy.where("too like ?","%,#{current_user.id},%").or(EmailHierarchy.where("too like ?","#{current_user.id},%")).or(EmailHierarchy.where("too like ?","%,#{current_user.id}"))
-		.pluck(:user_id)
-		# a = EmailHierarchy.where("to like ?","%#{current_user.id.to_s}%").pluck(:user_id)
-		# b = EmailHierarchy.where("cc like ?","%#{current_user.id.to_s}%").pluck(:user_id)
-		b = EmailHierarchy.where("cc like ?","%,#{current_user.id},%").or(EmailHierarchy.where("cc like ?","#{current_user.id},%")).or(EmailHierarchy.where("cc like ?","%,#{current_user.id}"))
-		.pluck(:user_id)
-		@attendances = Attendance.where(user_id: (a+b).split(',')).order(current_date: :desc)
+		@selected_user = params[:selected_user]
+		@start_date = params[:start_date]
+		@end_date = params[:end_date]
+		# a = EmailHierarchy.where("too like ?","%,#{current_user.id},%").or(EmailHierarchy.where("too like ?","#{current_user.id},%")).or(EmailHierarchy.where("too like ?","%,#{current_user.id}"))
+		# .pluck(:user_id)
+		# # a = EmailHierarchy.where("to like ?","%#{current_user.id.to_s}%").pluck(:user_id)
+		# # b = EmailHierarchy.where("cc like ?","%#{current_user.id.to_s}%").pluck(:user_id)
+		# b = EmailHierarchy.where("cc like ?","%,#{current_user.id},%").or(EmailHierarchy.where("cc like ?","#{current_user.id},%")).or(EmailHierarchy.where("cc like ?","%,#{current_user.id}"))
+		# .pluck(:user_id)
+		a = User.ids
+
+		
+		q = Attendance.where(user_id: (a).split(','))
+		# q = DailyWorkReport.where(user_id: (a+b)) 
+		q = q.where(user_id: @selected_user) if @selected_user.present?
+		q = q.where(attendance_date: @start_date..@end_date) if date_range_present?
+		@attendances = q.accessible_by(current_ability).order(attendance_date: :desc)    
 		# end
 	end
 	def new
@@ -93,7 +102,10 @@ class AttendancesController < ApplicationController
 		
 
 	private
-
+	def date_range_present?
+		@start_date.present? && @end_date.present?
+	end
+	
 	def set_project
 		@attendance = Attendance.find(params[:id])
 	end

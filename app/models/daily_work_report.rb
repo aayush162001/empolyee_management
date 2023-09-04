@@ -9,12 +9,12 @@ class DailyWorkReport < ApplicationRecord
   # enum status: [:in_process, :completed]
   # validate :validate_user_entry    
   # validate :time_limit, :on => :create
-  def self.ransackable_attributes(auth_object = nil)
-    ["created_at", "current_date", "hours", "id", "project_id", "status", "updated_at", "user_id", "project", "user"]
-  end
-  def self.ransackable_associations(auth_object = nil)
-    ["project", "user"]
-  end
+  # def self.ransackable_attributes(auth_object = nil)
+  #   ["created_at", "current_date", "hours", "id", "project_id", "status", "updated_at", "user_id", "project", "user"]
+  # end
+  # def self.ransackable_associations(auth_object = nil)
+  #   ["project", "user"]
+  # end
 
   # def time_limit
   #   binding.pry

@@ -1,9 +1,37 @@
 <h1>Attendance Records</h1>
 
+    <%= form_tag attendance_check_attendance_path, method: :get, class: "user-filter-form" do %>
+      <%# <%= hidden_field_tag :category, "other_work_reports"  %>
+      
+      <div class="input-group row">
+        <div class="col-md-3">
+          <h4>User</h4>
+          <%= select_tag :selected_user, options_for_select(User.accessible_by(current_ability).pluck(:email, :id), params[:selected_user]), class: "form-control", prompt: "Select a user" %>
+        </div>
+
+
+        <div class="col-md-2">
+          <h4>Start Date</h4>
+          <%= date_field_tag :start_date, params[:start_date], class: "form-control", placeholder: "Start Date" %>
+        </div>
+
+        <div class="col-md-2">
+          <h4>End Date</h4>
+          <%= date_field_tag :end_date, params[:end_date], class: "form-control", placeholder: "End Date" %>
+        </div>
+    
+        <div class="col-md-1">
+          <button class="btn btn-primary btn-block" type="submit" title="Search">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
+    <% end %>
+
 <% 
 # binding.pry
  %>
-
+<br>
 <table>
   <thead>
     <tr>
